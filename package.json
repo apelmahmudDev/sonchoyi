@@ -1,23 +1,31 @@
 {
-  "name": "nextjs-material-ui-starter",
-  "version": "5.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/cache": "latest",
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
-  }
+	"name": "nextjs-material-ui-starter",
+	"version": "5.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
+	},
+	"dependencies": {
+		"@emotion/cache": "latest",
+		"@emotion/react": "latest",
+		"@emotion/styled": "latest",
+		"@mui/icons-material": "latest",
+		"@mui/material": "latest",
+		"@mui/material-nextjs": "^5.15.6",
+		"next": "latest",
+		"react": "latest",
+		"react-dom": "latest"
+	},
+	"devDependencies": {
+		"@types/node": "20.11.10",
+		"@types/react": "^18.2.48",
+		"@types/react-dom": "^18.2.18",
+		"eslint": "^8.56.0",
+		"eslint-config-next": "^14.1.0",
+		"typescript": "^5.3.3"
+	}
 }
