@@ -7,7 +7,7 @@ import ProTip from '@/components/ProTip'
 import Copyright from '@/components/Copyright'
 import Navbar from '@/components/Navbar'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Container maxWidth="lg">
       <Navbar />
