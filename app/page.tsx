@@ -5,7 +5,6 @@ import Link from '@mui/material/Link'
 import NextLink from 'next/link'
 import ProTip from '@/components/ProTip'
 import Copyright from '@/components/Copyright'
-
 import Navbar from '@/components/Navbar'
 
 export default function Home() {
