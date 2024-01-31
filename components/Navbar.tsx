@@ -31,8 +31,10 @@ export default function Navbar(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState)
+    setMobileOpen(prevState => !prevState)
   }
+
+  const name = 'Fundwave'
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -41,7 +43,7 @@ export default function Navbar(props: Props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {navItems.map(item => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item} />
@@ -52,8 +54,7 @@ export default function Navbar(props: Props) {
     </Box>
   )
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined
+  const container = window !== undefined ? () => window().document.body : undefined
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -69,15 +70,11 @@ export default function Navbar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             Fundwave
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <Button key={item} sx={{ color: '#fff' }}>
                 {item}
               </Button>
