@@ -1,5 +1,8 @@
 'use client'
-import * as React from 'react'
+
+// ** MUI imports
+import { useState, useMemo, useEffect } from 'react'
+import { PaletteMode } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -15,11 +18,16 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
+// ** Icons imports
+import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+
+// ** Redux imports
+import { useDispatch } from 'react-redux'
+import { storeMode } from '@/app/store/slices/modeSlice'
+
+// ** types
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window
 }
 
@@ -28,13 +36,28 @@ const navItems = ['Home', 'About', 'Contact']
 
 export default function Navbar(props: Props) {
   const { window } = props
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+  const dispatch = useDispatch()
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mode, setMode] = useState<PaletteMode>(localStorage.getItem('mode') === 'dark' ? 'dark' : 'light')
+
+  const colorMode = useMemo(
+    () => ({
+      // The dark mode switch would invoke this method
+      toggleColorMode: () => {
+        setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'))
+      },
+    }),
+    [],
+  )
+
+  useEffect(() => {
+    dispatch(storeMode(mode))
+    localStorage.setItem('mode', mode)
+  }, [mode])
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState)
   }
-
-  const name = 'Fundwave'
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -57,51 +80,56 @@ export default function Navbar(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+    <Toolbar>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar component="nav">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              Fundwave
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {navItems.map(item => (
+                <Button key={item} sx={{ color: '#fff' }}>
+                  {item}
+                </Button>
+              ))}
+            </Box>
+            <IconButton onClick={colorMode.toggleColorMode}>
+              {mode === 'light' ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <nav>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+              },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-            Fundwave
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map(item => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-    </Box>
+            {drawer}
+          </Drawer>
+        </nav>
+      </Box>
+    </Toolbar>
   )
 }
