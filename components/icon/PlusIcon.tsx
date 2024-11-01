@@ -27,4 +27,4 @@ const PlusIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { PlusIcon };
+export default PlusIcon;

@@ -10,17 +10,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { NotificationIcon } from "@/components/icon/Notifications";
-import { ExpenseIcon } from "@/components/icon/ExpenseIcon";
-import { IncomeIcon } from "@/components/icon/IncomeIcon";
 
 const Chart = dynamic(() => import("react-apexcharts"), {
 	ssr: false,
 });
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
-import { ShoppingBagIcon } from "@/components/icon/ShoppingBagIcon";
+import {
+	ShoppingBagIcon,
+	NotificationIcons,
+	ExpenseIcon,
+	IncomeIcon,
+} from "@/components/icon";
 import BottomNavigation from "@/components/common/BottomNavigation";
+// import ShoppingBagIcon from "@/components/icon/ShoppingBagIcon";
 
 // chart options
 const options: ApexOptions = {
@@ -147,7 +150,7 @@ export default function YourAccountPage() {
 					</div>
 					{/* notification */}
 					<button className="border-none w-fit h-fit">
-						<NotificationIcon />
+						<NotificationIcons />
 					</button>
 				</div>
 				{/* account balance */}

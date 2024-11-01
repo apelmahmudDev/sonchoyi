@@ -19,4 +19,4 @@ const CurrencyExchangeIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { CurrencyExchangeIcon };
+export default CurrencyExchangeIcon;

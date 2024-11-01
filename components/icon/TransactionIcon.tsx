@@ -19,4 +19,4 @@ const TransactionIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { TransactionIcon };
+export default TransactionIcon;

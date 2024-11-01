@@ -19,4 +19,4 @@ const HomeIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { HomeIcon };
+export default HomeIcon;

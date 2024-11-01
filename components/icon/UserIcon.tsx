@@ -19,4 +19,4 @@ const UserIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { UserIcon };
+export default UserIcon;

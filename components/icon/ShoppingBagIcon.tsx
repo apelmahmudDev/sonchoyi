@@ -19,4 +19,4 @@ const ShoppingBagIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { ShoppingBagIcon };
+export default ShoppingBagIcon;

@@ -19,4 +19,4 @@ const NotificationIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { NotificationIcon };
+export default NotificationIcon;

@@ -17,4 +17,4 @@ const PieChartIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { PieChartIcon };
+export default PieChartIcon;

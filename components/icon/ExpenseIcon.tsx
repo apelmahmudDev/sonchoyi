@@ -25,4 +25,4 @@ const ExpenseIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export { ExpenseIcon };
+export default ExpenseIcon;

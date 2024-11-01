@@ -1,14 +1,16 @@
 // Note : Bottom Navigation component just used for small device but in large device we will use sidebar navigation / top navigation
 
 import React from "react";
-import { HomeIcon } from "../icon/HomeIcon";
-import { TransactionIcon } from "../icon/TransactionIcon";
-import { PieChartIcon } from "../icon/PieChartIcon";
-import { UserIcon } from "../icon/UserIcon";
-import { PlusIcon } from "../icon/PlusIcon";
-import { IncomeIcon } from "../icon/IncomeIcon";
-import { ExpenseIcon } from "../icon/ExpenseIcon";
-import { CurrencyExchangeIcon } from "../icon/CurrencyExchangeIcon";
+import {
+	CurrencyExchangeIcon,
+	ExpenseIcon,
+	IncomeIcon,
+	PlusIcon,
+	PieChartIcon,
+	TransactionIcon,
+	UserIcon,
+	HomeIcon,
+} from "../icon";
 
 const BottomNavigation = () => {
 	return (
@@ -32,7 +34,7 @@ const BottomNavigation = () => {
 								<PlusIcon className="flex-shrink-0" />
 							</div>
 							{/* start more options */}
-							<div className="invisible group-hover/options:visible absolute bottom-[55px] pb-3 flex-shrink-0 w-[170px] flex flex-col items-center">
+							<div className="invisible group-hover/options:visible absolute bottom-[55px] pb-3 flex-shrink-0 w-[170px] flex flex-col items-center transition-all">
 								<div className="h-[50px] w-[50px] bg-[#0077FF] rounded-full flex items-center justify-center text-white">
 									<CurrencyExchangeIcon />
 								</div>
