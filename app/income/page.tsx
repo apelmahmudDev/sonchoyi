@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 
-export default function ExpensePage() {
+export default function IncomePage() {
 	const router = useRouter();
 
 	// go back to previous page
@@ -23,13 +23,13 @@ export default function ExpensePage() {
 	return (
 		<div className="flex flex-col p-0 h-screen">
 			{/* how much amount to be add */}
-			<div className="bg-[#FD3C4A] px-4 pt-4 pb-8">
+			<div className="bg-[#00A86B] px-4 pt-4 pb-8">
 				<div className="flex items-center mb-[60px]">
 					<button onClick={handleNavigateBack} className="text-white">
 						<ArrowLeftIcon />
 					</button>
 					<p className="mx-auto text-center text-white text-lg font-semibold pr-8">
-						Expense
+						Income
 					</p>
 				</div>
 				<div>
@@ -59,14 +59,17 @@ export default function ExpensePage() {
 						</SelectTrigger>
 						<SelectContent className="h-[200px]">
 							<SelectGroup>
-								<SelectItem value="subscription">Subscription</SelectItem>
-								<SelectItem value="food">Food</SelectItem>
-								<SelectItem value="transport">Transport</SelectItem>
-								<SelectItem value="shopping">Shopping</SelectItem>
-								<SelectItem value="health">Health</SelectItem>
-								<SelectItem value="entertainment">Entertainment</SelectItem>
-								<SelectItem value="education">Education</SelectItem>
-								<SelectItem value="others">Others</SelectItem>
+								<SelectItem value="salary">Salary</SelectItem>
+								<SelectItem value="bonus">Bonus</SelectItem>
+								<SelectItem value="interest">Interest</SelectItem>
+								<SelectItem value="business">Business</SelectItem>
+								<SelectItem value="investments">Investments</SelectItem>
+								<SelectItem value="freelance">Freelance</SelectItem>
+								<SelectItem value="savings ">Savings</SelectItem>
+								<SelectItem value="pension ">Pension</SelectItem>
+								<SelectItem value="tutoring ">Tutoring</SelectItem>
+								<SelectItem value="selling ">Selling Goods</SelectItem>
+								<SelectItem value="other">Other</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -93,7 +96,7 @@ export default function ExpensePage() {
 						type="submit"
 						className="w-full h-[56px] rounded-xl font-medium bg-[#7F3DFF] text-white mt-4"
 					>
-						Add Expense
+						Add Income
 					</Button>
 				</form>
 			</div>
