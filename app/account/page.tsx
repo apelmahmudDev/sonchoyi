@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import AvatarImg from "@/assets/images/avatar.jpg";
-import Image from "next/image";
 import {
 	Select,
 	SelectContent,
@@ -23,6 +22,8 @@ import {
 	IncomeIcon,
 } from "@/components/icon";
 import BottomNavigation from "@/components/common/BottomNavigation";
+import Avatar from "@/components/ui/avatar";
+import Link from "next/link";
 // import ShoppingBagIcon from "@/components/icon/ShoppingBagIcon";
 
 // chart options
@@ -117,13 +118,9 @@ export default function YourAccountPage() {
 				{/* heading */}
 				<div className="flex justify-between items-center mb-6">
 					{/* avatar / user image */}
-					<div className="border-2 border-[#7F3DFF] rounded-full h-[50px] w-[50px] overflow-hidden p-1">
-						<Image
-							className="h-full w-full rounded-full object-cover"
-							src={AvatarImg}
-							alt="user-name"
-						/>
-					</div>
+					<Link href="/profile">
+						<Avatar source={AvatarImg} />
+					</Link>
 					{/* select field of month */}
 					<div className="flex-shrink-0 text-center">
 						<Select>
