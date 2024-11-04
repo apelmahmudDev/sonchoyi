@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 export default function AddAccountPage() {
-	const [accountName, setAccountName] = useState("");
-	const [accountType, setAccountType] = useState("");
+	const router = useRouter();
 	const [balance, setBalance] = useState("");
 	const [bankName, setBankName] = useState("");
-	const router = useRouter();
+	const [accountName, setAccountName] = useState("");
+	const [accountType, setAccountType] = useState("");
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
