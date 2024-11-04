@@ -13,3 +13,8 @@ export { default as RecurringBillIcon } from "./RecurringBillIcon";
 export { default as ThreeLineIcon } from "./ThreeLineIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
 export { default as ArrowRightIcon } from "./ArrowRightIcon";
+export { default as EditIcon } from "./EditIcon";
+export { default as ExportUploadIcon } from "./ExportUploadIcon";
+export { default as LogoutIcon } from "./LogoutIcon";
+export { default as SettingsIcon } from "./SettingsIcon";
+export { default as WalletIcon } from "./WalletIcon";

@@ -11,6 +11,7 @@ import {
 	UserIcon,
 	HomeIcon,
 } from "../icon";
+import Link from "next/link";
 
 const BottomNavigation = () => {
 	return (
@@ -18,10 +19,12 @@ const BottomNavigation = () => {
 			<div className="h-[79px] w-full"></div>
 			<div className="d w-full fixed bottom-0 h-[79px] bg-[#FCFCFC] rounded-t-2xl px-4">
 				<div className="flex justify-around items-center h-full">
-					<div className="flex flex-col items-center">
-						<HomeIcon />
-						<p className="mt-1 text-sm text-[#7F3DFF] font-medium">Home</p>
-					</div>
+					<Link href="/account">
+						<div className="flex flex-col items-center">
+							<HomeIcon />
+							<p className="mt-1 text-sm text-[#7F3DFF] font-medium">Home</p>
+						</div>
+					</Link>
 					<div className="flex flex-col items-center">
 						<TransactionIcon />
 						<p className="mt-1 text-sm text-[#C6C6C6] font-medium">
@@ -39,12 +42,16 @@ const BottomNavigation = () => {
 									<CurrencyExchangeIcon />
 								</div>
 								<div className="mt-3 flex justify-between w-full">
-									<div className="h-[50px] w-[50px] bg-[#00A86B] rounded-full flex items-center justify-center text-white">
-										<IncomeIcon />
-									</div>
-									<div className="h-[50px] w-[50px] bg-[#FD3C4A] rounded-full flex items-center justify-center text-white">
-										<ExpenseIcon />
-									</div>
+									<Link href="/income">
+										<div className="h-[50px] w-[50px] bg-[#00A86B] rounded-full flex items-center justify-center text-white">
+											<IncomeIcon />
+										</div>
+									</Link>
+									<Link href="/expense">
+										<div className="h-[50px] w-[50px] bg-[#FD3C4A] rounded-full flex items-center justify-center text-white">
+											<ExpenseIcon />
+										</div>
+									</Link>
 								</div>
 							</div>
 							{/* end more options */}
@@ -54,10 +61,12 @@ const BottomNavigation = () => {
 						<PieChartIcon />
 						<p className="mt-1 text-sm text-[#C6C6C6] font-medium">Budget</p>
 					</div>
-					<div className="flex flex-col items-center">
-						<UserIcon />
-						<p className="mt-1 text-sm text-[#C6C6C6] font-medium">Profile</p>
-					</div>
+					<Link href="/profile">
+						<div className="flex flex-col items-center">
+							<UserIcon />
+							<p className="mt-1 text-sm text-[#C6C6C6] font-medium">Profile</p>
+						</div>
+					</Link>
 				</div>
 			</div>
 		</>
