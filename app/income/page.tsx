@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 export default function IncomePage() {
 	const router = useRouter();
 
-	// go back to previous page
 	const handleNavigateBack = () => {
 		router.push("/account");
 	};
@@ -52,7 +51,7 @@ export default function IncomePage() {
 			{/* settings options */}
 			<div className="flex-1 bg-white p-4 relative -top-5 rounded-t-2xl">
 				<form action="">
-					{/* category / should be multiple option select filed */}
+					{/* select - income category */}
 					<Select>
 						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
 							<SelectValue placeholder="Category" />
