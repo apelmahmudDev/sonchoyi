@@ -17,6 +17,7 @@
 		"icon": "@/components/icon",
 		"lib": "@/lib",
 		"hooks": "@/hooks",
-		"assets": "@/assets"
+		"assets": "@/assets",
+		"auth": "@/auth"
 	}
 }
