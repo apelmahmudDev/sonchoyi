@@ -5,9 +5,8 @@ import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
-	const handleAuth = (event) => {
-		event.preventDefault();
-		signIn("google", { callbackUrl: "http://localhost:3000" });
+	const handleAuth = () => {
+		signIn("google", { callbackUrl: "http://localhost:3000/profile" });
 	};
 	return (
 		<div className="p-4">
