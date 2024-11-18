@@ -1,8 +1,8 @@
 import React from "react";
-import Avatar from "./ui/avatar";
-import AvatarImg from "@/assets/images/avatar.jpg";
-import { EditIcon } from "./icon";
 import { auth } from "@/auth";
+import Avatar from "./ui/avatar";
+import { EditIcon } from "./icon";
+import AvatarImg from "@/assets/images/avatar.jpg";
 
 const User = async () => {
 	const { user } = (await auth()) || {};
