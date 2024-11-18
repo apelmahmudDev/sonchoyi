@@ -3,11 +3,11 @@
 import React from "react";
 import {
 	CurrencyExchangeIcon,
+	TransactionIcon,
+	PieChartIcon,
 	ExpenseIcon,
 	IncomeIcon,
 	PlusIcon,
-	PieChartIcon,
-	TransactionIcon,
 	UserIcon,
 	HomeIcon,
 } from "../icon";
