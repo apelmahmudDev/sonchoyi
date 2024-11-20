@@ -10,7 +10,7 @@ const Avatar: React.FC<AvatarProps> = ({ source, className }) => {
 	return (
 		<div
 			className={cn(
-				"border-2 border-[#7F3DFF] rounded-full h-[50px] w-[50px] overflow-hidden p-1",
+				"flex-shrink-0 border-2 border-[#7F3DFF] rounded-full h-[50px] w-[50px] overflow-hidden p-1",
 				className
 			)}
 		>
