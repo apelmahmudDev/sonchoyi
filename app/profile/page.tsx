@@ -1,10 +1,16 @@
+import { auth } from "@/auth";
 import BottomNavigation from "@/components/common/BottomNavigation";
 import { ExportUploadIcon, SettingsIcon, WalletIcon } from "@/components/icon";
 import Logout from "@/components/Logout";
 import User from "@/components/User";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+	const session = await auth();
+	if (!session) {
+		redirect("/login");
+	}
 	return (
 		<>
 			<div className="h-[calc(100vh-80px)] bg-[#f6f6f6] p-5">
