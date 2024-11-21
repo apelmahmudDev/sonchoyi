@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import AvatarImg from "@/assets/images/avatar.jpg";
 import {
 	Select,
@@ -10,11 +8,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-const Chart = dynamic(() => import("react-apexcharts"), {
-	ssr: false,
-});
-import { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
 import {
 	ShoppingBagIcon,
 	NotificationIcons,
@@ -25,92 +18,15 @@ import BottomNavigation from "@/components/common/BottomNavigation";
 import Avatar from "@/components/ui/avatar";
 import Link from "next/link";
 // import ShoppingBagIcon from "@/components/icon/ShoppingBagIcon";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import WaveChart from "@/components/WaveChart";
 
-// chart options
-const options: ApexOptions = {
-	chart: {
-		// height: 350,
-		type: "area",
-		toolbar: {
-			show: false,
-		},
-		foreColor: "rgba(0 0 0 / 50%)",
-		zoom: {
-			enabled: false,
-		},
-	},
-	grid: {
-		show: false,
-		borderColor: "#F4F4F4",
-	},
-	fill: {
-		type: "gradient",
-		// opacity: 0.5,
-		// type: "solid",
-		gradient: {
-			// shadeIntensity: 1,
-			// opacityFrom: 0,
-			// opacityTo: 0.9,
-			colorStops: [
-				{
-					offset: 20,
-					color: "#7F3DFF",
-					opacity: 0.6,
-				},
-				{
-					offset: 80,
-					color: "#7F3DFF",
-					opacity: 0.1,
-				},
-			],
-		},
-	},
-	colors: ["#7F3DFF"],
-	dataLabels: {
-		enabled: false,
-	},
-	stroke: {
-		curve: "smooth",
-		show: true,
-	},
-	tooltip: {
-		x: {
-			format: "dd/MM/yy HH:mm",
-		},
-	},
-	xaxis: {
-		labels: {
-			show: false,
-		},
-		categories: ["Jan", "Feb", "Mar", "Apr", "May"],
-	},
-	yaxis: {
-		labels: {
-			show: false,
-		},
-	},
-	series: [
-		{
-			name: "spend",
-			data: [30, 15, 25, 12, 40, 20],
-		},
-	],
-};
-
-// chart series
-// const series = [
-// 	{
-// 		name: "spend",
-// 		data: [28, 18, 28, 19, 12, 25, 35, 20, 30, 40, 50, 60],
-// 	},
-// ];
-
-export default function YourAccountPage() {
-	const [selectedMonth, setSelectedMonth] = useState("January");
-
-	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedMonth(e.target.value);
-	};
+export default async function YourAccountPage() {
+	const session = await auth();
+	if (!session) {
+		redirect("/login");
+	}
 
 	return (
 		<>
@@ -184,15 +100,7 @@ export default function YourAccountPage() {
 					<p className="font-semibold text-lg text-[#0D0E0F]">
 						Spend Frequency
 					</p>
-					{/* radialbars chart */}
-					<div id="chart" className="h-[193px]">
-						<Chart
-							options={options}
-							series={options.series}
-							type="area"
-							height={185}
-						/>
-					</div>
+					<WaveChart />
 					{/* filter option for chart */}
 					<div className="flex justify-between">
 						<button className="bg-[#FCEED4] px-6 py-2 font-bold text-sm text-[#FCAC12] rounded-3xl">
