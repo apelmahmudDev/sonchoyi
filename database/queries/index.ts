@@ -1,12 +1,11 @@
 import { userModel } from "@/models/user-model";
 import { mainAccountModel } from "@/models/main-account";
-import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/data-util";
+import { replaceMongoIdInObject } from "@/lib/data-util";
 import { ObjectId } from "mongodb";
 
-export async function getAllUsers() {
-	const users = await userModel.find().lean();
-
-	return replaceMongoIdInArray(users);
+export async function getUserByEmail(email: string) {
+	const users = await userModel.find({ email: email }).lean();
+	return replaceMongoIdInObject(users[0]);
 }
 
 export async function getMainAccountByUserId(userId: string) {

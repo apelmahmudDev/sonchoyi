@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import { connectToDatabase } from "@/service/mongo";
 import { mainAccountModel } from "@/models/main-account";
 import { subAccountModel } from "@/models/sub-account-model";
+import { incomeModel } from "@/models/income-model";
 
 export const POST = async (request: NextApiRequest) => {
 	try {
@@ -70,6 +71,19 @@ export const POST = async (request: NextApiRequest) => {
 			// Save the updated main account
 			await mainAccount.save();
 		}
+
+		// add initial income to the income model
+		const income = {
+			userId: userId,
+			accountId: savedSubAccount._id,
+			category: "Initial",
+			amount: balance,
+			description: "First deposit creation of account",
+			date: new Date(),
+		};
+
+		const createdIncome = await incomeModel.create(income);
+		console.log("Income created:", createdIncome);
 
 		return new NextResponse("Account has been created", { status: 201 });
 	} catch (error) {

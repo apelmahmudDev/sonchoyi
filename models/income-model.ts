@@ -16,6 +16,7 @@ const incomeSchema = new Schema(
 			type: String,
 			required: true,
 			enum: [
+				"Initial",
 				"Salary",
 				"Business Income",
 				"Investments",
