@@ -7,11 +7,6 @@ const mainAccountSchema = new Schema(
 			ref: "User",
 			required: true,
 		},
-		income: {
-			type: Number,
-			required: true,
-			default: 0,
-		},
 		totalBalance: {
 			type: Number,
 			required: true,
