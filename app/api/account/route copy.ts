@@ -5,7 +5,6 @@ import { connectToDatabase } from "@/service/mongo";
 import { mainAccountModel } from "@/models/main-account";
 import { subAccountModel } from "@/models/sub-account-model";
 import { incomeModel } from "@/models/income-model";
-import { transactionModel } from "@/models/transactions-model";
 
 export const POST = async (request: NextApiRequest) => {
 	try {
@@ -85,17 +84,6 @@ export const POST = async (request: NextApiRequest) => {
 
 		const createdIncome = await incomeModel.create(income);
 		console.log("Income created:", createdIncome);
-
-		// Step 5: Log the transaction
-		await transactionModel.create({
-			userId,
-			accountId: savedSubAccount._id,
-			type: "income", // Treat initial deposit as income
-			amount: balance,
-			category: "Initial",
-			description: "Initial deposit for new account",
-			date: new Date(),
-		});
 
 		return new NextResponse("Account has been created", { status: 201 });
 	} catch (error) {

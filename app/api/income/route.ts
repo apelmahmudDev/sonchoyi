@@ -3,10 +3,10 @@ import { connectToDatabase } from "@/service/mongo";
 import { incomeModel } from "@/models/income-model";
 import { mainAccountModel } from "@/models/main-account";
 import { subAccountModel } from "@/models/sub-account-model";
+import { transactionModel } from "@/models/transactions-model";
 
 export const POST = async (request: Request) => {
 	try {
-		// Parse the request body
 		const {
 			userId,
 			accountId,
@@ -18,42 +18,18 @@ export const POST = async (request: Request) => {
 			date,
 		} = await request.json();
 
-		// Ensure database connection
 		await connectToDatabase();
 
-		// Validate required fields
-		if (!userId || !accountId || !category || !amount || !date) {
+		// Validate input
+		if (!userId || !accountId || !category || !amount || amount <= 0) {
 			return NextResponse.json(
-				{ error: "Missing required fields." },
+				{ error: "Invalid input data." },
 				{ status: 400 }
 			);
 		}
 
-		// Ensure the amount is valid
-		if (amount <= 0) {
-			return NextResponse.json(
-				{ error: "Amount must be greater than 0." },
-				{ status: 400 }
-			);
-		}
-
-		// Step 1: Fetch the sub-account to update its balance
-		const account = await subAccountModel.findById(accountId);
-
-		if (!account) {
-			return NextResponse.json(
-				{ error: "Sub-account not found." },
-				{ status: 404 }
-			);
-		}
-
-		// Update the sub-account balance
-		account.balance += amount;
-		await account.save();
-
-		// Step 2: Fetch the main account for the user
+		// Fetch the main account
 		const mainAccount = await mainAccountModel.findOne({ userId });
-
 		if (!mainAccount) {
 			return NextResponse.json(
 				{ error: "Main account not found." },
@@ -61,31 +37,17 @@ export const POST = async (request: Request) => {
 			);
 		}
 
-		// Update main account total balance
-		mainAccount.totalBalance += amount;
-
-		// Check if the sub-account exists in the linkedAccounts array
-		const subAccountIndex = mainAccount.linkedAccounts.findIndex(
-			(account) => account.accountId.toString() === accountId
-		);
-
-		if (subAccountIndex !== -1) {
-			// Update the balance of the linked sub-account
-			mainAccount.linkedAccounts[subAccountIndex].balance += amount;
-		} else {
-			// Optional: Handle the case where the sub-account is not in linkedAccounts
-			mainAccount.linkedAccounts.push({
-				accountId: account._id,
-				accountName: account.accountName,
-				balance: account.balance,
-			});
+		// Fetch the sub-account
+		const account = await subAccountModel.findById(accountId);
+		if (!account) {
+			return NextResponse.json(
+				{ error: "Account not found." },
+				{ status: 404 }
+			);
 		}
 
-		// Save the updated main account
-		await mainAccount.save();
-
-		// Step 3: Create a new income document
-		const newIncome = {
+		// Step 1: Add income to the database
+		const newIncome = await incomeModel.create({
 			userId,
 			accountId,
 			category,
@@ -94,24 +56,45 @@ export const POST = async (request: Request) => {
 			attachment,
 			repeat,
 			date,
-		};
+		});
 
-		// Save the income record to the database
-		const savedIncome = await incomeModel.create(newIncome);
+		// Step 2: Update the sub-account balance
+		account.balance += amount;
+		await account.save();
+
+		// Step 3: Update the main account balance and total income
+		mainAccount.totalBalance += amount;
+		mainAccount.totalIncome += amount;
+
+		// Update sub-account in linked accounts of the main account
+		const linkedAccount = mainAccount.linkedAccounts.find(
+			(account) => account.accountId.toString() === accountId
+		);
+		if (linkedAccount) {
+			linkedAccount.balance += amount;
+		}
+		await mainAccount.save();
+
+		// Step 4: Log the transaction
+		await transactionModel.create({
+			userId,
+			accountId,
+			type: "income",
+			amount,
+			category,
+			description,
+			date,
+		});
 
 		return NextResponse.json(
 			{
-				message: "Income record created successfully and accounts updated.",
-				income: savedIncome,
-				mainAccount,
+				message: "Income added successfully and transaction logged.",
+				income: newIncome,
 			},
 			{ status: 201 }
 		);
 	} catch (error) {
-		console.error("Error creating income record:", error);
-		return NextResponse.json(
-			{ error: error.message || "Internal Server Error" },
-			{ status: 500 }
-		);
+		console.error("Error adding income:", error);
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 };
