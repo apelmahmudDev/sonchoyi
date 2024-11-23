@@ -14,7 +14,7 @@ export default function AddAccountPage() {
 		e.preventDefault();
 		// Handle form submission logic here
 		console.log({ accountName, accountType, balance, bankName });
-		router.push("/dashboard");
+		// router.push("/dashboard");
 	};
 
 	return (
