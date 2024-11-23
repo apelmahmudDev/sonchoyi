@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import bg from "@/assets/images/banner-bg.png";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const carouselData = [
 	{
@@ -50,8 +51,12 @@ const Carousel = () => {
 									<div className="progressbar"></div>
 								</div>
 								<div className="mt-10 flex gap-4">
-									<Button>Login</Button>
-									<Button>Sign Up</Button>
+									<Link href="/login">
+										<Button>Login</Button>
+									</Link>
+									<Link href="/signup">
+										<Button>Sign Up</Button>
+									</Link>
 								</div>
 							</div>
 							<div className="place-content-center">
