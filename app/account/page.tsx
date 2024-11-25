@@ -21,12 +21,16 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import WaveChart from "@/components/WaveChart";
+import { getMainAccountByUserId, getUserByEmail } from "@/database/queries";
 
 export default async function YourAccountPage() {
 	const session = await auth();
 	if (!session) {
 		redirect("/login");
 	}
+
+	const user = await getUserByEmail(session?.user?.email as string);
+	const mainAccount = await getMainAccountByUserId(user?.id as string);
 
 	return (
 		<>
@@ -35,7 +39,7 @@ export default async function YourAccountPage() {
 				<div className="flex justify-between items-center mb-6">
 					{/* avatar / user image */}
 					<Link href="/profile">
-						<Avatar source={AvatarImg} />
+						<Avatar source={session?.user?.image} />
 					</Link>
 					{/* select field of month */}
 					<div className="flex-shrink-0 text-center">
@@ -69,7 +73,9 @@ export default async function YourAccountPage() {
 				{/* account balance */}
 				<div className="text-center mb-[27px]">
 					<p className="text-[#91919F] text-lg font-medium">Account balance</p>
-					<p className="text-[#161719] text-[40px] font-semibold">$4000</p>
+					<p className="text-[#161719] text-[40px] font-semibold">
+						${mainAccount?.totalBalance}
+					</p>
 				</div>
 				{/* income/expense */}
 				<div className="flex justify-between gap-4">
@@ -80,7 +86,9 @@ export default async function YourAccountPage() {
 						</div>
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Income</p>
-							<p className="text-[#FCFCFC] text-[22px] font-semibold">$5000</p>
+							<p className="text-[#FCFCFC] text-[22px] font-semibold">
+								${mainAccount?.totalIncome}
+							</p>
 						</div>
 					</div>
 
@@ -91,7 +99,9 @@ export default async function YourAccountPage() {
 						</div>
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Expenses</p>
-							<p className="text-[#FCFCFC] text-[22px] font-semibold">$2000</p>
+							<p className="text-[#FCFCFC] text-[22px] font-semibold">
+								${mainAccount?.totalExpense}
+							</p>
 						</div>
 					</div>
 				</div>

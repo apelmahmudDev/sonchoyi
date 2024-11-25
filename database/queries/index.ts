@@ -1,7 +1,8 @@
 import { userModel } from "@/models/user-model";
 import { mainAccountModel } from "@/models/main-account";
-import { replaceMongoIdInObject } from "@/lib/data-util";
+import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/data-util";
 import { ObjectId } from "mongodb";
+import { transactionModel } from "@/models/transactions-model";
 
 export async function getUserByEmail(email: string) {
 	const users = await userModel.find({ email: email }).lean();
@@ -21,5 +22,17 @@ export async function getMainAccountByUserId(userId: string) {
 		}
 	} catch (error) {
 		console.error("Error fetching main account:", error);
+	}
+}
+
+export async function getTransactionsByUserId(userId: string) {
+	try {
+		const userIdObj = new ObjectId(userId);
+		const transactions = await transactionModel
+			.find({ userId: userIdObj })
+			.lean();
+		return replaceMongoIdInArray(transactions);
+	} catch (error) {
+		console.error("Error fetching transactions:", error);
 	}
 }
