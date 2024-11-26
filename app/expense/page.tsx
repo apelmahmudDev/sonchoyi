@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 export default function ExpensePage() {
 	const router = useRouter();
 
-	// go back to previous page
 	const handleNavigateBack = () => {
 		router.push("/account");
 	};

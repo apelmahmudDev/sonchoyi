@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
-import BottomNavigation from "@/components/common/BottomNavigation";
-import { ExportUploadIcon, SettingsIcon, WalletIcon } from "@/components/icon";
-import Logout from "@/components/Logout";
-import User from "@/components/User";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ExportUploadIcon, SettingsIcon, WalletIcon } from "@/components/icon";
+import BottomNavigation from "@/components/common/BottomNavigation";
+import Logout from "@/components/Logout";
+import User from "@/components/User";
 
 export default async function ProfilePage() {
 	const session = await auth();

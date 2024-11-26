@@ -11,12 +11,31 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function IncomePage() {
 	const router = useRouter();
+	const [incomeInfo, setIncomeInfo] = useState(null);
 
 	const handleNavigateBack = () => {
 		router.push("/account");
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		fetch("/api/income", {
+			method: "POST",
+			body: JSON.stringify(incomeInfo),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((res) => {
+				console.log(res);
+				router.push("/account");
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
 	};
 
 	return (
@@ -50,10 +69,19 @@ export default function IncomePage() {
 
 			{/* settings options */}
 			<div className="flex-1 bg-white p-4 relative -top-5 rounded-t-2xl">
-				<form action="">
+				<form onSubmit={handleSubmit}>
 					{/* select - income category */}
-					<Select>
-						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+					<Select
+						onValueChange={(value) =>
+							setIncomeInfo((prev) => ({ ...prev, category: value }))
+						}
+					>
+						<SelectTrigger
+							onChange={() => {
+								console.log("click");
+							}}
+							className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none"
+						>
 							<SelectValue placeholder="Category" />
 						</SelectTrigger>
 						<SelectContent className="h-[200px]">
@@ -73,12 +101,22 @@ export default function IncomePage() {
 						</SelectContent>
 					</Select>
 					<Input
+						onChange={(e) =>
+							setIncomeInfo((prev) => ({
+								...prev,
+								description: e.target.value,
+							}))
+						}
 						placeholder="Description"
 						className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none mt-4"
 					/>
 					{/* select - account type*/}
 					<div className="mt-4">
-						<Select>
+						<Select
+							onValueChange={(value) =>
+								setIncomeInfo((prev) => ({ ...prev, type: value }))
+							}
+						>
 							<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
 								<SelectValue placeholder="Account" />
 							</SelectTrigger>
