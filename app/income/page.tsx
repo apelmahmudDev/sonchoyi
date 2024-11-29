@@ -1,4 +1,5 @@
 "use client";
+import { auth } from "@/auth";
 import { ArrowLeftIcon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,8 +16,8 @@ import { useState } from "react";
 
 export default function IncomePage() {
 	const router = useRouter();
+	const session = auth();
 	const [incomeInfo, setIncomeInfo] = useState(null);
-
 	const handleNavigateBack = () => {
 		router.push("/account");
 	};

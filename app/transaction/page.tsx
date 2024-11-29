@@ -1,10 +1,10 @@
 import {
 	Select,
-	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectTrigger,
 	SelectValue,
+	SelectTrigger,
+	SelectContent,
 } from "@/components/ui/select";
 import BottomNavigation from "@/components/common/BottomNavigation";
 import {

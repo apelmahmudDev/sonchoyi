@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import localFont from "next/font/local";
 import { connectToDatabase } from "@/service/mongo";
 
 const geistSans = localFont({
