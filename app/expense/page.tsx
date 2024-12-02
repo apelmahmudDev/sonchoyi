@@ -1,5 +1,5 @@
-"use client";
-import { ArrowLeftIcon } from "@/components/icon";
+import { auth } from "@/auth";
+import BackToAccount from "@/components/BackToAccount";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,23 +10,51 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
 
-export default function ExpensePage() {
-	const router = useRouter();
+export default async function ExpensePage() {
+	const session = await auth();
+	const user = await getUserByEmail(session?.user?.email as string);
+	const subAccounts = await getSubAccountsByUserId(user?.id);
 
-	const handleNavigateBack = () => {
-		router.push("/account");
+	const addExpense = async (formData) => {
+		"use server";
+
+		const expenseData = {
+			userId: user?.id,
+			accountId: formData.get("accountId"),
+			category: formData.get("category"),
+			amount: parseFloat(formData.get("amount")),
+			description: formData.get("description"),
+		};
+
+		try {
+			const response = await fetch("http://localhost:3000/api/expense", {
+				method: "POST",
+				body: JSON.stringify(expenseData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				console.error("Error from server:", result.error);
+			} else {
+				console.log("Success:", result);
+			}
+		} catch (error) {
+			console.error("Network error:", error);
+		}
 	};
 
 	return (
-		<div className="flex flex-col p-0 h-screen">
+		<form action={addExpense} className="flex flex-col p-0 h-screen">
 			{/* how much amount to be add */}
 			<div className="bg-[#FD3C4A] px-4 pt-4 pb-8">
 				<div className="flex items-center mb-[60px]">
-					<button onClick={handleNavigateBack} className="text-white">
-						<ArrowLeftIcon />
-					</button>
+					<BackToAccount />
 					<p className="mx-auto text-center text-white text-lg font-semibold pr-8">
 						Expense
 					</p>
@@ -40,6 +68,7 @@ export default function ExpensePage() {
 							$
 						</label>
 						<Input
+							name="amount"
 							defaultValue="0"
 							type="number"
 							className="bg-transparent text-[#FCFCFC] text-[64px] font-semibold w-full min-w-200 focus:outline-none outline-none border-none p-1"
@@ -47,55 +76,56 @@ export default function ExpensePage() {
 					</div>
 				</div>
 			</div>
-
-			{/* settings options */}
 			<div className="flex-1 bg-white p-4 relative -top-5 rounded-t-2xl">
-				<form action="">
-					{/* category / should be multiple option select filed */}
-					<Select>
+				{/* category / should be multiple option select filed */}
+				<Select name="category">
+					<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+						<SelectValue placeholder="Category" />
+					</SelectTrigger>
+					<SelectContent className="h-[200px]">
+						<SelectGroup>
+							<SelectItem value="Food">Food</SelectItem>
+							<SelectItem value="Rent">Rent</SelectItem>
+							<SelectItem value="Utilities">Utilities</SelectItem>
+							<SelectItem value="Transportation">Transportation</SelectItem>
+							<SelectItem value="Entertainment">Entertainment</SelectItem>
+							<SelectItem value="Healthcare">Healthcare</SelectItem>
+							<SelectItem value="Education ">Education</SelectItem>
+							<SelectItem value="Shopping ">Shopping</SelectItem>
+							<SelectItem value="Travel ">Travel</SelectItem>
+							<SelectItem value="other">Other</SelectItem>
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+				<Input
+					name="description"
+					placeholder="Description"
+					className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none mt-4"
+				/>
+				{/* select - account type*/}
+				<div className="mt-4">
+					<Select name="accountId">
 						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
-							<SelectValue placeholder="Category" />
+							<SelectValue placeholder="Account" />
 						</SelectTrigger>
-						<SelectContent className="h-[200px]">
+						<SelectContent>
 							<SelectGroup>
-								<SelectItem value="subscription">Subscription</SelectItem>
-								<SelectItem value="food">Food</SelectItem>
-								<SelectItem value="transport">Transport</SelectItem>
-								<SelectItem value="shopping">Shopping</SelectItem>
-								<SelectItem value="health">Health</SelectItem>
-								<SelectItem value="entertainment">Entertainment</SelectItem>
-								<SelectItem value="education">Education</SelectItem>
-								<SelectItem value="others">Others</SelectItem>
+								{subAccounts?.map((account) => (
+									<SelectItem key={account?.id} value={account?.id}>
+										{account?.accountName}
+									</SelectItem>
+								))}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
-					<Input
-						placeholder="Description"
-						className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none mt-4"
-					/>
-					{/* select - account type*/}
-					<div className="mt-4">
-						<Select>
-							<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
-								<SelectValue placeholder="Account" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectItem value="cash">Cash</SelectItem>
-									<SelectItem value="bank">Bank</SelectItem>
-									<SelectItem value="credit">Credit</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-					</div>
-					<Button
-						type="submit"
-						className="w-full h-[56px] rounded-xl font-medium bg-[#7F3DFF] text-white mt-4"
-					>
-						Add Expense
-					</Button>
-				</form>
+				</div>
+				<Button
+					type="submit"
+					className="w-full h-[56px] rounded-xl font-medium bg-[#7F3DFF] text-white mt-4"
+				>
+					Add Expense
+				</Button>
 			</div>
-		</div>
+		</form>
 	);
 }
