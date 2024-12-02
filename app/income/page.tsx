@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { ArrowLeftIcon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,6 +10,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
+import BackToAccount from "./(components)/BackToAccount";
 
 export default async function IncomePage() {
 	const session = await auth();
@@ -54,12 +54,7 @@ export default async function IncomePage() {
 			{/* how much amount to be add */}
 			<div className="bg-[#00A86B] px-4 pt-4 pb-8">
 				<div className="flex items-center mb-[60px]">
-					<button
-						//  onClick={handleNavigateBack}
-						className="text-white"
-					>
-						<ArrowLeftIcon />
-					</button>
+					<BackToAccount />
 					<p className="mx-auto text-center text-white text-lg font-semibold pr-8">
 						Income
 					</p>
