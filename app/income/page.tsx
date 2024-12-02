@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import BackToAccount from "@/components/BackToAccount";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +11,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
-import BackToAccount from "./(components)/BackToAccount";
 
 export default async function IncomePage() {
 	const session = await auth();
