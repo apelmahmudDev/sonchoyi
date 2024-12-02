@@ -11,37 +11,11 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
-// import { useRouter } from "next/navigation";
-// import { useState } from "react";
 
 export default async function IncomePage() {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email as string);
 	const subAccounts = await getSubAccountsByUserId(user?.id);
-	// console.log(subAccounts);
-
-	// const router = useRouter();
-	// const [incomeInfo, setIncomeInfo] = useState(null);
-	// const handleNavigateBack = () => {
-	// 	router.push("/account");
-	// };
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	fetch("/api/income", {
-	// 		method: "POST",
-	// 		body: JSON.stringify(incomeInfo),
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	})
-	// 		.then((res) => {
-	// 			console.log(res);
-	// 			router.push("/account");
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 		});
-	// };
 
 	const addIncome = async (formData) => {
 		"use server";
@@ -50,27 +24,33 @@ export default async function IncomePage() {
 			userId: user?.id,
 			accountId: formData.get("accountId"),
 			category: formData.get("category"),
-			amount: formData.get("amount"),
+			amount: parseFloat(formData.get("amount")),
 			description: formData.get("description"),
 		};
 
-		const response = await fetch("/api/income", {
-			method: "POST",
-			body: JSON.stringify(incomeData),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		try {
+			const response = await fetch("http://localhost:3000/api/income", {
+				method: "POST",
+				body: JSON.stringify(incomeData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-		if (response.ok) {
-			router.push("/account");
-		} else {
-			console.error("Error:", response.statusText);
+			const result = await response.json();
+
+			if (!response.ok) {
+				console.error("Error from server:", result.error);
+			} else {
+				console.log("Success:", result);
+			}
+		} catch (error) {
+			console.error("Network error:", error);
 		}
 	};
 
 	return (
-		<form onSubmit={addIncome} className="flex flex-col p-0 h-screen">
+		<form action={addIncome} className="flex flex-col p-0 h-screen">
 			{/* how much amount to be add */}
 			<div className="bg-[#00A86B] px-4 pt-4 pb-8">
 				<div className="flex items-center mb-[60px]">
@@ -101,71 +81,41 @@ export default async function IncomePage() {
 					</div>
 				</div>
 			</div>
-
-			{/* settings options */}
 			<div className="flex-1 bg-white p-4 relative -top-5 rounded-t-2xl">
-				{/* <form action={handleSubmit}> */}
 				{/* select - income category */}
-				<Select
-					// onValueChange={(value) =>
-					// 	setIncomeInfo((prev) => ({ ...prev, category: value }))
-					// }
-					// onValueChange={(value) => console.log(value)}
-					name="category"
-				>
-					<SelectTrigger
-						// onChange={() => {
-						// 	console.log("click");
-						// }}
-						// onChange={(e) => console.log(e)}
-						// name="category"
-						className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none"
-					>
+				<Select name="category">
+					<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
 						<SelectValue placeholder="Category" />
 					</SelectTrigger>
 					<SelectContent className="h-[200px]">
 						<SelectGroup>
-							<SelectItem value="salary">Salary</SelectItem>
-							<SelectItem value="bonus">Bonus</SelectItem>
-							<SelectItem value="interest">Interest</SelectItem>
-							<SelectItem value="business">Business</SelectItem>
-							<SelectItem value="investments">Investments</SelectItem>
-							<SelectItem value="freelance">Freelance</SelectItem>
-							<SelectItem value="savings ">Savings</SelectItem>
-							<SelectItem value="pension ">Pension</SelectItem>
-							<SelectItem value="tutoring ">Tutoring</SelectItem>
-							<SelectItem value="selling ">Selling Goods</SelectItem>
+							<SelectItem value="Salary">Salary</SelectItem>
+							<SelectItem value="Bonus">Bonus</SelectItem>
+							<SelectItem value="Interest">Interest</SelectItem>
+							<SelectItem value="Business">Business</SelectItem>
+							<SelectItem value="Investments">Investments</SelectItem>
+							<SelectItem value="Freelance">Freelance</SelectItem>
+							<SelectItem value="Savings ">Savings</SelectItem>
+							<SelectItem value="Pension ">Pension</SelectItem>
+							<SelectItem value="Tutoring ">Tutoring</SelectItem>
+							<SelectItem value="Selling ">Selling Goods</SelectItem>
 							<SelectItem value="other">Other</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
 				<Input
-					// onChange={(e) =>
-					// 	setIncomeInfo((prev) => ({
-					// 		...prev,
-					// 		description: e.target.value,
-					// 	}))
-					// }
 					name="description"
 					placeholder="Description"
 					className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none mt-4"
 				/>
 				{/* select - account type*/}
 				<div className="mt-4">
-					<Select
-						// onValueChange={(value) =>
-						// 	setIncomeInfo((prev) => ({ ...prev, type: value }))
-						// }
-						name="accountId"
-					>
+					<Select name="accountId">
 						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
 							<SelectValue placeholder="Account" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								{/* <SelectItem value="cash">Cash</SelectItem>
-								<SelectItem value="bank">Bank</SelectItem>
-								<SelectItem value="credit">Credit</SelectItem> */}
 								{subAccounts?.map((account) => (
 									<SelectItem key={account?.id} value={account?.id}>
 										{account?.accountName}
@@ -181,7 +131,6 @@ export default async function IncomePage() {
 				>
 					Add Income
 				</Button>
-				{/* </form> */}
 			</div>
 		</form>
 	);
