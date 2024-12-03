@@ -1,102 +1,129 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { auth } from "@/auth";
+import BackToAccount from "@/components/BackToAccount";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { getUserByEmail } from "@/database/queries";
 
-export default function AddAccountPage() {
-	const router = useRouter();
-	const [balance, setBalance] = useState("");
-	const [bankName, setBankName] = useState("");
-	const [accountName, setAccountName] = useState("");
-	const [accountType, setAccountType] = useState("");
+const accounts = ["Bank", "Credit Card", "Cash", "Wallet"];
+const banks = ["IBBL", "DBBL", "Sonali Bank", "HSBC", "City Bank", "Other"];
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		// Handle form submission logic here
-		console.log({ accountName, accountType, balance, bankName });
-		// router.push("/dashboard");
+export default async function AddAccountPage() {
+	const session = await auth();
+	const user = await getUserByEmail(session?.user?.email as string);
+
+	const addAccount = async (formData) => {
+		"use server";
+		const accountData = {
+			userId: user?.id,
+			accountName: formData.get("accountName"),
+			accountType: formData.get("accountType"),
+			bankName: formData.get("bankName"),
+			balance: parseFloat(formData.get("balance")),
+		};
+
+		try {
+			const response = await fetch("http://localhost:3000/api/account", {
+				method: "POST",
+				body: JSON.stringify(accountData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				console.error("Error from server:", result.error);
+			} else {
+				console.log("Success:", result);
+			}
+		} catch (error) {
+			console.error("Network error:", error);
+		}
 	};
 
 	return (
-		<div className="p-4">
-			<h1 className="font-medium text-4xl my-5">Add New Account</h1>
-			<form onSubmit={handleSubmit}>
-				<div className="mb-4">
-					<label
-						className="block text-sm font-medium mb-2"
-						htmlFor="accountName"
-					>
-						Account Name
-					</label>
-					<input
-						type="text"
-						id="accountName"
-						value={accountName}
-						onChange={(e) => setAccountName(e.target.value)}
-						className="w-full p-2 border border-gray-300 rounded"
-						required
-					/>
+		<form action={addAccount} className="flex flex-col p-0 h-screen">
+			{/* how much amount to be add */}
+			<div className="bg-[#7F3DFF] px-4 pt-4 pb-8">
+				<div className="flex items-center mb-[60px]">
+					<BackToAccount />
+					<p className="mx-auto text-center text-white text-lg font-semibold pr-8">
+						Add new account
+					</p>
 				</div>
-				<div className="mb-4">
-					<label
-						className="block text-sm font-medium mb-2"
-						htmlFor="accountType"
-					>
-						Account Type
-					</label>
-					<select
-						id="accountType"
-						value={accountType}
-						onChange={(e) => setAccountType(e.target.value)}
-						className="w-full p-2 border border-gray-300 rounded"
-						required
-					>
-						<option value="">Select Account Type</option>
-						<option value="Bank">Bank</option>
-						<option value="Credit Card">Credit Card</option>
-						<option value="Wallet">Wallet</option>
-					</select>
-				</div>
-				{accountType === "Bank" && (
-					<div className="mb-4">
-						<label
-							className="block text-sm font-medium mb-2"
-							htmlFor="bankName"
-						>
-							Bank Name
-						</label>
-						<select
-							id="bankName"
-							value={bankName}
-							onChange={(e) => setBankName(e.target.value)}
-							className="w-full p-2 border border-gray-300 rounded"
-							required
-						>
-							<option value="">Select Bank Name</option>
-							<option value="Bank of America">Bank of America</option>
-							<option value="Chase">Chase</option>
-							<option value="Wells Fargo">Wells Fargo</option>
-							<option value="Citi">Citi</option>
-						</select>
-					</div>
-				)}
-				<div className="mb-4">
-					<label className="block text-sm font-medium mb-2" htmlFor="balance">
+				<div>
+					<p className="text-left text-[#fcb7bc] text-lg font-semibold mb-3">
 						Balance
-					</label>
-					<input
-						type="number"
-						id="balance"
-						value={balance}
-						onChange={(e) => setBalance(e.target.value)}
-						className="w-full p-2 border border-gray-300 rounded"
-						required
-					/>
+					</p>
+					<div className="flex items-center">
+						<label className="text-left text-[#FCFCFC] text-[64px] font-semibold">
+							$
+						</label>
+						<Input
+							name="balance"
+							defaultValue="0.00"
+							type="number"
+							className="bg-transparent text-[#FCFCFC] text-[64px] font-semibold w-full min-w-200 focus:outline-none outline-none border-none p-1"
+						/>
+					</div>
 				</div>
-				<Button type="submit" className="w-full">
-					Add Account
+			</div>
+			<div className="flex-1 bg-white p-4 relative -top-5 rounded-t-2xl">
+				<Input
+					name="accountName"
+					placeholder="Name"
+					className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none mt-4"
+				/>
+				{/* select - account type*/}
+				<div className="mt-4">
+					<Select name="accountType">
+						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+							<SelectValue placeholder="Account" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{accounts?.map((account) => (
+									<SelectItem key={account} value={account}>
+										{account}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+				{/* select - Bank*/}
+				<div className="mt-4">
+					<Select name="bankName">
+						<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+							<SelectValue placeholder="Bank" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								{banks?.map((bank) => (
+									<SelectItem key={bank} value={bank}>
+										{bank}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+				<Button
+					type="submit"
+					className="w-full h-[56px] rounded-xl font-medium bg-[#7F3DFF] text-white mt-4"
+				>
+					Continue
 				</Button>
-			</form>
-		</div>
+			</div>
+		</form>
 	);
 }
