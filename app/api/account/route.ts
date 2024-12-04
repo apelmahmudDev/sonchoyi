@@ -1,4 +1,3 @@
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "@/service/mongo";
@@ -7,9 +6,8 @@ import { subAccountModel } from "@/models/sub-account-model";
 import { incomeModel } from "@/models/income-model";
 import { transactionModel } from "@/models/transactions-model";
 
-export const POST = async (request: NextApiRequest) => {
+export const POST = async (request: Request) => {
 	try {
-		// Parse the request body
 		const {
 			userId,
 			accountName,
@@ -97,7 +95,14 @@ export const POST = async (request: NextApiRequest) => {
 			date: new Date(),
 		});
 
-		return new NextResponse("Account has been created", { status: 201 });
+		// return new NextResponse("Account has been created", { status: 201 });
+		return new NextResponse(
+			JSON.stringify({ message: "Account has been created" }),
+			{
+				status: 201,
+				headers: { "Content-Type": "application/json" },
+			}
+		);
 	} catch (error) {
 		console.error("Error:", error);
 		return new NextResponse(error.message, { status: 500 });
