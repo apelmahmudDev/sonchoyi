@@ -1,4 +1,6 @@
+import { EyeIcon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default async function IncomePage() {
 	return (
@@ -16,6 +18,24 @@ export default async function IncomePage() {
 					<Button variant="destructive">Destructive</Button>
 					<Button variant="link">Link</Button>
 					<Button variant="outline">Outline</Button>
+				</div>
+			</div>
+			<div>
+				<div className="mb-5">
+					<h1 className="mb-1 text-2xl font-semibold">Forms</h1>
+					<p>Building forms with React Hook Form and Zod.</p>
+				</div>
+				<div className="gap-4 flex flex-wrap">
+					<Input />
+					<Input placeholder="Input..." />
+					<Input
+						placeholder="Password"
+						endAdornment={
+							<button>
+								<EyeIcon />
+							</button>
+						}
+					/>
 				</div>
 			</div>
 			<div>

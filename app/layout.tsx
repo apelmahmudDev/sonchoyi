@@ -18,7 +18,7 @@ export default async function RootLayout({
 	await connectToDatabase();
 	return (
 		<html lang="en">
-			<body className={`${inter.className} light`}>{children}</body>
+			<body className={`${inter.className} dark`}>{children}</body>
 		</html>
 	);
 }

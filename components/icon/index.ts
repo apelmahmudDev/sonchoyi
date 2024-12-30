@@ -18,3 +18,5 @@ export { default as ExportUploadIcon } from "./ExportUploadIcon";
 export { default as LogoutIcon } from "./LogoutIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as WalletIcon } from "./WalletIcon";
+export { default as EyeIcon } from "./EyeIcon";
+export { default as EyeSlashIcon } from "./EyeSlashIcon";
