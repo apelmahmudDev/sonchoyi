@@ -21,6 +21,10 @@ const options: ApexOptions = {
 	grid: {
 		show: false,
 		borderColor: "#F4F4F4",
+		padding: {
+			left: -10,
+			right: 0,
+		},
 	},
 	fill: {
 		type: "gradient",
