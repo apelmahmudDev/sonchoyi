@@ -11,7 +11,7 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	({ className, type, endAdornment, ...props }, ref) => {
 		return endAdornment ? (
-			<div className="relative">
+			<div className="relative w-full">
 				<input
 					type={type}
 					className={cn(

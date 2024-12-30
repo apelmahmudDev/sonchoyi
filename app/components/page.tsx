@@ -29,6 +29,7 @@ export default async function IncomePage() {
 					<Input />
 					<Input placeholder="Input..." />
 					<Input
+						type="password"
 						placeholder="Password"
 						endAdornment={
 							<button>
