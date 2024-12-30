@@ -20,3 +20,4 @@ export { default as SettingsIcon } from "./SettingsIcon";
 export { default as WalletIcon } from "./WalletIcon";
 export { default as EyeIcon } from "./EyeIcon";
 export { default as EyeSlashIcon } from "./EyeSlashIcon";
+export { default as ArrowDownIcon } from "./ArrowDownIcon";
