@@ -138,9 +138,11 @@ export default async function YourAccountPage() {
 						<p className="font-semibold text-lg text-[#292B2D]">
 							Recent Transaction
 						</p>
-						<button className="bg-[#EEE5FF] px-6 py-2 font-medium text-sm text-[#7F3DFF] rounded-3xl">
-							Sell all
-						</button>
+						<Link href="/transaction">
+							<button className="bg-[#EEE5FF] px-6 py-2 font-medium text-sm text-[#7F3DFF] rounded-3xl">
+								Sell all
+							</button>
+						</Link>
 					</div>
 
 					{/* transaction list */}
