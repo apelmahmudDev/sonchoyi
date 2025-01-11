@@ -13,8 +13,18 @@ import {
 	ThreeLineIcon,
 } from "@/components/icon";
 import TransactionItem from "@/components/TransactionItem";
+import { auth } from "@/auth";
+import { getTransactionsByUserId, getUserByEmail } from "@/database/queries";
 
-export default function TransactionPage() {
+export default async function TransactionPage() {
+	const session = await auth();
+	if (!session) {
+		redirect("/login");
+	}
+
+	const user = await getUserByEmail(session?.user?.email as string);
+	const transactions = await getTransactionsByUserId(user?.id as string);
+
 	return (
 		<div className="p-4">
 			<div>
@@ -55,55 +65,19 @@ export default function TransactionPage() {
 				{/* transaction list */}
 				<div className="flex flex-col gap-4">
 					<div>
-						<h4 className="text-[#0D0E0F] text-lg font-semibold">Today</h4>
 						<div className="flex flex-col gap-2">
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={-120}
-								created="10:00 AM"
-							/>
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={-120}
-								created="10:00 AM"
-							/>
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={120}
-								created="10:00 AM"
-							/>
-						</div>
-					</div>
-					<div>
-						<h4 className="text-[#0D0E0F] text-lg font-semibold">Yesterday</h4>
-						<div className="flex flex-col gap-2">
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={-120}
-								created="10:00 AM"
-							/>
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={-120}
-								created="10:00 AM"
-							/>
-							<TransactionItem
-								icon={<ShoppingBagIcon />}
-								title="Shopping"
-								description="Buy some grocery"
-								amount={-120}
-								created="10:00 AM"
-							/>
+							{transactions?.map((transaction) => (
+								<TransactionItem
+									key={transaction?.id}
+									icon={<ShoppingBagIcon />}
+									title={transaction?.category}
+									description={transaction?.description}
+									amount={transaction?.amount}
+									created={new Date(
+										transaction?.date as string
+									).toLocaleTimeString()}
+								/>
+							))}
 						</div>
 					</div>
 				</div>

@@ -93,7 +93,7 @@ export default async function ExpensePage() {
 							<SelectItem value="Education ">Education</SelectItem>
 							<SelectItem value="Shopping ">Shopping</SelectItem>
 							<SelectItem value="Travel ">Travel</SelectItem>
-							<SelectItem value="other">Other</SelectItem>
+							<SelectItem value="Other">Other</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
