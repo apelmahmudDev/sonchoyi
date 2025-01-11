@@ -40,12 +40,12 @@ export default async function ExpensePage() {
 			const result = await response.json();
 
 			if (!response.ok) {
-				console.error("Error from server:", result.error);
+				throw new Error("Error from server:", result.error);
 			} else {
 				console.log("Success:", result);
 			}
 		} catch (error) {
-			console.error("Network error:", error);
+			throw new Error("Network error:", error);
 		}
 	};
 
