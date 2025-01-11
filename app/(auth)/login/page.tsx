@@ -12,7 +12,7 @@ export default function LoginPage() {
 	const [error, setError] = useState<string | null>(null);
 
 	const handleAuth = () => {
-		signIn("google", { callbackUrl: "http://localhost:3000/profile" });
+		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export default function LoginPage() {
 			if (!!response.error) {
 				setError(response.error?.message);
 			} else {
-				router.push("/profile");
+				router.push("/letsgo");
 			}
 		} catch (error) {
 			setError(error as string);

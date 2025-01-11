@@ -74,7 +74,7 @@ export default async function YourAccountPage() {
 				<div className="text-center mb-[27px]">
 					<p className="text-[#91919F] text-lg font-medium">Account balance</p>
 					<p className="text-[#161719] text-[40px] font-semibold">
-						${mainAccount?.totalBalance}
+						${mainAccount?.totalBalance || 0}
 					</p>
 				</div>
 				{/* income/expense */}
@@ -87,7 +87,7 @@ export default async function YourAccountPage() {
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Income</p>
 							<p className="text-[#FCFCFC] text-[22px] font-semibold">
-								${mainAccount?.totalIncome}
+								${mainAccount?.totalIncome || 0}
 							</p>
 						</div>
 					</div>
@@ -100,7 +100,7 @@ export default async function YourAccountPage() {
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Expenses</p>
 							<p className="text-[#FCFCFC] text-[22px] font-semibold">
-								${mainAccount?.totalExpense}
+								${mainAccount?.totalExpense || 0}
 							</p>
 						</div>
 					</div>
