@@ -8,7 +8,7 @@ const BackToAccount = () => {
 		router.push("/account");
 	};
 	return (
-		<button onClick={handleNavigateBack} className="text-white">
+		<button type="button" onClick={handleNavigateBack} className="text-white">
 			<ArrowLeftIcon />
 		</button>
 	);
