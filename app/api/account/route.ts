@@ -47,7 +47,7 @@ export const POST = async (request: Request) => {
 			await mainAccountModel.create({
 				userId: new ObjectId(userId),
 				totalBalance: balance,
-				totalIncome: 0,
+				totalIncome: balance,
 				totalExpense: 0,
 				currency,
 				linkedAccounts: [
