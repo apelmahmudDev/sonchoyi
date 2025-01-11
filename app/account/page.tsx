@@ -150,6 +150,7 @@ export default async function YourAccountPage() {
 								key={transaction?.id}
 								icon={<ShoppingBagIcon />}
 								title={transaction?.category}
+								type={transaction?.type}
 								description={transaction?.description}
 								amount={transaction?.amount}
 								created={new Date(
@@ -157,6 +158,12 @@ export default async function YourAccountPage() {
 								).toLocaleTimeString()}
 							/>
 						))}
+						{/* no transaction message */}
+						{transactions?.length === 0 && (
+							<div className="text-center text-[#91919F]">
+								Currently you don&apos;t have any transaction
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

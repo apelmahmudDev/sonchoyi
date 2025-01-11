@@ -71,6 +71,7 @@ export default async function TransactionPage() {
 									key={transaction?.id}
 									icon={<ShoppingBagIcon />}
 									title={transaction?.category}
+									type={transaction?.type}
 									description={transaction?.description}
 									amount={transaction?.amount}
 									created={new Date(

@@ -4,6 +4,7 @@ interface TransactionItemProps {
 	icon: React.ReactNode;
 	title: string;
 	description: string;
+	type: string;
 	amount: number;
 	created: string;
 }
@@ -11,6 +12,7 @@ interface TransactionItemProps {
 const TransactionItem: React.FC<TransactionItemProps> = ({
 	icon,
 	title,
+	type,
 	description,
 	amount,
 	created,
@@ -28,7 +30,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
 			</div>
 			<div className="text-right">
 				<p className="font-semibold text-base text-[#FD3C4A]">
-					{amount < 0 ? `- $${Math.abs(amount)}` : `$${amount}`}
+					{type === "expense" ? `- $${amount}` : `$${amount}`}
 				</p>
 				<p className="text-[#91919F] text-[14px] mt-1">{created}</p>
 			</div>

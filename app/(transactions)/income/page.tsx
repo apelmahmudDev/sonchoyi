@@ -94,7 +94,7 @@ export default async function IncomePage() {
 							<SelectItem value="Pension ">Pension</SelectItem>
 							<SelectItem value="Tutoring ">Tutoring</SelectItem>
 							<SelectItem value="Selling ">Selling Goods</SelectItem>
-							<SelectItem value="other">Other</SelectItem>
+							<SelectItem value="Other">Other</SelectItem>
 						</SelectGroup>
 					</SelectContent>
 				</Select>
