@@ -25,12 +25,14 @@ const BottomNavigation = () => {
 							<p className="mt-1 text-sm text-[#7F3DFF] font-medium">Home</p>
 						</div>
 					</Link>
-					<div className="flex flex-col items-center">
-						<TransactionIcon />
-						<p className="mt-1 text-sm text-[#C6C6C6] font-medium">
-							Transaction
-						</p>
-					</div>
+					<Link href="/transaction">
+						<div className="flex flex-col items-center">
+							<TransactionIcon />
+							<p className="mt-1 text-sm text-[#C6C6C6] font-medium">
+								Transaction
+							</p>
+						</div>
+					</Link>
 					<div className="relative bg-white bottom-5 p-2 rounded-full">
 						<button className="flex-shrink-0 bg-[#7F3DFF] h-[50px] w-[50px] flex items-center justify-center rounded-full shadow-sm group/options">
 							<div className="group-hover/options:rotate-45 transition">
