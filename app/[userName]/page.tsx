@@ -20,14 +20,14 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import WaveChart from "@/components/WaveChart";
-import { getMainAccountByUserId, getUserByEmail } from "@/database/queries";
+import {
+	getMainAccountByUserId,
+	getTransactionsByUserId,
+	getUserByEmail,
+} from "@/database/queries";
+import TransactionItem from "@/components/TransactionItem";
 
-export default async function UserAccountPage({
-	params,
-}: {
-	params: { userName: string };
-}) {
-	const { userName } = params;
+export default async function YourAccountPage() {
 	const session = await auth();
 	if (!session) {
 		redirect("/login");
@@ -35,6 +35,7 @@ export default async function UserAccountPage({
 
 	const user = await getUserByEmail(session?.user?.email as string);
 	const mainAccount = await getMainAccountByUserId(user?.id as string);
+	const transactions = await getTransactionsByUserId(user?.id as string);
 
 	return (
 		<>
@@ -78,7 +79,7 @@ export default async function UserAccountPage({
 				<div className="text-center mb-[27px]">
 					<p className="text-[#91919F] text-lg font-medium">Account balance</p>
 					<p className="text-[#161719] text-[40px] font-semibold">
-						${mainAccount?.totalBalance}
+						${mainAccount?.totalBalance || 0}
 					</p>
 				</div>
 				{/* income/expense */}
@@ -91,7 +92,7 @@ export default async function UserAccountPage({
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Income</p>
 							<p className="text-[#FCFCFC] text-[22px] font-semibold">
-								${mainAccount?.totalIncome}
+								${mainAccount?.totalIncome || 0}
 							</p>
 						</div>
 					</div>
@@ -104,7 +105,7 @@ export default async function UserAccountPage({
 						<div>
 							<p className="font-medium text-sm text-[#FCFCFC]">Expenses</p>
 							<p className="text-[#FCFCFC] text-[22px] font-semibold">
-								${mainAccount?.totalExpense}
+								${mainAccount?.totalExpense || 0}
 							</p>
 						</div>
 					</div>
@@ -136,49 +137,34 @@ export default async function UserAccountPage({
 						<p className="font-semibold text-lg text-[#292B2D]">
 							Recent Transaction
 						</p>
-						<button className="bg-[#EEE5FF] px-6 py-2 font-medium text-sm text-[#7F3DFF] rounded-3xl">
-							Sell all
-						</button>
+						<Link href="/transaction">
+							<button className="bg-[#EEE5FF] px-6 py-2 font-medium text-sm text-[#7F3DFF] rounded-3xl">
+								Sell all
+							</button>
+						</Link>
 					</div>
 
 					{/* transaction list */}
-					<div className="mt-4 flex flex-col gap-2">
-						<div className="flex items-center justify-between bg-[#FCFCFC] py-[14px] px-4 rounded-3xl">
-							<div className="flex items-center gap-4">
-								<div className="flex items-center justify-center h-[48px] w-[48px] bg-[#FCEED4] rounded-2xl">
-									<ShoppingBagIcon />
-								</div>
-								<div>
-									<p className="font-medium text-base text-[#292B2D]">
-										Shopping
-									</p>
-									<p className="text-[#91919F] text-[14px] mt-1">
-										Buy some grocery
-									</p>
-								</div>
+					<div className="mt-4 flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+						{transactions?.map((transaction) => (
+							<TransactionItem
+								key={transaction?.id}
+								icon={<ShoppingBagIcon />}
+								title={transaction?.category}
+								type={transaction?.type}
+								description={transaction?.description}
+								amount={transaction?.amount}
+								created={new Date(
+									transaction?.date as string
+								).toLocaleTimeString()}
+							/>
+						))}
+						{/* no transaction message */}
+						{transactions?.length === 0 && (
+							<div className="text-center text-[#91919F]">
+								Currently you don&apos;t have any transaction
 							</div>
-							<div className="text-right">
-								<p className="font-semibold text-base text-[#FD3C4A]">
-									- $5000
-								</p>
-								<p className="text-[#91919F] text-[14px] mt-1">10:00 AM</p>
-							</div>
-						</div>
-						<div className="flex items-center justify-between bg-[#FCFCFC] py-[14px] px-4 rounded-3xl">
-							<div className="flex items-center gap-4">
-								<div className="flex items-center justify-center h-[48px] w-[48px] bg-[#FCEED4] rounded-2xl">
-									<ShoppingBagIcon />
-								</div>
-								<div>
-									<p className="font-medium text-base text-[#292B2D]">Food</p>
-									<p className="text-[#91919F] text-[14px] mt-1">Buy a pizza</p>
-								</div>
-							</div>
-							<div className="text-right">
-								<p className="font-semibold text-base text-[#FD3C4A]">- $120</p>
-								<p className="text-[#91919F] text-[14px] mt-1">10:00 AM</p>
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>
