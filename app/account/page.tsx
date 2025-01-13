@@ -1,20 +1,24 @@
+import Link from "next/link";
+import Image from "next/image";
+import Account from "@/components/Account";
+import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "@/components/icon";
+import MiddleBg from "@/assets/images/background/account-middle-bg.svg";
 import CornerLargeBg from "@/assets/images/background/account-r-corner-lg-bg.svg";
 import CornerSmallBg from "@/assets/images/background/account-r-corner-sm-bg.svg";
 import LeftCornerLgBg from "@/assets/images/background/account-l-corner-lg-bg.svg";
 import LeftCornerSmBg from "@/assets/images/background/account-l-corner-sm-bg.svg";
-import MiddleBg from "@/assets/images/background/account-middle-bg.svg";
-import Image from "next/image";
-import Account from "@/components/Account";
 
 export default async function AccountPage() {
 	return (
-		<div className="p-0">
-			<div className="pt-4 pb-8">
+		<div className="h-screen p-0">
+			<div className="h-full border flex flex-col pt-4 pb-8">
 				<div className="px-4 flex items-center mb-[60px]">
-					<button type="button" className="text-white">
-						<ArrowLeftIcon color="#212325" />
-					</button>
+					<Link href="/username">
+						<button type="button" className="text-white">
+							<ArrowLeftIcon color="#212325" />
+						</button>
+					</Link>
 					<p className="mx-auto text-center text-[#212325] text-lg font-semibold pr-8">
 						Account
 					</p>
@@ -57,6 +61,12 @@ export default async function AccountPage() {
 					<Account accountName="Wallet" ballance={400} />
 					<Account accountName="IBBL" ballance={1000} />
 					<Account accountName="Nuha Savings" ballance={2000} />
+				</div>
+
+				<div className="mt-auto mx-auto rounded-2xl">
+					<Link href="/account/add">
+						<Button>Add new wallet</Button>
+					</Link>
 				</div>
 			</div>
 		</div>
