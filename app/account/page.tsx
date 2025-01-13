@@ -19,7 +19,6 @@ export default async function AccountPage() {
 						Account
 					</p>
 				</div>
-
 				<div className="relative h-[162px]">
 					<Image
 						className="absolute -top-12 left-4"
@@ -55,9 +54,9 @@ export default async function AccountPage() {
 				</div>
 
 				<div className="">
-					<Account accountName="Wallet" ballance="400" />
-					<Account accountName="IBBL" ballance="1000" />
-					<Account accountName="Nuha Savings" ballance="2000" />
+					<Account accountName="Wallet" ballance={400} />
+					<Account accountName="IBBL" ballance={1000} />
+					<Account accountName="Nuha Savings" ballance={2000} />
 				</div>
 			</div>
 		</div>
