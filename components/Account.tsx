@@ -2,10 +2,10 @@ import { WalletIcon } from "./icon";
 
 interface AccountProps {
 	accountName: string;
-	ballance: number;
+	balance: number;
 }
 
-const Account: React.FC<AccountProps> = ({ accountName, ballance }) => {
+const Account: React.FC<AccountProps> = ({ accountName, balance }) => {
 	return (
 		<div className="px-4 flex items-center gap-2 justify-between border-[#f5f5f5] border-b h-[80px]">
 			<div className="flex items-center gap-2">
@@ -14,7 +14,7 @@ const Account: React.FC<AccountProps> = ({ accountName, ballance }) => {
 				</div>
 				<p className="font-semibold text-lg text-black">{accountName}</p>
 			</div>
-			<p className="font-semibold text-lg text-black">${ballance}</p>
+			<p className="font-semibold text-lg text-black">${balance}</p>
 		</div>
 	);
 };

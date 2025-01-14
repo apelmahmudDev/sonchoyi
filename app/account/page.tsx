@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import Account from "@/components/Account";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "@/components/icon";
@@ -8,8 +10,22 @@ import CornerLargeBg from "@/assets/images/background/account-r-corner-lg-bg.svg
 import CornerSmallBg from "@/assets/images/background/account-r-corner-sm-bg.svg";
 import LeftCornerLgBg from "@/assets/images/background/account-l-corner-lg-bg.svg";
 import LeftCornerSmBg from "@/assets/images/background/account-l-corner-sm-bg.svg";
+import {
+	getMainAccountByUserId,
+	getSubAccountsByUserId,
+	getUserByEmail,
+} from "@/database/queries";
 
 export default async function AccountPage() {
+	const session = await auth();
+	if (!session) {
+		redirect("/login");
+	}
+
+	const user = await getUserByEmail(session?.user?.email as string);
+	const subAccounts = await getSubAccountsByUserId(user?.id as string);
+	const mainAccount = await getMainAccountByUserId(user?.id as string);
+
 	return (
 		<div className="h-screen p-0">
 			<div className="h-full border flex flex-col pt-4 pb-8">
@@ -38,7 +54,7 @@ export default async function AccountPage() {
 						Account Balance
 					</p>
 					<p className="text-center text-[#161719] text-[40px] font-semibold">
-						$9400
+						${mainAccount?.totalBalance || 0}
 					</p>
 					<Image
 						className="absolute -bottom-10 right-1/2"
@@ -58,9 +74,13 @@ export default async function AccountPage() {
 				</div>
 
 				<div className="">
-					<Account accountName="Wallet" ballance={400} />
-					<Account accountName="IBBL" ballance={1000} />
-					<Account accountName="Nuha Savings" ballance={2000} />
+					{subAccounts.map((acc) => (
+						<Account
+							key={acc?.id}
+							accountName={acc?.accountName}
+							balance={acc?.balance}
+						/>
+					))}
 				</div>
 
 				<div className="mt-auto mx-auto rounded-2xl">
