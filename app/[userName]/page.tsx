@@ -161,8 +161,8 @@ export default async function YourAccountPage() {
 						))}
 						{/* no transaction message */}
 						{transactions?.length === 0 && (
-							<div className="text-center text-[#91919F]">
-								Currently you don&apos;t have any transaction
+							<div className="my-10 text-center text-[#91919F]">
+								Currently you don&apos;t have any transaction!
 							</div>
 						)}
 					</div>
