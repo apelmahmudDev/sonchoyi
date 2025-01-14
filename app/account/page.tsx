@@ -97,7 +97,23 @@ export default async function AccountPage() {
 
 				<div className="mt-auto mx-auto rounded-2xl">
 					<Link href="/account/add">
-						<Button>Add account</Button>
+						<Button>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M12 4.5v15m7.5-7.5h-15"
+								/>
+							</svg>
+							Add account
+						</Button>
 					</Link>
 				</div>
 			</div>
