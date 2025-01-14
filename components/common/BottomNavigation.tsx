@@ -19,7 +19,7 @@ const BottomNavigation = () => {
 			<div className="h-[79px] w-full"></div>
 			<div className="d w-full fixed bottom-0 h-[79px] bg-[#FCFCFC] rounded-t-2xl px-4">
 				<div className="flex justify-around items-center h-full">
-					<Link href="/account">
+					<Link href="/username">
 						<div className="flex flex-col items-center">
 							<HomeIcon />
 							<p className="mt-1 text-sm text-[#7F3DFF] font-medium">Home</p>
