@@ -81,11 +81,23 @@ export default async function AccountPage() {
 							balance={acc?.balance}
 						/>
 					))}
+					{/* no account message */}
+					{subAccounts?.length === 0 && (
+						<div className="px-4">
+							<p className="mb-3 text-center text-[#91919F] font-semibold font-base">
+								No Accounts Found!
+							</p>
+							<p className="max-w-sm mx-auto text-center text-[#91919F]">
+								Create your first account to view your balance and manage your
+								finances. Click “Add Account” to get started! 🚀
+							</p>
+						</div>
+					)}
 				</div>
 
 				<div className="mt-auto mx-auto rounded-2xl">
 					<Link href="/account/add">
-						<Button>Add new wallet</Button>
+						<Button>Add account</Button>
 					</Link>
 				</div>
 			</div>
