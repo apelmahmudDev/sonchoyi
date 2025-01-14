@@ -88,8 +88,7 @@ export default async function AccountPage() {
 								No Accounts Found!
 							</p>
 							<p className="max-w-sm mx-auto text-center text-[#91919F]">
-								Create your first account to view your balance and manage your
-								finances. Click “Add Account” to get started! 🚀
+								Click “Add Account” to get started! 🚀
 							</p>
 						</div>
 					)}

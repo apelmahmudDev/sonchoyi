@@ -4,6 +4,6 @@ import { Carousel } from "@/components/home";
 
 export default async function Home() {
 	const session = await auth();
-	if (session?.user) return redirect("/account");
+	if (session?.user) return redirect("/username");
 	return <Carousel />;
 }
