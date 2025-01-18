@@ -16,7 +16,7 @@ const subAccountSchema = new Schema(
 		accountType: {
 			type: String,
 			required: true,
-			enum: ["Bank", "Credit Card", "Cash", "Wallet"], // Define account types
+			enum: ["Bank", "Credit Card", "Cash", "Digital Wallet", "Savings"], // Define account types
 		},
 		bankName: {
 			type: String, // Only applicable if accountType is "Bank"
