@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { auth } from "@/auth";
 import BackToAccount from "@/components/BackToAccount";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,12 +20,11 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { getUserByEmail } from "@/database/queries";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 // Reusable constants
 const accountTypes = [
@@ -44,75 +43,37 @@ const bankNames = [
 	"Other",
 ] as const;
 
-const formSchema = z
-	.object({
-		accountName: z
-			.string()
-			.nonempty({ message: "Wallet name is required." })
-			.min(3, { message: "Account name must be at least 3 characters." })
-			.max(100, { message: "Account name cannot exceed 100 characters." }),
-		accountType: z
-			.string()
-			.nonempty({ message: "Account type is required." })
-			.refine(
-				(value) =>
-					["Bank", "Credit Card", "Cash", "Digital Wallet", "Savings"].includes(
-						value
-					),
-				{ message: "Invalid account type." }
-			),
-		bankName: z.string().optional(), // Make bankName optional by default
-		// balance: z.number().min(0, { message: "Balance cannot be negative." }),
-		balance: z.preprocess((value) => {
-			const numValue = parseFloat(value);
-			return isNaN(numValue) ? undefined : numValue;
-		}, z.number().min(0, { message: "Balance must be a positive number." })),
-	})
-	.refine(
-		(data) => {
-			if (data.accountType === "Bank") {
-				return !!data.bankName; // Ensure bankName is provided when accountType is "Bank"
-			}
-			return true; // Pass validation for other account types
-		},
+const formSchema = z.object({
+	accountName: z
+		.string()
+		.nonempty({ message: "Wallet name is required." })
+		.min(3, { message: "Account name must be at least 3 characters." })
+		.max(100, { message: "Account name cannot exceed 100 characters." }),
+	accountType: z.enum(
+		["Bank", "Credit Card", "Cash", "Digital Wallet", "Savings"],
 		{
-			message: "Bank name is required when account type is 'Bank'.",
-			path: ["bankName"], // Error will appear on the `bankName` field
+			message: "Account type must be one of the predefined types.",
 		}
-	)
-	.transform((data) => {
-		// Remove bankName if accountType is not "Bank"
-		if (data.accountType !== "Bank") {
-			delete data.bankName;
-		}
-		return data;
-	});
+	),
+	bankName: z
+		.string()
+		.optional()
+		.refine(
+			(value) =>
+				!value ||
+				["IBBL", "DBBL", "Sonali Bank", "HSBC", "City Bank", "Other"].includes(
+					value
+				),
+			{
+				message: "Bank name must be a valid option if provided.",
+			}
+		),
+	balance: z.number().min(0, { message: "Balance cannot be negative." }),
+});
 
 export default function AddAccountPage() {
-	const { data: session } = useSession();
-	const [user, setUser] = useState(null);
-
-	useEffect(() => {
-		async function fetchUser() {
-			if (session?.user?.email) {
-				try {
-					const response = await fetch(
-						`/api/user?email=${session?.user?.email}`
-					);
-					if (response.ok) {
-						const user = await response.json();
-						setUser(user);
-					} else {
-						const error = await response.text();
-						throw new Error(error);
-					}
-				} catch (error) {
-					console.log("error", error);
-				}
-			}
-		}
-		fetchUser();
-	}, [session?.user?.email]);
+	// const session = await auth();
+	// const user = await getUserByEmail(session?.user?.email as string);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -121,33 +82,51 @@ export default function AddAccountPage() {
 		},
 	});
 
+	// const addAccount = async (formData) => {
+	// 	// "use server";
+	// 	const accountData = {
+	// 		userId: user?.id,
+	// 		accountName: formData.get("accountName"),
+	// 		accountType: formData.get("accountType"),
+	// 		bankName: formData.get("bankName"),
+	// 		balance: parseFloat(formData.get("balance")),
+	// 	};
+
+	// 	try {
+	// 		const response = await fetch("http://localhost:3000/api/account", {
+	// 			method: "POST",
+	// 			body: JSON.stringify(accountData),
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 		});
+
+	// 		const result = await response.json();
+
+	// 		if (!response.ok) {
+	// 			console.error("Error from server:", result.error);
+	// 		} else {
+	// 			console.log("Success:", result);
+	// 		}
+	// 	} catch (error) {
+	// 		console.error("Network error:", error);
+	// 	}
+	// };
 	async function addAccount(values: z.infer<typeof formSchema>) {
-		try {
-			const accountData = {
-				userId: user?._id,
-				accountName: values?.accountName,
-				accountType: values?.accountType,
-				bankName: values?.bankName,
-				balance: values?.balance,
-			};
-			const response = await fetch("http://localhost:3000/api/account", {
-				method: "POST",
-				body: JSON.stringify(accountData),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-
-			const result = await response.json();
-
-			if (!response.ok) {
-				console.error("Error from server:", result.error);
-			} else {
-				toast.success(result?.message);
-			}
-		} catch (error) {
-			console.error("Network error:", error);
-		}
+		console.log("values", values);
+		// try {
+		// 	const response = await login({
+		// 		email: values.email,
+		// 		password: values.password,
+		// 	});
+		// 	if (!!response.error) {
+		// 		setError(response.error?.message);
+		// 	} else {
+		// 		router.push("/letsgo");
+		// 	}
+		// } catch (error) {
+		// 	setError(error as string);
+		// }
 	}
 	return (
 		<Form {...form}>
@@ -180,7 +159,6 @@ export default function AddAccountPage() {
 											<FormControl>
 												<Input
 													{...field}
-													type="number"
 													placeholder="0.00"
 													className="bg-transparent text-[#FCFCFC] text-[64px] font-semibold w-full min-w-200 focus:outline-none outline-none border-none p-1"
 												/>
@@ -212,6 +190,20 @@ export default function AddAccountPage() {
 					/>
 					{/* select - account type*/}
 					<div className="mt-4">
+						{/* <Select name="accountType">
+							<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+								<SelectValue placeholder="Account Type" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									{accountTypes?.map((account) => (
+										<SelectItem key={account} value={account}>
+											{account}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select> */}
 						<FormField
 							control={form.control}
 							name="accountType"
@@ -243,6 +235,31 @@ export default function AddAccountPage() {
 					</div>
 					{/* select - Bank*/}
 					<div className="mt-4">
+						{/* <Select name="bankName">
+							<SelectTrigger className="w-full h-[56px] rounded-xl font-medium border-[#F1F1FA] shadow-none">
+								<SelectValue placeholder="Bank" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									{bankNames?.map((bank) => (
+										<SelectItem key={bank} value={bank}>
+											{bank}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select> */}
+						{/* <div className="mt-2">
+							<p className="text-black font-medium font-base mb-2">Bank</p>
+							<div className="flex gap-2 flex-wrap">
+								<Bank bankIcon={<span>IBBL</span>} />
+								<Bank bankIcon={<span>DBBL</span>} />
+								<Bank bankIcon={<span>Sonali Bank</span>} />
+								<Bank bankIcon={<span>HSBC</span>} />
+								<Bank bankIcon={<span>City Bank</span>} />
+								<Bank bankIcon={<span>Other</span>} />
+							</div>
+						</div> */}
 						{/* Render Bank Selection if accountType is "Bank" */}
 						{form.watch("accountType") === "Bank" && (
 							<FormField
