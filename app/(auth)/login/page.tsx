@@ -48,7 +48,7 @@ export default function LoginPage() {
 				password: values.password,
 			});
 			if (!!response.error) {
-				setError(response.error?.message);
+				setError(response?.error);
 			} else {
 				router.push("/letsgo");
 			}
