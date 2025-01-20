@@ -47,12 +47,16 @@ const bankNames = [
 const formSchema = z
 	.object({
 		accountName: z
-			.string()
+			.string({
+				required_error: "Wallet name is required.",
+			})
 			.nonempty({ message: "Wallet name is required." })
 			.min(3, { message: "Account name must be at least 3 characters." })
-			.max(100, { message: "Account name cannot exceed 100 characters." }),
+			.max(30, { message: "Account name cannot exceed 30 characters." }),
 		accountType: z
-			.string()
+			.string({
+				required_error: "Account type is required.",
+			})
 			.nonempty({ message: "Account type is required." })
 			.refine(
 				(value) =>
@@ -61,12 +65,18 @@ const formSchema = z
 					),
 				{ message: "Invalid account type." }
 			),
-		bankName: z.string().optional(), // Make bankName optional by default
-		// balance: z.number().min(0, { message: "Balance cannot be negative." }),
-		balance: z.preprocess((value) => {
-			const numValue = parseFloat(value);
-			return isNaN(numValue) ? undefined : numValue;
-		}, z.number().min(0, { message: "Balance must be a positive number." })),
+		bankName: z.string().optional(),
+		balance: z.preprocess(
+			(value) => {
+				const numValue = parseFloat(value);
+				return isNaN(numValue) ? undefined : numValue;
+			},
+			z
+				.number({
+					required_error: "Balance is required.",
+				})
+				.min(0, { message: "Balance must be a positive number." })
+		),
 	})
 	.refine(
 		(data) => {
@@ -103,11 +113,18 @@ export default function AddAccountPage() {
 						const user = await response.json();
 						setUser(user);
 					} else {
-						const error = await response.text();
-						throw new Error(error);
+						const errorText = await response.text();
+						throw new Error(`API Error: ${errorText}`);
 					}
 				} catch (error) {
-					console.log("error", error);
+					// API or network error
+					if (error instanceof Error) {
+						throw new Error(`Caught error: ${error.message}`);
+					} else {
+						throw new Error(
+							"An unexpected error occurred. Please try again later."
+						);
+					}
 				}
 			}
 		}
@@ -141,14 +158,21 @@ export default function AddAccountPage() {
 			const result = await response.json();
 
 			if (!response.ok) {
-				console.error("Error from server:", result.error);
+				toast.error(result?.message);
 			} else {
 				toast.success(result?.message);
 			}
 		} catch (error) {
-			console.error("Network error:", error);
+			if (error instanceof Error) {
+				throw new Error(`Caught error: ${error.message}`);
+			} else {
+				throw new Error(
+					"An unexpected error occurred. Please try again later."
+				);
+			}
 		}
 	}
+
 	return (
 		<Form {...form}>
 			<form
@@ -182,7 +206,7 @@ export default function AddAccountPage() {
 													{...field}
 													type="number"
 													placeholder="0.00"
-													className="bg-transparent text-[#FCFCFC] text-[64px] font-semibold w-full min-w-200 focus:outline-none outline-none border-none p-1"
+													className="bg-transparent text-[#FCFCFC] text-[60px] md:text-[64px] font-semibold w-full min-w-200 focus:outline-none outline-none border-none focus-visible:ring-0 shadow-none p-1 placeholder:text-[#fcb7bc]"
 												/>
 											</FormControl>
 										</div>
