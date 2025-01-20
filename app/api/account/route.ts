@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "@/service/mongo";
 import { mainAccountModel } from "@/models/main-account";
 import { subAccountModel } from "@/models/sub-account-model";
 import { incomeModel } from "@/models/income-model";
 import { transactionModel } from "@/models/transactions-model";
+import createErrorResponse from "@/lib/createErrorResponse";
+import createSuccessResponse from "@/lib/createSuccessResponse";
 
 export const POST = async (request: Request) => {
 	try {
@@ -20,11 +21,21 @@ export const POST = async (request: Request) => {
 		// Ensure database connection
 		await connectToDatabase();
 
-		// Validate input fields
-		if (!userId || !accountName || !accountType || !balance) {
-			return new NextResponse("Please fill in all fields", {
-				status: 400,
-			});
+		const missingFields = [];
+		if (!userId) missingFields.push("userId");
+		if (!accountName) missingFields.push("accountName");
+		if (!accountType) missingFields.push("accountType");
+		if (balance === undefined || balance === null)
+			missingFields.push("balance");
+
+		if (missingFields.length > 0) {
+			const formattedFields = missingFields.join(", ");
+			const message =
+				missingFields.length === 1
+					? `Please provide the missing field: ${formattedFields}.`
+					: `Please provide the missing fields: ${formattedFields}.`;
+
+			return createErrorResponse({ message });
 		}
 
 		// Step 1: Create the Sub-Account
@@ -71,7 +82,7 @@ export const POST = async (request: Request) => {
 			await mainAccount.save();
 		}
 
-		// add initial income to the income model
+		// add initial income to the income model of balance greater than 0
 		const income = {
 			userId: userId,
 			accountId: savedSubAccount._id,
@@ -80,31 +91,29 @@ export const POST = async (request: Request) => {
 			description: "First deposit creation of account",
 			date: new Date(),
 		};
-
-		const createdIncome = await incomeModel.create(income);
-		console.log("Income created:", createdIncome);
+		await incomeModel.create(income);
 
 		// Step 5: Log the transaction
-		await transactionModel.create({
-			userId,
-			accountId: savedSubAccount._id,
-			type: "income", // Treat initial deposit as income
-			amount: balance,
-			category: "Initial",
-			description: "Initial deposit for new account",
-			date: new Date(),
-		});
+		if (balance > 0) {
+			await transactionModel.create({
+				userId,
+				accountId: savedSubAccount._id,
+				type: "income", // Treat initial deposit as income
+				amount: balance,
+				category: "Initial",
+				description: "Initial deposit for new account",
+				date: new Date(),
+			});
+		}
 
-		// return new NextResponse("Account has been created", { status: 201 });
-		return new NextResponse(
-			JSON.stringify({ message: "Account has been created" }),
-			{
-				status: 201,
-				headers: { "Content-Type": "application/json" },
-			}
-		);
-	} catch (error) {
-		console.error("Error:", error);
-		return new NextResponse(error.message, { status: 500 });
+		return createSuccessResponse({
+			message: "Account has been created",
+			status: 201,
+		});
+	} catch {
+		return createErrorResponse({
+			message: "An unexpected error occurred. Please try again later.",
+			status: 500,
+		});
 	}
 };
