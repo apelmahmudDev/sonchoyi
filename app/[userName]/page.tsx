@@ -116,22 +116,6 @@ export default async function YourAccountPage() {
 						Spend Frequency
 					</p>
 					<WaveChart />
-					{/* filter option for chart */}
-					<div className="flex justify-between">
-						<button className="bg-[#FCEED4] px-6 py-2 font-bold text-sm text-[#FCAC12] rounded-3xl">
-							Today
-						</button>
-						<button className="px-6 py-2 font-medium text-sm text-[#91919F] rounded-3xl">
-							Week
-						</button>
-						<button className="px-6 py-2 font-medium text-sm text-[#91919F] rounded-3xl">
-							Month
-						</button>
-						<button className="px-6 py-2 font-medium text-sm text-[#91919F] rounded-3xl">
-							Year
-						</button>
-					</div>
-
 					{/* recenter transaction */}
 					<div className="mt-4 flex items-center justify-between">
 						<p className="font-semibold text-lg text-[#292B2D]">

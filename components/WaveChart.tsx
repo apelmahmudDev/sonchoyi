@@ -1,102 +1,125 @@
 "use client";
-import React from "react";
+
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
+import { cn } from "@/lib/utils";
+
+// Dynamically import the chart to avoid SSR issues
 const Chart = dynamic(() => import("react-apexcharts"), {
 	ssr: false,
 });
-import { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
-// chart options
-const options: ApexOptions = {
+
+type TimePeriodKey = "today" | "weekly" | "monthly" | "yearly";
+
+interface TimePeriodData {
+	labels: string[];
+	data: number[];
+}
+
+const timePeriods: Record<TimePeriodKey, TimePeriodData> = {
+	today: {
+		labels: ["12 AM", "6 AM", "12 PM", "6 PM"],
+		data: [5, 15, 10, 20],
+	},
+	weekly: {
+		labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		data: [50, 30, 40, 20, 60, 35, 45],
+	},
+	monthly: {
+		labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+		data: [200, 300, 250, 400],
+	},
+	yearly: {
+		labels: [
+			"Jan",
+			"Feb",
+			"Mar",
+			"Apr",
+			"May",
+			"Jun",
+			"Jul",
+			"Aug",
+			"Sep",
+			"Oct",
+			"Nov",
+			"Dec",
+		],
+		data: [800, 650, 900, 750, 1200, 1100, 950, 880, 1030, 1150, 980, 1050],
+	},
+};
+
+const getChartOptions = (
+	xaxisLabels: string[],
+	seriesData: number[]
+): ApexOptions => ({
 	chart: {
-		// height: 350,
 		type: "area",
-		toolbar: {
-			show: false,
-		},
+		toolbar: { show: false },
 		foreColor: "rgba(0 0 0 / 50%)",
-		zoom: {
-			enabled: false,
-		},
+		zoom: { enabled: false },
 	},
 	grid: {
 		show: false,
 		borderColor: "#F4F4F4",
-		padding: {
-			left: -10,
-			right: 0,
-		},
+		padding: { left: -10, right: 0 },
 	},
 	fill: {
 		type: "gradient",
-		// opacity: 0.5,
-		// type: "solid",
 		gradient: {
-			// shadeIntensity: 1,
-			// opacityFrom: 0,
-			// opacityTo: 0.9,
 			colorStops: [
-				{
-					offset: 20,
-					color: "#7F3DFF",
-					opacity: 0.6,
-				},
-				{
-					offset: 80,
-					color: "#7F3DFF",
-					opacity: 0.1,
-				},
+				{ offset: 20, color: "#7F3DFF", opacity: 0.6 },
+				{ offset: 80, color: "#7F3DFF", opacity: 0.1 },
 			],
 		},
 	},
 	colors: ["#7F3DFF"],
-	dataLabels: {
-		enabled: false,
-	},
-	stroke: {
-		curve: "smooth",
-		show: true,
-	},
-	tooltip: {
-		x: {
-			format: "dd/MM/yy HH:mm",
-		},
-	},
-	xaxis: {
-		labels: {
-			show: false,
-		},
-		categories: ["Jan", "Feb", "Mar", "Apr", "May"],
-	},
-	yaxis: {
-		labels: {
-			show: false,
-		},
-	},
-	series: [
-		{
-			name: "spend",
-			data: [30, 15, 25, 12, 39, 20],
-		},
-	],
-};
+	dataLabels: { enabled: false },
+	stroke: { curve: "smooth", show: true },
+	tooltip: { x: { format: "dd/MM/yy HH:mm" } },
+	xaxis: { categories: xaxisLabels, labels: { show: false } },
+	yaxis: { labels: { show: false } },
+	series: [{ name: "Spend", data: seriesData }],
+});
 
-// chart series
-// const series = [
-// 	{
-// 		name: "spend",
-// 		data: [28, 18, 28, 19, 12, 25, 35, 20, 30, 40, 50, 60],
-// 	},
-// ];
+const WaveChart: React.FC = () => {
+	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("weekly");
+	const [chartOptions, setChartOptions] = useState<ApexOptions>(
+		getChartOptions(
+			timePeriods[timePeriod].labels,
+			timePeriods[timePeriod].data
+		)
+	);
 
-const WaveChart = () => {
+	// Handle time period change
+	useEffect(() => {
+		const { labels, data } = timePeriods[timePeriod];
+		setChartOptions(getChartOptions(labels, data));
+	}, [timePeriod]);
+
 	return (
-		<div id="chart" className="h-[193px]">
-			<Chart
-				options={options}
-				series={options.series}
-				type="area"
-				height={185}
-			/>
+		<div>
+			<div id="chart" className="h-[193px]">
+				<Chart
+					options={chartOptions}
+					series={chartOptions.series!}
+					type="area"
+					height={185}
+				/>
+			</div>
+			<div className="flex justify-between">
+				{(Object.keys(timePeriods) as TimePeriodKey[]).map((period) => (
+					<button
+						key={period}
+						onClick={() => setTimePeriod(period)}
+						className={cn("px-6 py-2 text-sm rounded-3xl text-[#91919F]", {
+							"bg-[#FCEED4] text-[#FCAC12] font-bold": timePeriod === period,
+						})}
+					>
+						{period.charAt(0).toUpperCase() + period.slice(1)}
+					</button>
+				))}
+			</div>
 		</div>
 	);
 };
