@@ -25,7 +25,7 @@ _A Comprehensive Money Management Solution_
 
 ### **Frontend**
 
-- **Next.js**
+- **Next.js 14**
 - **Tailwind CSS**
 - **React.js**
 
