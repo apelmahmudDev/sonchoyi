@@ -44,7 +44,7 @@ export default async function YourAccountPage() {
 				<div className="flex justify-between items-center mb-6">
 					{/* avatar / user image */}
 					<Link href="/profile">
-						<Avatar source={session?.user?.image} />
+						<Avatar source={session?.user?.image as string} />
 					</Link>
 					{/* select field of month */}
 					<div className="flex-shrink-0 text-center">
