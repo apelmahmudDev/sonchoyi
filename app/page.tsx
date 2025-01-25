@@ -29,7 +29,7 @@ export default async function Home() {
 					<div className="absolute w-full h-full">
 						<div className="h-full container mx-auto px-4 flex flex-col md:flex-row gap-10 justify-between items-center">
 							<div className="max-w-xl">
-								<p className="mt-10 md:mt-0 text-base mb-3 text-black">
+								<p className="mt-[130px] md:mt-0 text-base mb-3 text-black">
 									Smart Money Management
 								</p>
 								<h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-left uppercase text-black">
@@ -68,9 +68,9 @@ export default async function Home() {
 					</div>
 				</section>
 				{/* key benefits */}
-				<section className="bg-white py-20">
-					<div className="container flex flex-col md:flex-row gap-20">
-						<div className="relative max-w-lg w-full bg-accent h-[500px] rounded-lg px-10 py-3">
+				<section className="bg-white mt-[200px] sm:mt-[300px] md:mt-0 py-20">
+					<div className="container flex flex-col lg:flex-row gap-20">
+						<div className="relative lg:max-w-lg w-full bg-accent h-auto rounded-lg px-10 py-3 order-last lg:order-first">
 							<div className="shadow-md rounded-lg overflow-hidden border border-gray-200">
 								<Image src={MyAccountImg} alt="Bank" />
 							</div>
