@@ -10,45 +10,27 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 	ssr: false,
 });
 
-type TimePeriodKey = "today" | "weekly" | "monthly" | "yearly";
+// Type definitions
+type TimePeriodKey = "today" | "week" | "month" | "year";
 
-interface TimePeriodData {
-	labels: string[];
-	data: number[];
+interface SpendingData {
+	label: string;
+	totalSpent: number;
+	count: number;
 }
 
-const timePeriods: Record<TimePeriodKey, TimePeriodData> = {
-	today: {
-		labels: ["12 AM", "6 AM", "12 PM", "6 PM"],
-		data: [5, 15, 10, 20],
-	},
-	weekly: {
-		labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-		data: [50, 30, 40, 20, 60, 35, 45],
-	},
-	monthly: {
-		labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-		data: [200, 300, 250, 400],
-	},
-	yearly: {
-		labels: [
-			"Jan",
-			"Feb",
-			"Mar",
-			"Apr",
-			"May",
-			"Jun",
-			"Jul",
-			"Aug",
-			"Sep",
-			"Oct",
-			"Nov",
-			"Dec",
-		],
-		data: [800, 650, 900, 750, 1200, 1100, 950, 880, 1030, 1150, 980, 1050],
-	},
+// Default placeholder values
+const defaultTimePeriods: Record<
+	TimePeriodKey,
+	{ labels: string[]; data: number[] }
+> = {
+	today: { labels: [], data: [] },
+	week: { labels: [], data: [] },
+	month: { labels: [], data: [] },
+	year: { labels: [], data: [] },
 };
 
+// Chart configuration function
 const getChartOptions = (
 	xaxisLabels: string[],
 	seriesData: number[]
@@ -83,32 +65,55 @@ const getChartOptions = (
 });
 
 const WaveChart: React.FC = () => {
-	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("weekly");
-	const [chartOptions, setChartOptions] = useState<ApexOptions>(
-		getChartOptions(
-			timePeriods[timePeriod].labels,
-			timePeriods[timePeriod].data
-		)
-	);
+	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("week");
+	const [chartData, setChartData] = useState(defaultTimePeriods);
+	const [isLoading, setIsLoading] = useState(false);
 
-	// Handle time period change
+	// Fetch spending data based on selected time period
 	useEffect(() => {
-		const { labels, data } = timePeriods[timePeriod];
-		setChartOptions(getChartOptions(labels, data));
+		const fetchSpendingData = async () => {
+			setIsLoading(true);
+			try {
+				const response = await fetch(`/api/spending?type=${timePeriod}`);
+				if (!response.ok) throw new Error("Failed to fetch data");
+
+				const data: SpendingData[] = await response.json();
+				const labels = data.map((item) => item.label);
+				const values = data.map((item) => item.totalSpent);
+
+				setChartData((prev) => ({
+					...prev,
+					[timePeriod]: { labels, data: values },
+				}));
+			} catch (error) {
+				console.error("Error fetching spending data:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchSpendingData();
 	}, [timePeriod]);
 
 	return (
 		<div>
-			<div id="chart" className="h-[193px]">
-				<Chart
-					options={chartOptions}
-					series={chartOptions.series!}
-					type="area"
-					height={185}
-				/>
+			<div id="chart" className="h-[250px]">
+				{isLoading ? (
+					<p className="text-center text-gray-500">Loading chart...</p>
+				) : (
+					<Chart
+						options={getChartOptions(
+							chartData[timePeriod].labels,
+							chartData[timePeriod].data
+						)}
+						series={[{ name: "Spend", data: chartData[timePeriod].data }]}
+						type="area"
+						height={200}
+					/>
+				)}
 			</div>
-			<div className="flex justify-between">
-				{(Object.keys(timePeriods) as TimePeriodKey[]).map((period) => (
+			<div className="flex justify-between mt-4">
+				{(Object.keys(defaultTimePeriods) as TimePeriodKey[]).map((period) => (
 					<button
 						key={period}
 						onClick={() => setTimePeriod(period)}
