@@ -108,7 +108,7 @@ const WaveChart: React.FC = () => {
 						)}
 						series={[{ name: "Spend", data: chartData[timePeriod].data }]}
 						type="area"
-						height={200}
+						height={205}
 					/>
 				)}
 			</div>
