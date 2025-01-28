@@ -39,7 +39,7 @@ export default async function YourAccountPage() {
 
 	return (
 		<>
-			<div className="p-4">
+			<div className="p-4 overflow-x-hidden">
 				{/* heading */}
 				<div className="flex justify-between items-center mb-6">
 					{/* avatar / user image */}
