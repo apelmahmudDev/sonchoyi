@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
 import { login } from "../../actions";
 import { useRouter } from "next/navigation";
+import ManImg from "@/assets/images/man.png";
 import {
 	Form,
 	FormControl,
@@ -17,6 +18,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Image from "next/image";
+import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
+import Navigation from "@/components/common/Navigation";
 
 const formSchema = z.object({
 	email: z.string().email({ message: "Invalid email address." }),
@@ -58,56 +62,108 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div className="p-4">
-			<p className="font-semibold text-lg text-center my-5">Login</p>
-			<div className="mb-5">
-				{error && (
-					<p className="text-red-500 text-center text-sm">{error?.message}</p>
-				)}
-			</div>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="text" placeholder="Email " {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="password" placeholder="Password" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit">Login</Button>
-				</form>
-			</Form>
-			<p className="font-semibold text-lg text-center mt-[33px] mb-[38px]">
-				Forgot Password?
-			</p>
-			<div className="flex justify-center">
-				<button type="button" onClick={handleAuth} className="mb-5">
-					Sign with google
-				</button>
-			</div>
-			<p className="text-center text-[#91919F]">
-				Don’t have an account yet?{" "}
-				<Link className="text-[#7F3DFF]" href="/signup">
-					Sign Up
+		<div className="h-screen">
+			<div className="h-full container">
+				<Link href="/">
+					<span className="text-lg font-semibold">Fundwave</span>
 				</Link>
-			</p>
+				<div className="h-full flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-[100px]">
+					<div className="relative lg:max-w-[629px] w-full">
+						<h1 className="mt-10 lg:mt-0 font-semibold text-[26px] md:text-[42px] xl:text-[50px]">
+							{/* Welcome back! */} Sign in to
+						</h1>
+						<h2 className="font-medium text-lg md:text-2xl xl:text-[35px]">
+							Manage your money
+						</h2>
+						<p className="mt-8 lg:mt-[43px] mb-1.5 z-10 text-sm md:text-base">
+							If you don’t have an account register
+						</p>
+						<p className="text-sm md:text-base">
+							You can{" "}
+							<Link href="/signup">
+								<button className="text-primary font-semibold text-sm md:text-base">
+									Register here !
+								</button>
+							</Link>
+						</p>
+						<Image
+							className="hidden lg:flex w-[300px] absolute mt-28 xl:mt-20 right-0 top-0 bottom-0 -z-10"
+							src={ManImg}
+							alt="man"
+						/>
+					</div>
+					<div className="lg:max-w-sm w-full pb-10 lg:pb-0">
+						<h3 className="hidden lg:flex font-medium text-3xl mb-7">
+							Sign in
+						</h3>
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit(onSubmit)}
+								className="space-y-9"
+							>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													className="bg-[#F0EFFF]"
+													type="text"
+													placeholder="Email "
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													className="bg-[#F0EFFF]"
+													type="password"
+													placeholder="Password"
+													endAdornment={
+														<button type="button">
+															<EyeIcon />
+															{/* <EyeSlashIcon /> */}
+														</button>
+													}
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<div className="justify-end flex">
+									<button
+										type="button"
+										className="-mt-6 text-right text-gray-500 text-[13px]"
+									>
+										Forgot password ?
+									</button>
+								</div>
+								<Button className="w-full h-[54px]" type="submit">
+									Sign in
+								</Button>
+							</form>
+						</Form>
+						<p className="text-center text-gray-500 my-8">OR</p>
+						<div>
+							<button className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors">
+								<GoogleIcon />
+								<span>Sign in with Google</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

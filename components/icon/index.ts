@@ -22,3 +22,4 @@ export { default as EyeIcon } from "./EyeIcon";
 export { default as EyeSlashIcon } from "./EyeSlashIcon";
 export { default as ArrowDownIcon } from "./ArrowDownIcon";
 export { default as SuccessIcon } from "./SuccessIcon";
+export { default as GoogleIcon } from "./GoogleIcon";
