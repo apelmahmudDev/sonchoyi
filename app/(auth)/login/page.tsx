@@ -14,13 +14,12 @@ import {
 	FormItem,
 	FormMessage,
 } from "@/components/ui/form";
+import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from "next/image";
-import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
-import Navigation from "@/components/common/Navigation";
 
 const formSchema = z.object({
 	email: z.string().email({ message: "Invalid email address." }),
@@ -32,6 +31,7 @@ const formSchema = z.object({
 export default function LoginPage() {
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
+	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -41,7 +41,11 @@ export default function LoginPage() {
 		},
 	});
 
-	const handleAuth = () => {
+	const handlePasswordVisibility = () => {
+		setIsVisiblePassword((prev) => !prev);
+	};
+
+	const signWithGoogle = () => {
 		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
 	};
 
@@ -60,7 +64,7 @@ export default function LoginPage() {
 			setError(error as string);
 		}
 	}
-
+	console.log("error", error);
 	return (
 		<div className="h-screen">
 			<div className="h-full container">
@@ -70,7 +74,7 @@ export default function LoginPage() {
 				<div className="h-full flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-[100px]">
 					<div className="relative lg:max-w-[629px] w-full">
 						<h1 className="mt-10 lg:mt-0 font-semibold text-[26px] md:text-[42px] xl:text-[50px]">
-							{/* Welcome back! */} Sign in to
+							Sign in to
 						</h1>
 						<h2 className="font-medium text-lg md:text-2xl xl:text-[35px]">
 							Manage your money
@@ -96,6 +100,13 @@ export default function LoginPage() {
 						<h3 className="hidden lg:flex font-medium text-3xl mb-7">
 							Sign in
 						</h3>
+						<div className="mb-5">
+							{error && (
+								<p className="text-red-500 text-left text-sm">
+									{error?.message}
+								</p>
+							)}
+						</div>
 						<Form {...form}>
 							<form
 								onSubmit={form.handleSubmit(onSubmit)}
@@ -126,12 +137,18 @@ export default function LoginPage() {
 											<FormControl>
 												<Input
 													className="bg-[#F0EFFF]"
-													type="password"
+													type={isVisiblePassword ? "text" : "password"}
 													placeholder="Password"
 													endAdornment={
-														<button type="button">
-															<EyeIcon />
-															{/* <EyeSlashIcon /> */}
+														<button
+															onClick={handlePasswordVisibility}
+															type="button"
+														>
+															{isVisiblePassword ? (
+																<EyeIcon />
+															) : (
+																<EyeSlashIcon />
+															)}
 														</button>
 													}
 													{...field}
@@ -156,7 +173,10 @@ export default function LoginPage() {
 						</Form>
 						<p className="text-center text-gray-500 my-8">OR</p>
 						<div>
-							<button className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors">
+							<button
+								onClick={signWithGoogle}
+								className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors"
+							>
 								<GoogleIcon />
 								<span>Sign in with Google</span>
 							</button>
