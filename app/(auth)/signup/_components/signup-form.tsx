@@ -13,6 +13,7 @@ import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -30,7 +31,7 @@ const formSchema = z.object({
 
 export const SignupForm = () => {
 	const router = useRouter();
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<string>("");
 	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
 	const handlePasswordVisibility = () => {
@@ -52,6 +53,7 @@ export const SignupForm = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
+			setError("");
 			const res = await fetch("/api/auth/register", {
 				method: "POST",
 				headers: {
@@ -63,12 +65,14 @@ export const SignupForm = () => {
 					password: values.password,
 				}),
 			});
+
+			const data = await res.json();
+
 			if (res.status === 201) {
+				toast.success("User has been created successfully.");
 				router.push("/login");
 			} else {
-				setError({
-					message: "There were somethings error",
-				});
+				setError(data.message || "Something went wrong.");
 			}
 		} catch (error) {
 			setError(error as string);
@@ -79,9 +83,7 @@ export const SignupForm = () => {
 		<div className="lg:max-w-sm w-full pb-10 lg:pb-0">
 			<h3 className="hidden lg:flex font-medium text-3xl mb-7">Sign in</h3>
 			<div className="mb-5">
-				{error && (
-					<p className="text-red-500 text-left text-sm">{error?.message}</p>
-				)}
+				{error && <p className="text-red-500 text-left text-sm">{error}</p>}
 			</div>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
