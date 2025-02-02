@@ -33,14 +33,6 @@ export default function LoginPage() {
 	const [error, setError] = useState<string | null>(null);
 	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-		},
-	});
-
 	const handlePasswordVisibility = () => {
 		setIsVisiblePassword((prev) => !prev);
 	};
@@ -48,6 +40,14 @@ export default function LoginPage() {
 	const signWithGoogle = () => {
 		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
 	};
+
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
@@ -64,7 +64,7 @@ export default function LoginPage() {
 			setError(error as string);
 		}
 	}
-	console.log("error", error);
+
 	return (
 		<div className="h-screen">
 			<div className="h-full container">
@@ -74,13 +74,13 @@ export default function LoginPage() {
 				<div className="h-full flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-[100px]">
 					<div className="relative lg:max-w-[629px] w-full">
 						<h1 className="mt-10 lg:mt-0 font-semibold text-[26px] md:text-[42px] xl:text-[50px]">
-							Sign in to
+							Sign In to
 						</h1>
 						<h2 className="font-medium text-lg md:text-2xl xl:text-[35px]">
 							Manage your money
 						</h2>
 						<p className="mt-8 lg:mt-[43px] mb-1.5 z-10 text-sm md:text-base">
-							If you don’t have an account register
+							If you don’t have an account
 						</p>
 						<p className="text-sm md:text-base">
 							You can{" "}

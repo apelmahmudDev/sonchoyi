@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -12,6 +12,9 @@ import {
 	FormItem,
 	FormMessage,
 } from "@/components/ui/form";
+import { signIn } from "next-auth/react";
+import ManImg from "@/assets/images/man.png";
+import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,6 +33,15 @@ const formSchema = z.object({
 export default function SignUpPage() {
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
+	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
+
+	const handlePasswordVisibility = () => {
+		setIsVisiblePassword((prev) => !prev);
+	};
+
+	const signWithGoogle = () => {
+		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
+	};
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -66,63 +78,133 @@ export default function SignUpPage() {
 	}
 
 	return (
-		<div className="p-4">
-			<p className="font-semibold text-lg text-center my-5">Sign Up</p>
-			<div className="mb-5">
-				{error && (
-					<p className="text-red-500 text-center text-sm">{error?.message}</p>
-				)}
-			</div>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField
-						control={form.control}
-						name="name"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="text" placeholder="Name " {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="text" placeholder="Name " {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="password" placeholder="Password" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit">Sign In</Button>
-				</form>
-			</Form>
-			<p className="font-semibold text-lg text-center mt-[33px] mb-[38px]">
-				Sign Up with Google
-			</p>
-			<p className="text-center text-[#91919F]">
-				Already have an account?{" "}
-				<Link className="text-[#7F3DFF]" href="/login">
-					Login
+		<div className="h-screen">
+			<div className="h-full container">
+				<Link href="/">
+					<span className="text-lg font-semibold">Fundwave</span>
 				</Link>
-			</p>
+				<div className="h-full flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-[100px]">
+					<div className="relative lg:max-w-[629px] w-full">
+						<h1 className="mt-10 lg:mt-0 font-semibold text-[26px] md:text-[42px] xl:text-[50px]">
+							Sign Up to
+						</h1>
+						<h2 className="font-medium text-lg md:text-2xl xl:text-[35px]">
+							Manage your money
+						</h2>
+						<p className="mt-8 lg:mt-[43px] mb-1.5 z-10 text-sm md:text-base">
+							If you already have an account
+						</p>
+						<p className="text-sm md:text-base">
+							You can{" "}
+							<Link href="/login">
+								<button className="text-primary font-semibold text-sm md:text-base">
+									Login here !
+								</button>
+							</Link>
+						</p>
+						<Image
+							className="hidden lg:flex w-[300px] absolute mt-28 xl:mt-20 right-0 top-0 bottom-0 -z-10"
+							src={ManImg}
+							alt="man"
+						/>
+					</div>
+					<div className="lg:max-w-sm w-full pb-10 lg:pb-0">
+						<h3 className="hidden lg:flex font-medium text-3xl mb-7">
+							Sign in
+						</h3>
+						<div className="mb-5">
+							{error && (
+								<p className="text-red-500 text-left text-sm">
+									{error?.message}
+								</p>
+							)}
+						</div>
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit(onSubmit)}
+								className="space-y-5"
+							>
+								<FormField
+									control={form.control}
+									name="name"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													className="bg-[#F0EFFF]"
+													type="text"
+													placeholder="Name "
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													className="bg-[#F0EFFF]"
+													type="text"
+													placeholder="Email "
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													className="bg-[#F0EFFF]"
+													type={isVisiblePassword ? "text" : "password"}
+													placeholder="Password"
+													endAdornment={
+														<button
+															onClick={handlePasswordVisibility}
+															type="button"
+														>
+															{isVisiblePassword ? (
+																<EyeIcon />
+															) : (
+																<EyeSlashIcon />
+															)}
+														</button>
+													}
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button className="w-full h-[54px]" type="submit">
+									Sign in
+								</Button>
+							</form>
+						</Form>
+						<p className="text-center text-gray-500 my-8">OR</p>
+						<div>
+							<button
+								onClick={signWithGoogle}
+								className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors"
+							>
+								<GoogleIcon />
+								<span>Sign in with Google</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
