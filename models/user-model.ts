@@ -4,12 +4,12 @@ const userSchema = new Schema(
 	{
 		name: {
 			type: String,
-			required: true,
+			required: [true, "Name is required"],
 			maxlength: 100,
 		},
 		email: {
 			type: String,
-			required: true,
+			required: [true, "Email is required"],
 			unique: true,
 			match: [
 				/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
@@ -18,8 +18,8 @@ const userSchema = new Schema(
 		},
 		password: {
 			type: String,
-			required: true,
-			minlength: 8,
+			required: [true, "Password is required"],
+			minlength: 6,
 		},
 		image: {
 			type: String,
