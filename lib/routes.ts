@@ -4,7 +4,7 @@ export const ROOT = "/";
 
 export const PUBLIC_ROUTES = [
 	"/login",
-	"/register",
+	"/signup",
 	"/forgot-password",
 	"/reset-password",
 	"/terms-and-conditions",
