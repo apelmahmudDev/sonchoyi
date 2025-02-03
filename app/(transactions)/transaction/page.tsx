@@ -18,10 +18,6 @@ import { getTransactionsByUserId, getUserByEmail } from "@/database/queries";
 
 export default async function TransactionPage() {
 	const session = await auth();
-	if (!session) {
-		redirect("/login");
-	}
-
 	const user = await getUserByEmail(session?.user?.email as string);
 	const transactions = await getTransactionsByUserId(user?.id as string);
 

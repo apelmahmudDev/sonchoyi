@@ -17,7 +17,6 @@ import BottomNavigation from "@/components/common/BottomNavigation";
 import Avatar from "@/components/ui/avatar";
 import Link from "next/link";
 // import ShoppingBagIcon from "@/components/icon/ShoppingBagIcon";
-import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import WaveChart from "@/components/WaveChart";
 import {
@@ -29,10 +28,6 @@ import TransactionItem from "@/components/TransactionItem";
 
 export default async function YourAccountPage() {
 	const session = await auth();
-	if (!session) {
-		redirect("/login");
-	}
-
 	const user = await getUserByEmail(session?.user?.email as string);
 	const mainAccount = await getMainAccountByUserId(user?.id as string);
 	const transactions = await getTransactionsByUserId(user?.id as string);

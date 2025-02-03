@@ -1,16 +1,15 @@
 import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+// import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { userModel } from "./models/user-model";
 import bcrypt from "bcryptjs";
-import client from "./lib/db";
+// import client from "./lib/db";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-	adapter: MongoDBAdapter(client, { databaseName: process.env.ENVIRONMENT }),
-	session: {
-		strategy: "jwt",
-	},
+	// adapter: MongoDBAdapter(client, { databaseName: process.env.ENVIRONMENT }),
+	...authConfig,
 	providers: [
 		Credentials({
 			credentials: {
