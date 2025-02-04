@@ -43,6 +43,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			authorization: {
+				prompt: "consent",
+				access_type: "offline",
+				response_type: "code",
+			}
 		}),
 	],
 });
