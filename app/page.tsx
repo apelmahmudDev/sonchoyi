@@ -1,9 +1,3 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import { Carousel } from "@/components/home";
-
-export default async function Home() {
-	const session = await auth();
-	if (session?.user) return redirect("/account");
-	return <Carousel />;
+export default function Home() {
+	return <h1 className="text-2xl font-bold underline">Hello world!</h1>;
 }
