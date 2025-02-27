@@ -4,7 +4,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import bg from "@/assets/images/banner-bg.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -59,9 +58,9 @@ const Carousel = () => {
 									</Link>
 								</div>
 							</div>
-							<div className="place-content-center">
+							{/* <div className="place-content-center">
 								<img src={bg.src} alt="bg" />
-							</div>
+							</div> */}
 						</div>
 					</SwiperSlide>
 				))}

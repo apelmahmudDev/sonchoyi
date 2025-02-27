@@ -27,6 +27,15 @@ import { z } from "zod";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+interface User {
+	_id: string;
+	email: string;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+}
+
 // Reusable constants
 const accountTypes = [
 	"Bank",
@@ -100,7 +109,7 @@ const formSchema = z
 
 export default function AddAccountPage() {
 	const { data: session } = useSession();
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState<User | null>(null);
 
 	useEffect(() => {
 		async function fetchUser() {

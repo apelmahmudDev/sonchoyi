@@ -28,7 +28,8 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
 	const router = useRouter();
-	const [error, setError] = useState<string | null>(null);
+	// const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<Error | null>(null);
 	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
 	const handlePasswordVisibility = () => {
@@ -59,7 +60,7 @@ export const LoginForm = () => {
 				router.push("/letsgo");
 			}
 		} catch (error) {
-			setError(error as string);
+			setError(error as Error);
 		}
 	}
 

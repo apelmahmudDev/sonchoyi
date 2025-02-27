@@ -27,6 +27,7 @@ export const GET = async (request: Request) => {
 		}
 
 		// Process and return the user data (excluding sensitive info like password)
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { password, ...userWithoutPassword } = user;
 
 		return NextResponse.json(userWithoutPassword, { status: 200 });

@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/service/mongo";
 import { transactionModel } from "@/models/transactions-model";
-import {
-	startOfYear,
-	startOfMonth,
-	startOfWeek,
-	startOfToday,
-	format,
-} from "date-fns";
+import { startOfYear, startOfMonth, startOfToday } from "date-fns";
 import createErrorResponse from "@/lib/createErrorResponse";
 
 export async function GET(request: Request) {
@@ -18,13 +12,11 @@ export async function GET(request: Request) {
 		const filterType = searchParams.get("type"); // 'month', 'week', 'year', 'today'
 
 		let startDate;
-		let dateFormat;
 		let groupingField;
 
 		switch (filterType) {
 			case "month":
 				startDate = startOfYear(new Date());
-				dateFormat = "%m"; // Group by month (01, 02, ..., 12)
 				groupingField = {
 					$month: "$date",
 				};
@@ -32,7 +24,6 @@ export async function GET(request: Request) {
 
 			case "week":
 				startDate = startOfMonth(new Date());
-				dateFormat = "%u"; // Group by day of the week (1=Monday, 7=Sunday)
 				groupingField = {
 					$dayOfWeek: "$date",
 				};
@@ -40,7 +31,6 @@ export async function GET(request: Request) {
 
 			case "year":
 				startDate = startOfYear(new Date());
-				dateFormat = "%Y"; // Group by year (e.g., 2024)
 				groupingField = {
 					$year: "$date",
 				};
@@ -48,7 +38,6 @@ export async function GET(request: Request) {
 
 			case "today":
 				startDate = startOfToday();
-				dateFormat = "%H"; // Group by hour (00, 01, ..., 23)
 				groupingField = {
 					$hour: "$date",
 				};
@@ -90,7 +79,7 @@ export async function GET(request: Request) {
 		}));
 
 		return NextResponse.json(formattedData, { status: 200 });
-	} catch (error) {
+	} catch {
 		return NextResponse.json(
 			{ message: "Something went wrong while fetching spending data." },
 			{ status: 500 }
@@ -99,7 +88,7 @@ export async function GET(request: Request) {
 }
 
 // Helper function to format the result labels
-const formatLabel = (type, value) => {
+const formatLabel = (type: string, value: number) => {
 	const monthNames = [
 		"Jan",
 		"Feb",

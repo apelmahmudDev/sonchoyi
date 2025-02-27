@@ -44,10 +44,12 @@ export const POST = async (request: Request) => {
 			status: 201,
 			data: { id: user._id, name: user.name, email: user.email },
 		});
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		// Handle Mongooose validation error
 		if (error.name === "ValidationError") {
 			const messages = Object.values(error.errors).map(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(err: any) => err.message
 			);
 			return createErrorResponse({
