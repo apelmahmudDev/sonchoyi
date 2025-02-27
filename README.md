@@ -1,4 +1,4 @@
-# **FundWave** 🌊
+# **Sonchoyi** 🌊
 
 _A Comprehensive Money Management Solution_
 
