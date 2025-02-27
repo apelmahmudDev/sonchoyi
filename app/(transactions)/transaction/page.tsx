@@ -15,6 +15,7 @@ import {
 import TransactionItem from "@/components/TransactionItem";
 import { auth } from "@/auth";
 import { getTransactionsByUserId, getUserByEmail } from "@/database/queries";
+import { Transaction } from "@/app/[userName]/page";
 
 export default async function TransactionPage() {
 	const session = await auth();
@@ -62,7 +63,7 @@ export default async function TransactionPage() {
 				<div className="flex flex-col gap-4">
 					<div>
 						<div className="flex flex-col gap-2">
-							{transactions?.map((transaction) => (
+							{transactions?.map((transaction: Transaction) => (
 								<TransactionItem
 									key={transaction?.id}
 									icon={<ShoppingBagIcon />}
@@ -70,9 +71,7 @@ export default async function TransactionPage() {
 									type={transaction?.type}
 									description={transaction?.description}
 									amount={transaction?.amount}
-									created={new Date(
-										transaction?.date as string
-									).toLocaleTimeString()}
+									created={new Date(transaction?.date).toLocaleTimeString()}
 								/>
 							))}
 						</div>

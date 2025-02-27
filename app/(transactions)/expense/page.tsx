@@ -12,12 +12,27 @@ import {
 } from "@/components/ui/select";
 import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
 
+import { ObjectId } from "mongodb";
+
+export interface Account {
+	id: string;
+	userId: ObjectId;
+	accountName: string;
+	accountType: "Cash" | "Bank";
+	bankName: string | null;
+	balance: number;
+	createdAt: Date;
+	updatedAt: Date;
+	__v: number;
+}
+
 export default async function ExpensePage() {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email as string);
 	const subAccounts = await getSubAccountsByUserId(user?.id);
 
-	const addExpense = async (formData) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const addExpense = async (formData: any) => {
 		"use server";
 
 		const expenseData = {
@@ -44,8 +59,8 @@ export default async function ExpensePage() {
 			} else {
 				console.log("Success:", result);
 			}
-		} catch (error) {
-			throw new Error("Network error:", error);
+		} catch {
+			throw new Error("Network error:");
 		}
 	};
 
@@ -110,7 +125,7 @@ export default async function ExpensePage() {
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								{subAccounts?.map((account) => (
+								{subAccounts?.map((account: Account) => (
 									<SelectItem key={account?.id} value={account?.id}>
 										{account?.accountName}
 									</SelectItem>

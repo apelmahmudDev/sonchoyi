@@ -26,6 +26,22 @@ import {
 } from "@/database/queries";
 import TransactionItem from "@/components/TransactionItem";
 
+import { ObjectId } from "mongodb";
+
+export interface Transaction {
+	id: string;
+	userId: ObjectId;
+	accountId: ObjectId;
+	type: "income" | "expense";
+	amount: number;
+	category: string;
+	description: string;
+	date: Date;
+	createdAt: Date;
+	updatedAt: Date;
+	__v: number;
+}
+
 export default async function YourAccountPage() {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email as string);
@@ -125,7 +141,7 @@ export default async function YourAccountPage() {
 
 					{/* transaction list */}
 					<div className="mt-4 flex flex-col gap-2 max-h-[300px] overflow-y-auto">
-						{transactions?.map((transaction) => (
+						{transactions?.map((transaction: Transaction) => (
 							<TransactionItem
 								key={transaction?.id}
 								icon={<ShoppingBagIcon />}
@@ -133,9 +149,7 @@ export default async function YourAccountPage() {
 								type={transaction?.type}
 								description={transaction?.description}
 								amount={transaction?.amount}
-								created={new Date(
-									transaction?.date as string
-								).toLocaleTimeString()}
+								created={new Date(transaction?.date).toLocaleTimeString()}
 							/>
 						))}
 						{/* no transaction message */}

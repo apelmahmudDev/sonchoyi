@@ -11,13 +11,15 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getSubAccountsByUserId, getUserByEmail } from "@/database/queries";
+import { Account } from "../expense/page";
 
 export default async function IncomePage() {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email as string);
 	const subAccounts = await getSubAccountsByUserId(user?.id);
 
-	const addIncome = async (formData) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const addIncome = async (formData: any) => {
 		"use server";
 
 		const incomeData = {
@@ -44,8 +46,8 @@ export default async function IncomePage() {
 			} else {
 				console.log("Success:", result);
 			}
-		} catch (error) {
-			throw new Error("Network error:", error);
+		} catch {
+			throw new Error("Network error:");
 		}
 	};
 
@@ -111,7 +113,7 @@ export default async function IncomePage() {
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								{subAccounts?.map((account) => (
+								{subAccounts?.map((account: Account) => (
 									<SelectItem key={account?.id} value={account?.id}>
 										{account?.accountName}
 									</SelectItem>

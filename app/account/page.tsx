@@ -15,6 +15,7 @@ import {
 	getSubAccountsByUserId,
 	getUserByEmail,
 } from "@/database/queries";
+import { Account as AccountType } from "../(transactions)/expense/page";
 
 export default async function AccountPage() {
 	const session = await auth();
@@ -74,7 +75,7 @@ export default async function AccountPage() {
 				</div>
 
 				<div className="">
-					{subAccounts.map((acc) => (
+					{subAccounts.map((acc: AccountType) => (
 						<Account
 							key={acc?.id}
 							accountName={acc?.accountName}

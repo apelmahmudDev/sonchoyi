@@ -68,7 +68,7 @@ const formSchema = z
 		bankName: z.string().optional(),
 		balance: z.preprocess(
 			(value) => {
-				const numValue = parseFloat(value);
+				const numValue = parseFloat(value as string);
 				return isNaN(numValue) ? undefined : numValue;
 			},
 			z
