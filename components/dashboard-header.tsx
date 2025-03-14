@@ -1,6 +1,8 @@
 import { SidebarTrigger } from "./ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ModeToggle } from "./mode-toggle";
+import { SettingsIcon } from "./icon";
+import { Button } from "./ui/button";
 
 export default function DashboardHeader() {
 	return (
@@ -9,8 +11,11 @@ export default function DashboardHeader() {
 				<div>
 					<SidebarTrigger />
 				</div>
-				<div className="flex items-center gap-2.5">
+				<div className="flex items-center gap-1.5">
 					<ModeToggle />
+					<Button variant="icon" size="icon">
+						<SettingsIcon />
+					</Button>
 					<Avatar className="hover:scale-[1.05] transition duration-300 ease-in-out size-[40px] border-1 border-primary/65 hover:border-primary/100 rounded-full p-0.5">
 						<AvatarImage
 							className="rounded-full"

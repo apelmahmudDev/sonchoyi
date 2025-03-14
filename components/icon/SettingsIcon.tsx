@@ -10,6 +10,7 @@ const SettingsIcon: React.FC<SvgProps> = (props) => (
 		width={28}
 		height={28}
 		fill="none"
+		className="animate-spin duration-[3s]"
 		{...props}
 	>
 		<path
