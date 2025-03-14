@@ -1,14 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-	Bot,
-	Gauge,
-	Command,
-	AudioWaveform,
-	SquareTerminal,
-	GalleryVerticalEnd,
-} from "lucide-react";
+import { Command, AudioWaveform, GalleryVerticalEnd } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -21,17 +14,14 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 
-// const menuItems = [
-// 	{ name: "Overview", path: "/wallet" },
-// 	{ name: "Transactions", path: "/wallet/transactions" },
-// 	{ name: "Income", path: "/wallet/income" },
-// 	{ name: "Expenses", path: "/wallet/expenses" },
-// 	{ name: "Analytics", path: "/wallet/analytics" },
-// 	{ name: "Accounts", path: "/wallet/accounts" },
-// 	{ name: "Settings", path: "/wallet/settings" },
-// ];
+import {
+	AppExpenseIcon,
+	AppIncomeIcon,
+	BudgetIcon,
+	DashboardIcon,
+	WalletIcon,
+} from "./icon";
 
-// This is sample data.
 const data = {
 	user: {
 		name: "shadcn",
@@ -59,19 +49,14 @@ const data = {
 		{
 			title: "Overview",
 			url: "/my-wallet",
-			icon: Gauge,
+			icon: DashboardIcon,
 			isActive: true,
-		},
-		{
-			title: "Ecommerce",
-			url: "#",
-			icon: Gauge,
 		},
 		{
 			title: "Income",
 			url: "#",
-			icon: SquareTerminal,
-			isActive: true,
+			icon: AppIncomeIcon,
+			isActive: false,
 			items: [
 				{
 					title: "List",
@@ -87,13 +72,13 @@ const data = {
 		{
 			title: "Expense",
 			url: "#",
-			icon: SquareTerminal,
-			isActive: true,
+			icon: AppExpenseIcon,
+			isActive: false,
 			items: [
 				{
 					title: "List",
 					url: "/my-wallet/expense",
-					isActive: true,
+					isActive: false,
 				},
 				{
 					title: "Create",
@@ -104,7 +89,7 @@ const data = {
 		{
 			title: "Account",
 			url: "#",
-			icon: SquareTerminal,
+			icon: WalletIcon,
 			items: [
 				{
 					title: "List",
@@ -118,28 +103,9 @@ const data = {
 			],
 		},
 		{
-			title: "Models",
-			url: "#",
-			icon: Bot,
-			items: [
-				{
-					title: "Genesis",
-					url: "#",
-				},
-				{
-					title: "Explorer",
-					url: "#",
-				},
-				{
-					title: "Quantum",
-					url: "#",
-				},
-			],
-		},
-		{
 			title: "Budget",
 			url: "#",
-			icon: Gauge,
+			icon: BudgetIcon,
 		},
 	],
 };
