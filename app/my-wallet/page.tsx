@@ -1,31 +1,36 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import WaveChart from "./_components/WaveChart";
 import TransactionItem from "@/components/TransactionItem";
 import { ExpenseIcon, IncomeIcon, ShoppingBagIcon } from "@/components/icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { auth } from "@/auth";
-import { getMainAccountByUserId, getUserByEmail } from "@/database/queries";
+import {
+	getMainAccountByUserId,
+	getTransactionsByUserId,
+	getUserByEmail,
+} from "@/database/queries";
+
+import { ObjectId } from "mongodb";
+
+export interface Transaction {
+	id: string;
+	userId: ObjectId;
+	accountId: ObjectId;
+	type: "income" | "expense";
+	amount: number;
+	category: string;
+	description: string;
+	date: Date;
+	createdAt: Date;
+	updatedAt: Date;
+	__v: number;
+}
 
 export default async function MyWallet() {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email as string);
 	const mainAccount = await getMainAccountByUserId(user?.id as string);
-
-	// 	mainAccount  = totalBalance: 3572,
-	//   totalIncome: 2519,
-	//   totalExpense: 134,
-	//   currency: 'USD',
-
-	const transactions = [
-		{
-			id: 1,
-			type: "expense",
-			amount: 23,
-			category: "Food",
-			description: "eat food",
-			date: new Date(),
-		},
-	];
+	const transactions = await getTransactionsByUserId(user?.id as string);
 
 	return (
 		<div>
@@ -324,7 +329,7 @@ export default async function MyWallet() {
 
 					{/* transaction list */}
 					<CardContent className="flex flex-col gap-2 max-h-[300px] overflow-y-auto">
-						{transactions?.map((transaction) => (
+						{transactions?.map((transaction: Transaction) => (
 							<TransactionItem
 								key={transaction?.id}
 								icon={<ShoppingBagIcon />}

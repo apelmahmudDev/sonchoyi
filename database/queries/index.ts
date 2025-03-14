@@ -1,9 +1,9 @@
-import { userModel } from "@/models/user-model";
-import { mainAccountModel } from "@/models/main-account";
 import { ObjectId } from "mongodb";
-// import { transactionModel } from "@/models/transactions-model";
-import { subAccountModel } from "@/models/sub-account-model";
+import { userModel } from "@/models/user-model";
 import { transformResponse } from "@/lib/api-utils";
+import { mainAccountModel } from "@/models/main-account";
+import { subAccountModel } from "@/models/sub-account-model";
+import { transactionModel } from "@/models/transactions-model";
 
 export async function getUserByEmail(email: string) {
 	try {
@@ -49,14 +49,14 @@ export async function getSubAccountsByUserId(userId: string) {
 	}
 }
 
-// export async function getTransactionsByUserId(userId: string) {
-// 	try {
-// 		const userIdObj = new ObjectId(userId);
-// 		const transactions = await transactionModel
-// 			.find({ userId: userIdObj })
-// 			.lean();
-// 		return replaceMongoIdInArray(transactions);
-// 	} catch (error) {
-// 		console.error("Error fetching transactions:", error);
-// 	}
-// }
+export async function getTransactionsByUserId(userId: string) {
+	try {
+		const userIdObj = new ObjectId(userId);
+		const transactions = await transactionModel
+			.find({ userId: userIdObj })
+			.lean();
+		return transformResponse(transactions);
+	} catch (error) {
+		console.error("Error fetching transactions:", error);
+	}
+}
