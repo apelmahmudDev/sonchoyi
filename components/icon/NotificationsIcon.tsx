@@ -7,15 +7,23 @@ interface SvgProps {
 const NotificationIcon: React.FC<SvgProps> = (props) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		width={32}
-		height={32}
+		width={24}
+		height={24}
+		viewBox="0 0 28 28"
 		fill="none"
 		{...props}
 	>
-		<path
-			fill="#7F3DFF"
-			d="M26 21.5a3.09 3.09 0 0 1-3.11 2.5H9.11A3.09 3.09 0 0 1 6 21.5a3 3 0 0 1 1.52-3.13.93.93 0 0 0 .48-.83V14a8 8 0 0 1 5-7.43 3 3 0 0 1 6 .03 8.36 8.36 0 0 1 5 7.69v3.25a.93.93 0 0 0 .44.83A3 3 0 0 1 26 21.5ZM16 28a4 4 0 0 0 3.44-2h-6.88A4 4 0 0 0 16 28Z"
-		/>
+		<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+			<path
+				fill="currentColor"
+				d="M18.75 9v.704c0 .845.24 1.671.692 2.374l1.108 1.723c1.011 1.574.239 3.713-1.52 4.21a25.794 25.794 0 0 1-14.06 0c-1.759-.497-2.531-2.636-1.52-4.21l1.108-1.723a4.393 4.393 0 0 0 .693-2.374V9c0-3.866 3.022-7 6.749-7s6.75 3.134 6.75 7"
+				opacity="0.5"
+			></path>
+			<path
+				fill="currentColor"
+				d="M12.75 6a.75.75 0 0 0-1.5 0v4a.75.75 0 0 0 1.5 0zM7.243 18.545a5.002 5.002 0 0 0 9.513 0c-3.145.59-6.367.59-9.513 0"
+			></path>
+		</svg>
 	</svg>
 );
 
