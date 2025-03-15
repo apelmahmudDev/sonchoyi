@@ -1,7 +1,3 @@
-"use client";
-
-import { ChevronRight } from "lucide-react";
-
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -85,7 +81,6 @@ export function NavMain({
 									size="lg"
 									isActive={item.isActive}
 									tooltip={item.title}
-									// className="text-[#637381]"
 								>
 									<Link href={item.url}>
 										{item.icon && <item.icon />}
