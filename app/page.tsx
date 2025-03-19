@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { doSignOut } from "./actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,9 +9,6 @@ import MyAccountImg from "@/assets/images/account-presentation.png";
 import { LogoutIcon, SuccessIcon } from "@/components/icon";
 
 export default async function Home() {
-	const session = await auth();
-
-	console.log("session", session);
 
 	return (
 		<>
