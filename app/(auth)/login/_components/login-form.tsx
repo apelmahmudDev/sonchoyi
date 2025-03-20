@@ -37,7 +37,7 @@ export const LoginForm = () => {
 	};
 
 	const signWithGoogle = () => {
-		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
+		signIn("google", { callbackUrl: "http://localhost:3000/my-wallet" });
 	};
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -52,7 +52,7 @@ export const LoginForm = () => {
 		try {
 			const response = await login({
 				email: values.email,
-				password: values.password as string
+				password: values.password as string,
 			});
 			if (!!response.error) {
 				setError(response?.error);
