@@ -1,11 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { Command, AudioWaveform, GalleryVerticalEnd } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
 	Sidebar,
 	SidebarContent,
@@ -21,6 +19,7 @@ import {
 	DashboardIcon,
 	WalletIcon,
 } from "./icon";
+import Link from "next/link";
 
 const data = {
 	user: {
@@ -28,23 +27,6 @@ const data = {
 		email: "m@example.com",
 		avatar: "/avatars/shadcn.jpg",
 	},
-	teams: [
-		{
-			name: "Sonchoyi",
-			logo: GalleryVerticalEnd,
-			plan: "Pro",
-		},
-		{
-			name: "Acme Corp.",
-			logo: AudioWaveform,
-			plan: "Startup",
-		},
-		{
-			name: "Evil Corp.",
-			logo: Command,
-			plan: "Free",
-		},
-	],
 	navMain: [
 		{
 			title: "Overview",
@@ -114,7 +96,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
-				<TeamSwitcher teams={data.teams} />
+				<Link href="/">
+					<h1 className="text-2xl font-bold ml-2 my-2">Sonchoyi</h1>
+				</Link>
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
