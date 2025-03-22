@@ -1,3 +1,4 @@
+export { default as AppLogo } from "./AppLogo";
 export { default as CurrencyExchangeIcon } from "./CurrencyExchangeIcon";
 export { default as ExpenseIcon } from "./ExpenseIcon";
 export { default as HomeIcon } from "./HomeIcon";

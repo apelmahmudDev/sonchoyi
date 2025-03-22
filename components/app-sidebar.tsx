@@ -20,6 +20,7 @@ import {
 	WalletIcon,
 } from "./icon";
 import Link from "next/link";
+import { Logo } from "./ui/logo";
 
 const data = {
 	user: {
@@ -97,7 +98,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
 				<Link href="/">
-					<h1 className="text-2xl font-bold ml-2 my-2">Sonchoyi</h1>
+					<div className="ml-2 my-3">
+						<Logo />
+					</div>
 				</Link>
 			</SidebarHeader>
 			<SidebarContent>
