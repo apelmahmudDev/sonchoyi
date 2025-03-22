@@ -2,13 +2,13 @@
 
 _A Comprehensive Money Management Solution_
 
-![FundWave](https://via.placeholder.com/1200x400?text=FundWave+Banner)
+![Sonchoyi](https://via.placeholder.com/1200x400?text=Sonchoyi+Banner)
 
 ---
 
 ## **About the Project**
 
-**FundWave** is a Progressive Web App (PWA) designed to simplify personal finance management. Whether you're tracking income, managing expenses, or monitoring your financial health, FundWave provides an intuitive and seamless experience for users.
+**Sonchoyi** is a Progressive Web App (PWA) designed to simplify personal finance management. Whether you're tracking income, managing expenses, or monitoring your financial health, Sonchoyi provides an intuitive and seamless experience for users.
 
 ### **Features**
 
@@ -54,7 +54,7 @@ _A Comprehensive Money Management Solution_
 
    ```bash
    git clone https://github.com/apelmahmudDev/fund-wave.git
-   cd fundwave
+   cd sonchoyi
    ```
 
 2. Install dependencies:
