@@ -84,7 +84,7 @@ export default async function Home() {
 				</section>
 				{/* key benefits */}
 				<section className="bg-white mt-[200px] sm:mt-[300px] md:mt-0 py-20">
-					<div className="container flex flex-col lg:flex-row gap-20">
+					<div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-20">
 						<div className="relative lg:max-w-lg w-full bg-accent h-auto rounded-lg px-10 py-3 order-last lg:order-first">
 							<div className="shadow-md rounded-lg overflow-hidden border border-gray-200">
 								<Image src={MyAccountImg} alt="Bank" />
