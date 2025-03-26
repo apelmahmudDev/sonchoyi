@@ -5,10 +5,10 @@ export async function connectToDatabase() {
 		const connect = await mongoose.connect(
 			String(process.env.MONGO_CONNECTION_STRING),
 			{
-				dbName: "fundwave", // ✅ Ensure it uses the "fundwave" database
+				dbName: "sonchoyi", // ✅ Ensure it uses the "sonchoyi" database
 			}
 		);
-		console.log("Connected to MongoDB - fundwave database");
+		console.log("Connected to MongoDB - sonchoyi database");
 		return connect;
 	} catch (error) {
 		console.error("Error connecting to MongoDB:", error);
