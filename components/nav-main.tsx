@@ -48,7 +48,7 @@ export function NavMain({
 										<SidebarMenuButton
 											size="lg"
 											isActive={item.isActive}
-											tooltip={item.title}
+											hoverLinks={item.items}
 										>
 											{item.icon && <item.icon />}
 											<span>{item.title}</span>
@@ -76,12 +76,7 @@ export function NavMain({
 						) : (
 							// Handle normal item without subitems
 							<SidebarMenuItem key={item.title}>
-								<SidebarMenuButton
-									asChild
-									size="lg"
-									isActive={item.isActive}
-									tooltip={item.title}
-								>
+								<SidebarMenuButton asChild size="lg" isActive={item.isActive}>
 									<Link href={item.url}>
 										{item.icon && <item.icon />}
 										<span>{item.title}</span>
