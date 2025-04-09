@@ -6,7 +6,7 @@ const Logo = () => {
 	const { open } = useSidebar();
 	return (
 		<div className="flex items-center">
-			<AppLogo />
+			<AppLogo className="shrink-0" />
 			<h1
 				className={cn(
 					"text-2xl font-bold text-gray-900 ml-2 dark:text-white",
