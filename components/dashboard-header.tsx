@@ -10,7 +10,7 @@ export default function DashboardHeader() {
 			<nav className="h-[72px] flex items-center justify-between px-10">
 				<div>
 					<SidebarArrowTrigger />
-					<SidebarTrigger />
+					<SidebarTrigger /> {/* for mobile or small device*/}
 				</div>
 				<div className="flex items-center gap-2">
 					<ModeToggle />
