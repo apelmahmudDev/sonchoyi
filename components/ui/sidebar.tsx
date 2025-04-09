@@ -511,6 +511,7 @@ function SidebarMenuButton({
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
 	const Comp = asChild ? Slot : "button";
 	const { isMobile, state } = useSidebar();
+	const [isOpen, setIsOpen] = React.useState(false);
 
 	const button = (
 		<Comp
@@ -528,7 +529,11 @@ function SidebarMenuButton({
 	}
 
 	return (
-		<HoverCard>
+		<HoverCard
+			open={isOpen}
+			openDelay={300}
+			onOpenChange={(open) => setIsOpen(open)}
+		>
 			<HoverCardTrigger asChild>{button}</HoverCardTrigger>
 			<HoverCardContent
 				hidden={state !== "collapsed" || isMobile}
@@ -536,7 +541,11 @@ function SidebarMenuButton({
 			>
 				<ul className="flex flex-col gap-1 max-h-[260px] overflow-y-auto">
 					{hoverLinks?.map((item) => (
-						<li key={item.title} className="w-full">
+						<li
+							key={item.title}
+							className="w-full"
+							onClick={() => setIsOpen(false)}
+						>
 							<Link
 								href={item.url}
 								className="block w-full cursor-pointer rounded-sm py-2 px-3 text-sm font-normal outline-none hover:bg-[rgba(145,158,171,0.16)]"
