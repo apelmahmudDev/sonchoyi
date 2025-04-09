@@ -1,16 +1,15 @@
-
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
-import { SidebarTrigger } from "./ui/sidebar";
 import { NotificationIcon, SettingsIcon } from "./icon";
+import { SidebarArrowTrigger, SidebarTrigger } from "./ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-
 
 export default function DashboardHeader() {
 	return (
 		<header className="sticky top-0 left-auto right-0 w-full shrink-0 bg-none bg-transparent before:absolute before:content-[''] before-bg-dashboard-header before:w-full before:h-full before:top-0 before:left-0 z-10 before:-z-[1] before:backdrop-blur-[6px]">
 			<nav className="h-[72px] flex items-center justify-between px-10">
 				<div>
+					<SidebarArrowTrigger />
 					<SidebarTrigger />
 				</div>
 				<div className="flex items-center gap-2">
