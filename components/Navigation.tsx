@@ -9,9 +9,7 @@ const Navigation = async () => {
 
 	return (
 		<nav className="fixed top-5 left-1/2 -translate-x-1/2 z-[999] max-w-7xl w-full h-[64px] bg-white/75 backdrop-blur-sm flex items-center justify-between px-6 rounded-md border">
-			<Link href="/">
-				<Logo />
-			</Link>
+			<Link href="/">{/* <Logo /> */}</Link>
 			<ul className="flex items-center gap-6">
 				<li>
 					<Link href="/">Home</Link>
