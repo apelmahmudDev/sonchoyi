@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Logo } from "./ui/logo";
 
 const Navigation = async () => {
 	const session = await auth();
