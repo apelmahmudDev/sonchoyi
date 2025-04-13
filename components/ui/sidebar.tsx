@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -20,7 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 import Link from "next/link";
-import { ChevronRightIcon } from "../icon";
+import { ChevronRightIcon, HamburgerMenuIcon } from "../icon";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -256,10 +255,10 @@ function SidebarTrigger({
 		<Button
 			data-sidebar="trigger"
 			data-slot="sidebar-trigger"
-			variant="ghost"
+			variant="icon"
 			size="icon"
 			className={cn(
-				"h-7 w-7 [&_svg:not([class*='size-'])]:size-6 visible md:invisible",
+				"[&_svg:not([class*='size-'])]:size-6 visible md:invisible",
 				className
 			)}
 			onClick={(event) => {
@@ -268,8 +267,7 @@ function SidebarTrigger({
 			}}
 			{...props}
 		>
-			<PanelLeftIcon />
-			<span className="sr-only">Toggle Sidebar</span>
+			<HamburgerMenuIcon />
 		</Button>
 	);
 }
@@ -288,7 +286,7 @@ function SidebarArrowTrigger({
 			variant="icon"
 			size="icon"
 			className={cn(
-				"absolute -left-[13px] border dark:bg-[#141A21] dark:hover:bg-[#28323D] bg-white hover:bg-[#F4F6F8] size-6 invisible md:visible",
+				"absolute -left-[12px] border dark:bg-[#141A21] dark:hover:bg-[#28323D] bg-white hover:bg-[#F4F6F8] size-6 invisible md:visible",
 				className
 			)}
 			onClick={(event) => {
