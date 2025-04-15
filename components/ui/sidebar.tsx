@@ -286,7 +286,7 @@ function SidebarArrowTrigger({
 			variant="icon"
 			size="icon"
 			className={cn(
-				"absolute -left-[12px] border dark:bg-[#141A21] dark:hover:bg-[#28323D] bg-white hover:bg-[#F4F6F8] size-6 invisible md:visible",
+				"absolute -left-[12px] top-[24px] border dark:bg-[#141A21] dark:hover:bg-[#28323D] bg-white hover:bg-[#F4F6F8] size-6 invisible md:visible",
 				className
 			)}
 			onClick={(event) => {
