@@ -20,22 +20,18 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 					user = await userModel.findOne({ email: credentials.email });
 					if (user) {
 						const password = credentials.password as string;
-						const isMatch = await bcrypt.compare(
-							password,
-							user.password
-						);
+						const isMatch = await bcrypt.compare(password, user.password);
 						if (isMatch) {
 							return user;
 						} else {
-							throw new Error("Email or password is incorrect.");
+							return null;
 						}
 					} else {
-						throw new Error("No user found");
+						return null;
 					}
-				} catch {
-					throw new Error("Invalid credentials.");
+				} catch (error) {
+					throw error;
 				}
-				return user;
 			},
 		}),
 		Google({

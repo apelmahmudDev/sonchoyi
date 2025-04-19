@@ -14,7 +14,14 @@ export async function login(formData: { email: string; password: string }) {
 			password: formData.password,
 		});
 		return response;
-	} catch (error) {
-		throw new Error(String(error));
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (error: any) {
+		// Handle CredentialsSignin wrapped in CallbackRouteError
+		if (error?.type === "CredentialsSignin") {
+			throw new Error("Invalid email or password.");
+		}
+
+		// Unknown errors
+		throw new Error("Something went wrong. Please try again later.");
 	}
 }

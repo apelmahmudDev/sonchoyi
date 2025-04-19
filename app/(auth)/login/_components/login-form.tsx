@@ -57,7 +57,7 @@ export const LoginForm = () => {
 			if (!!response.error) {
 				setError(response?.error);
 			} else {
-				router.push("/letsgo");
+				router.push("/my-wallet");
 			}
 		} catch (error) {
 			setError(error as Error);
