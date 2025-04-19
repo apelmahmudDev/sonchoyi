@@ -31,3 +31,4 @@ export { default as AppExpenseIcon } from "./AppExpenseIcon";
 export { default as BudgetIcon } from "./BudgetIcon";
 export { default as ChevronRightIcon } from "./ChevronRightIcon";
 export { default as HamburgerMenuIcon } from "./HamburgerMenuIcon";
+export { default as LoaderIcon } from "./LoaderIcon";

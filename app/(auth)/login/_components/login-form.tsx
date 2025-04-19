@@ -13,7 +13,12 @@ import {
 	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { EyeIcon, EyeSlashIcon, GoogleIcon } from "@/components/icon";
+import {
+	EyeIcon,
+	EyeSlashIcon,
+	GoogleIcon,
+	LoaderIcon,
+} from "@/components/icon";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -28,7 +33,7 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
 	const router = useRouter();
-	// const [error, setError] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 	const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
 
@@ -50,6 +55,8 @@ export const LoginForm = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
+			setIsLoading(true);
+			setError(null);
 			const response = await login({
 				email: values.email,
 				password: values.password as string,
@@ -59,7 +66,9 @@ export const LoginForm = () => {
 			} else {
 				router.push("/my-wallet");
 			}
+			setIsLoading(false);
 		} catch (error) {
+			setIsLoading(false);
 			setError(error as Error);
 		}
 	}
@@ -83,6 +92,7 @@ export const LoginForm = () => {
 									<Input
 										className="bg-[#F0EFFF]"
 										type="text"
+										autoComplete="email"
 										placeholder="Email "
 										{...field}
 									/>
@@ -100,6 +110,7 @@ export const LoginForm = () => {
 									<Input
 										className="bg-[#F0EFFF]"
 										type={isVisiblePassword ? "text" : "password"}
+										autoComplete="current-password"
 										placeholder="Password"
 										endAdornment={
 											<button onClick={handlePasswordVisibility} type="button">
@@ -121,12 +132,27 @@ export const LoginForm = () => {
 							Forgot password ?
 						</button>
 					</div>
-					<Button className="w-full h-[54px]" type="submit">
+					<Button
+						disabled={isLoading}
+						className="w-full h-[54px]"
+						type="submit"
+					>
+						{isLoading && (
+							<span className="animate-spin">
+								<LoaderIcon />
+							</span>
+						)}
 						Sign in
 					</Button>
 				</form>
 			</Form>
-			<p className="text-center text-gray-500 my-8">OR</p>
+			<div className="my-8 flex flex-shrink items-center justify-center gap-2">
+				<div className="grow basis-0 border-b text-gray-500" />
+				<span className="font-normal uppercase leading-none text-gray-500">
+					or
+				</span>
+				<div className="grow basis-0 border-b text-gray-500" />
+			</div>
 			<div>
 				<button
 					onClick={signWithGoogle}
