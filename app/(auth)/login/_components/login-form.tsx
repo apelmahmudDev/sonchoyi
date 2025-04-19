@@ -14,9 +14,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import {
+	ErrorIcon,
 	EyeIcon,
 	EyeSlashIcon,
 	GoogleIcon,
+	InfoIcon,
 	LoaderIcon,
 } from "@/components/icon";
 
@@ -25,10 +27,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-	email: z.string().email({ message: "Invalid email address." }),
-	password: z.string().min(6, {
-		message: "Password must be at least 6 characters.",
-	}),
+	email: z
+		.string({ required_error: "Email is required!" })
+		.min(1, "Email is required!")
+		.email("Email must be a valid email address!"),
+	password: z
+		.string({ required_error: "Password is required!" })
+		.min(1, "Password is required!")
+		.min(6, "Password must be more than 6 characters!")
+		.max(32, "Password must be less than 32 characters!"),
 });
 
 export const LoginForm = () => {
@@ -42,7 +49,9 @@ export const LoginForm = () => {
 	};
 
 	const signWithGoogle = () => {
-		signIn("google", { callbackUrl: "http://localhost:3000/my-wallet" });
+		signIn("google", {
+			callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/my-wallet`,
+		});
 	};
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -56,7 +65,6 @@ export const LoginForm = () => {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
 			setIsLoading(true);
-			setError(null);
 			const response = await login({
 				email: values.email,
 				password: values.password as string,
@@ -74,15 +82,26 @@ export const LoginForm = () => {
 	}
 
 	return (
-		<div className="lg:max-w-sm w-full pb-10 lg:pb-0">
-			<h3 className="hidden lg:flex font-medium text-3xl mb-7">Sign in</h3>
-			<div className="mb-5">
+		<div>
+			<div className="space-y-6 mb-6">
+				{/* demo email & pass */}
+				<div className="w-full bg-[#CAFDF5] p-[13px] rounded-md flex gap-2.5 items-start">
+					<InfoIcon className="text-[#00b8d9] flex-shrink-0" />
+					<p className="text-sm text-[#003768] pt-[1.2px]">
+						Use <strong>demo@shonchoyi.com</strong> with password{" "}
+						<strong>demo1234</strong>
+					</p>
+				</div>
+				{/* error */}
 				{error && (
-					<p className="text-red-500 text-left text-sm">{error?.message}</p>
+					<div className="w-full bg-[#FFE9D5] p-[13px] rounded-md flex gap-2.5 items-start">
+						<ErrorIcon className="text-[#ff5630] flex-shrink-0" />
+						<p className="text-sm pt-0.5">{error?.message}</p>
+					</div>
 				)}
 			</div>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-9">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<FormField
 						control={form.control}
 						name="email"
@@ -90,7 +109,7 @@ export const LoginForm = () => {
 							<FormItem>
 								<FormControl>
 									<Input
-										className="bg-[#F0EFFF]"
+										className="h-[54px]"
 										type="text"
 										autoComplete="email"
 										placeholder="Email "
@@ -108,12 +127,16 @@ export const LoginForm = () => {
 							<FormItem>
 								<FormControl>
 									<Input
-										className="bg-[#F0EFFF]"
+										className="h-[54px]"
 										type={isVisiblePassword ? "text" : "password"}
 										autoComplete="current-password"
-										placeholder="Password"
+										placeholder="6+ characters"
 										endAdornment={
-											<button onClick={handlePasswordVisibility} type="button">
+											<button
+												className="cursor-pointer"
+												onClick={handlePasswordVisibility}
+												type="button"
+											>
 												{isVisiblePassword ? <EyeIcon /> : <EyeSlashIcon />}
 											</button>
 										}
@@ -134,7 +157,7 @@ export const LoginForm = () => {
 					</div>
 					<Button
 						disabled={isLoading}
-						className="w-full h-[54px]"
+						className="w-full h-[50px] font-semibold"
 						type="submit"
 					>
 						{isLoading && (
@@ -146,7 +169,7 @@ export const LoginForm = () => {
 					</Button>
 				</form>
 			</Form>
-			<div className="my-8 flex flex-shrink items-center justify-center gap-2">
+			<div className="my-5  flex flex-shrink items-center justify-center gap-2">
 				<div className="grow basis-0 border-b text-gray-500" />
 				<span className="font-normal uppercase leading-none text-gray-500">
 					or
@@ -154,13 +177,13 @@ export const LoginForm = () => {
 				<div className="grow basis-0 border-b text-gray-500" />
 			</div>
 			<div>
-				<button
+				<Button
 					onClick={signWithGoogle}
-					className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors"
+					className="w-full h-[50px] flex items-center gap-4 justify-center bg-[#FFE9D5] hover:bg-[#faeedb] px-8 text-[#B87514] font-semibold transition-colors"
 				>
 					<GoogleIcon />
-					<span>Sign in with Google</span>
-				</button>
+					<span>Continue with Google</span>
+				</Button>
 			</div>
 		</div>
 	);

@@ -283,3 +283,16 @@ input:-webkit-autofill::first-line {
 .dark input:-webkit-autofill::first-line {
 	-webkit-text-fill-color: #ffffff !important;
 }
+
+.auth-bg {
+	background-image: linear-gradient(
+			0deg,
+			rgba(255 255 255 / 0.92),
+			rgba(255 255 255 / 0.92)
+		),
+		url(https://pub-c5e31b5cdafb419fb247a8ac2e78df7a.r2.dev/public/assets/background/background-3-blur.webp);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	position: relative;
+}
