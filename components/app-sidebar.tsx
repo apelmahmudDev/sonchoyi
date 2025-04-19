@@ -19,7 +19,7 @@ import {
 	WalletIcon,
 } from "./icon";
 import Link from "next/link";
-import { Logo } from "./ui/logo";
+import { SidebarLogo } from "./ui/logo";
 
 const data = {
 	user: {
@@ -98,7 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarHeader>
 				<Link href="/">
 					<div className="ml-5 my-4">
-						<Logo />
+						<SidebarLogo />
 					</div>
 				</Link>
 			</SidebarHeader>

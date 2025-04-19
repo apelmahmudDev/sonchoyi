@@ -14,7 +14,7 @@ export default function LoginPage() {
 						<h2 className="font-bold text-2xl xl:text-3xl text-center">
 							Hi, Welcome back
 						</h2>
-						<p className="mt-4 text-[#637381] text-base text-center">
+						<p className="mt-4 text-[#637381] dark:text-[#919EAB] text-base text-center">
 							Manage your finances smarter, faster, better.
 						</p>
 						<div className="flex flex-col justify-center items-center">
@@ -22,7 +22,7 @@ export default function LoginPage() {
 						</div>
 					</div>
 				</div>
-				<div className="flex justify-center items-start lg:items-center px-4 py-[80px] lg:py-[72px] w-full">
+				<div className="flex justify-center items-start lg:items-center px-4 py-[90px] lg:py-[72px] w-full">
 					<div className="flex-shrink-0 max-w-[450px] w-full">
 						<div className="mb-10">
 							<h2 className="text-center lg:text-left text-lg font-bold mb-2.5">

@@ -32,3 +32,5 @@ export { default as BudgetIcon } from "./BudgetIcon";
 export { default as ChevronRightIcon } from "./ChevronRightIcon";
 export { default as HamburgerMenuIcon } from "./HamburgerMenuIcon";
 export { default as LoaderIcon } from "./LoaderIcon";
+export { default as InfoIcon } from "./InfoIcon";
+export { default as ErrorIcon } from "./ErrorIcon";

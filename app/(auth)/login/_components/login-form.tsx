@@ -23,6 +23,7 @@ import {
 } from "@/components/icon";
 
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -85,18 +86,20 @@ export const LoginForm = () => {
 		<div>
 			<div className="space-y-6 mb-6">
 				{/* demo email & pass */}
-				<div className="w-full bg-[#CAFDF5] p-[13px] rounded-md flex gap-2.5 items-start">
-					<InfoIcon className="text-[#00b8d9] flex-shrink-0" />
-					<p className="text-sm text-[#003768] pt-[1.2px]">
+				<div className="w-full bg-[#CAFDF5] dark:bg-[#003768] p-[13px] rounded-md flex gap-2.5 items-start">
+					<InfoIcon className="text-[#00b8d9] dark:text-[#CAFDF5] flex-shrink-0" />
+					<p className="text-sm text-[#003768] dark:text-[#CAFDF5] pt-[1.2px]">
 						Use <strong>demo@shonchoyi.com</strong> with password{" "}
 						<strong>demo1234</strong>
 					</p>
 				</div>
 				{/* error */}
 				{error && (
-					<div className="w-full bg-[#FFE9D5] p-[13px] rounded-md flex gap-2.5 items-start">
-						<ErrorIcon className="text-[#ff5630] flex-shrink-0" />
-						<p className="text-sm pt-0.5">{error?.message}</p>
+					<div className="w-full bg-[#FFE9D5] dark:bg-[#7A0916] p-[13px] rounded-md flex gap-2.5 items-start">
+						<ErrorIcon className="text-[#ff5630] dark:text-[#ffAC82] flex-shrink-0" />
+						<p className="text-sm pt-0.5 text-[#7A0916] dark:text-[#ffAC82]">
+							{error?.message}
+						</p>
 					</div>
 				)}
 			</div>
@@ -150,7 +153,12 @@ export const LoginForm = () => {
 					<div className="justify-end flex">
 						<button
 							type="button"
-							className="-mt-6 text-right text-gray-500 text-[13px]"
+							className={cn(
+								"-mt-5 h-8 text-right text-gray-500 text-[13px] cursor-pointer border-0 outline-0 ring-0 hover:underline hover:underline-offset-1",
+								{
+									"-mt-12": form.formState.errors.password,
+								}
+							)}
 						>
 							Forgot password ?
 						</button>

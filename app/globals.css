@@ -296,3 +296,11 @@ input:-webkit-autofill::first-line {
 	background-position: center center;
 	position: relative;
 }
+.dark .auth-bg {
+	background-image: linear-gradient(
+			0deg,
+			rgba(20 26 33 / 0.92),
+			rgba(20 26 33 / 0.92)
+		),
+		url(https://pub-c5e31b5cdafb419fb247a8ac2e78df7a.r2.dev/public/assets/background/background-3-blur.webp);
+}
