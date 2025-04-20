@@ -23,7 +23,6 @@ import {
 } from "@/components/icon";
 
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -123,45 +122,42 @@ export const LoginForm = () => {
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input
-										className="h-[54px]"
-										type={isVisiblePassword ? "text" : "password"}
-										autoComplete="current-password"
-										placeholder="6+ characters"
-										endAdornment={
-											<button
-												className="cursor-pointer"
-												onClick={handlePasswordVisibility}
-												type="button"
-											>
-												{isVisiblePassword ? <EyeIcon /> : <EyeSlashIcon />}
-											</button>
-										}
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<div className="justify-end flex">
-						<button
-							type="button"
-							className={cn(
-								"-mt-5 h-8 text-right text-gray-500 text-[13px] cursor-pointer border-0 outline-0 ring-0 hover:underline hover:underline-offset-1",
-								{
-									"-mt-12": form.formState.errors.password,
-								}
+					<div>
+						<div className="justify-end flex mb-2">
+							<button
+								type="button"
+								className="text-right text-[13px] cursor-pointer border-0 outline-0 ring-0 hover:underline hover:underline-offset-1"
+							>
+								Forgot password ?
+							</button>
+						</div>
+						<FormField
+							control={form.control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											className="h-[54px]"
+											type={isVisiblePassword ? "text" : "password"}
+											autoComplete="current-password"
+											placeholder="6+ characters"
+											endAdornment={
+												<button
+													className="cursor-pointer"
+													onClick={handlePasswordVisibility}
+													type="button"
+												>
+													{isVisiblePassword ? <EyeIcon /> : <EyeSlashIcon />}
+												</button>
+											}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
 							)}
-						>
-							Forgot password ?
-						</button>
+						/>
 					</div>
 					<Button
 						disabled={isLoading}
