@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,13 +11,13 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import {
+	ErrorIcon,
 	EyeIcon,
 	EyeSlashIcon,
 	GoogleIcon,
 	LoaderIcon,
 } from "@/components/icon";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
@@ -25,13 +26,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-	name: z.string().min(2, {
-		message: "Username must be at least 2 characters.",
-	}),
-	email: z.string().email({ message: "Invalid email address." }),
-	password: z.string().min(6, {
-		message: "Password must be at least 6 characters.",
-	}),
+	name: z
+		.string({ required_error: "Name is required!" })
+		.min(1, "Name is required!")
+		.min(2, "Name must be at least 2 characters.!"),
+	email: z
+		.string({ required_error: "Email is required!" })
+		.min(1, "Email is required!")
+		.email("Email must be a valid email address!"),
+	password: z
+		.string({ required_error: "Password is required!" })
+		.min(1, "Password is required!")
+		.min(6, "Password must be more than 6 characters!")
+		.max(32, "Password must be less than 32 characters!"),
 });
 
 export const SignupForm = () => {
@@ -45,7 +52,9 @@ export const SignupForm = () => {
 	};
 
 	const signWithGoogle = () => {
-		signIn("google", { callbackUrl: "http://localhost:3000/letsgo" });
+		signIn("google", {
+			callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/my-wallet`,
+		});
 	};
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -59,7 +68,6 @@ export const SignupForm = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
-			setError("");
 			setIsLoading(true);
 			const res = await fetch("/api/auth/register", {
 				method: "POST",
@@ -89,13 +97,20 @@ export const SignupForm = () => {
 	}
 
 	return (
-		<div className="lg:max-w-sm w-full pb-10 lg:pb-0">
-			<h3 className="hidden lg:flex font-medium text-3xl mb-7">Sign in</h3>
-			<div className="mb-5">
-				{error && <p className="text-red-500 text-left text-sm">{error}</p>}
+		<div>
+			<div className="space-y-6 mb-6">
+				{/* error */}
+				{error && (
+					<div className="w-full bg-[#FFE9D5] dark:bg-[#7A0916] p-[13px] rounded-md flex gap-2.5 items-start">
+						<ErrorIcon className="text-[#ff5630] dark:text-[#ffAC82] flex-shrink-0" />
+						<p className="text-sm pt-0.5 text-[#7A0916] dark:text-[#ffAC82]">
+							{error}
+						</p>
+					</div>
+				)}
 			</div>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<FormField
 						control={form.control}
 						name="name"
@@ -103,7 +118,7 @@ export const SignupForm = () => {
 							<FormItem>
 								<FormControl>
 									<Input
-										className="bg-[#F0EFFF]"
+										className="h-[54px]"
 										type="text"
 										placeholder="Name "
 										{...field}
@@ -120,10 +135,10 @@ export const SignupForm = () => {
 							<FormItem>
 								<FormControl>
 									<Input
-										className="bg-[#F0EFFF]"
+										className="h-[54px]"
 										type="text"
-										placeholder="Email "
 										autoComplete="email"
+										placeholder="Email "
 										{...field}
 									/>
 								</FormControl>
@@ -138,12 +153,16 @@ export const SignupForm = () => {
 							<FormItem>
 								<FormControl>
 									<Input
-										className="bg-[#F0EFFF]"
+										className="h-[54px]"
 										type={isVisiblePassword ? "text" : "password"}
 										autoComplete="current-password"
-										placeholder="Password"
+										placeholder="6+ characters"
 										endAdornment={
-											<button onClick={handlePasswordVisibility} type="button">
+											<button
+												className="cursor-pointer"
+												onClick={handlePasswordVisibility}
+												type="button"
+											>
 												{isVisiblePassword ? <EyeIcon /> : <EyeSlashIcon />}
 											</button>
 										}
@@ -154,9 +173,10 @@ export const SignupForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<Button
 						disabled={isLoading}
-						className="w-full h-[54px]"
+						className="w-full h-[50px] font-semibold"
 						type="submit"
 					>
 						{isLoading && (
@@ -164,25 +184,25 @@ export const SignupForm = () => {
 								<LoaderIcon />
 							</span>
 						)}
-						Sign in
+						Create an account
 					</Button>
 				</form>
 			</Form>
-			<div className="my-8 flex flex-shrink items-center justify-center gap-2">
+			<div className="my-5  flex flex-shrink items-center justify-center gap-2">
 				<div className="grow basis-0 border-b text-gray-500" />
-				<span className="font-normal uppercase leading-none text-gray-500">
+				<span className="font-normal text-sm uppercase leading-none text-gray-500">
 					or
 				</span>
 				<div className="grow basis-0 border-b text-gray-500" />
 			</div>
 			<div>
-				<button
+				<Button
 					onClick={signWithGoogle}
-					className="w-full h-[54px] flex items-center gap-5 justify-center bg-[#FFF4E3] hover:bg-[#faeedb] rounded-md px-8 text-[#B87514] text-base font-normal transition-colors"
+					className="w-full h-[50px] flex items-center gap-4 justify-center bg-[#FFE9D5] hover:bg-[#faeedb] px-8 text-[#B87514] font-semibold transition-colors"
 				>
 					<GoogleIcon />
-					<span>Sign in with Google</span>
-				</button>
+					<span>Continue with Google</span>
+				</Button>
 			</div>
 		</div>
 	);

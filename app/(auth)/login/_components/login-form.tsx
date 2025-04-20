@@ -175,7 +175,7 @@ export const LoginForm = () => {
 			</Form>
 			<div className="my-5  flex flex-shrink items-center justify-center gap-2">
 				<div className="grow basis-0 border-b text-gray-500" />
-				<span className="font-normal uppercase leading-none text-gray-500">
+				<span className="font-normal text-sm uppercase leading-none text-gray-500">
 					or
 				</span>
 				<div className="grow basis-0 border-b text-gray-500" />
