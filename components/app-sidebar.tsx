@@ -9,6 +9,7 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
+	SidebarLogo,
 } from "@/components/ui/sidebar";
 
 import {
@@ -19,7 +20,6 @@ import {
 	WalletIcon,
 } from "./icon";
 import Link from "next/link";
-import { SidebarLogo } from "./ui/logo";
 
 const data = {
 	user: {

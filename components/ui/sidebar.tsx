@@ -19,7 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 import Link from "next/link";
-import { ChevronRightIcon, HamburgerMenuIcon } from "../icon";
+import { AppLogo, ChevronRightIcon, HamburgerMenuIcon } from "../icon";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -716,6 +716,23 @@ function SidebarMenuSubButton({
 	);
 }
 
+const SidebarLogo = () => {
+	const { open } = useSidebar();
+	return (
+		<div className="flex items-center">
+			<AppLogo className="shrink-0" />
+			<h1
+				className={cn(
+					"text-2xl font-bold text-gray-900 ml-2 dark:text-white",
+					open ? "block" : "md:hidden"
+				)}
+			>
+				Sonchoyi
+			</h1>
+		</div>
+	);
+};
+
 export {
 	Sidebar,
 	SidebarContent,
@@ -741,4 +758,5 @@ export {
 	SidebarTrigger,
 	SidebarArrowTrigger,
 	useSidebar,
+	SidebarLogo,
 };
