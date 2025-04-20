@@ -99,7 +99,6 @@ export const SignupForm = () => {
 	return (
 		<div>
 			<div className="space-y-6 mb-6">
-				{/* error */}
 				{error && (
 					<div className="w-full bg-[#FFE9D5] dark:bg-[#7A0916] p-[13px] rounded-md flex gap-2.5 items-start">
 						<ErrorIcon className="text-[#ff5630] dark:text-[#ffAC82] flex-shrink-0" />
