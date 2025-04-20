@@ -5,14 +5,7 @@ interface SvgProps {
 }
 
 const InfoIcon: React.FC<SvgProps> = (props) => (
-	<svg
-		aria-hidden="true"
-		className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-mz9m0q"
-		viewBox="0 0 24 24"
-		width={24}
-		height={24}
-		{...props}
-	>
+	<svg aria-hidden="true" viewBox="0 0 24 24" width={24} height={24} {...props}>
 		<path
 			fill="currentColor"
 			fillRule="evenodd"
