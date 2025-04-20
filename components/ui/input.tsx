@@ -13,7 +13,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 		return endAdornment ? (
 			<div className="relative w-full">
 				<input
-					// autoComplete="off"
 					type={type}
 					className={cn(
 						"flex h-14 w-full rounded-md border hover:border-foreground bg-transparent pl-4 pr-12 py-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus:border-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
@@ -28,7 +27,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			</div>
 		) : (
 			<input
-				// autoComplete="off"
 				type={type}
 				className={cn(
 					"flex h-14 w-full rounded-md border hover:border-foreground bg-transparent px-4 py-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus:border-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
