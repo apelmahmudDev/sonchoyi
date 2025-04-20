@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { userModel } from "./models/user-model";
 import bcrypt from "bcryptjs";
+import { connectToDatabase } from "./service/mongo";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
 	...authConfig,
@@ -14,6 +15,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 				password: {},
 			},
 			authorize: async (credentials) => {
+				await connectToDatabase();
+
 				let user = null;
 				if (credentials === null) return user;
 				try {
