@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/service/mongo";
 import { transactionModel } from "@/models/transactions-model";
 import { startOfYear, startOfMonth, startOfToday } from "date-fns";
 import createErrorResponse from "@/lib/createErrorResponse";
+import createSuccessResponse from "@/lib/createSuccessResponse";
+import { ObjectId } from "mongodb";
 
 export async function GET(request: Request) {
 	try {
@@ -10,6 +11,14 @@ export async function GET(request: Request) {
 
 		const { searchParams } = new URL(request.url);
 		const filterType = searchParams.get("type"); // 'month', 'week', 'year', 'today'
+		const userId = searchParams.get("userId");
+
+		if (!userId) {
+			return createErrorResponse({
+				message: "User ID is required.",
+				status: 400,
+			});
+		}
 
 		let startDate;
 		let groupingField;
@@ -17,30 +26,22 @@ export async function GET(request: Request) {
 		switch (filterType) {
 			case "month":
 				startDate = startOfYear(new Date());
-				groupingField = {
-					$month: "$date",
-				};
+				groupingField = { $month: "$date" };
 				break;
 
 			case "week":
 				startDate = startOfMonth(new Date());
-				groupingField = {
-					$dayOfWeek: "$date",
-				};
+				groupingField = { $dayOfWeek: "$date" };
 				break;
 
 			case "year":
 				startDate = startOfYear(new Date());
-				groupingField = {
-					$year: "$date",
-				};
+				groupingField = { $year: "$date" };
 				break;
 
 			case "today":
 				startDate = startOfToday();
-				groupingField = {
-					$hour: "$date",
-				};
+				groupingField = { $hour: "$date" };
 				break;
 
 			default:
@@ -51,9 +52,13 @@ export async function GET(request: Request) {
 				});
 		}
 
+		// Convert userId to ObjectId
+		const userIdObj = new ObjectId(userId);
+
 		const spending = await transactionModel.aggregate([
 			{
 				$match: {
+					userId: userIdObj,
 					type: "expense", // Filter only expenses
 					date: { $gte: startDate },
 				},
@@ -71,19 +76,21 @@ export async function GET(request: Request) {
 		]);
 
 		// Mapping the aggregation result to human-readable labels
-		console.log("spending", spending);
 		const formattedData = spending.map((item) => ({
 			label: formatLabel(filterType, item._id),
 			totalSpent: item.totalSpent,
 			count: item.count,
 		}));
 
-		return NextResponse.json(formattedData, { status: 200 });
+		return createSuccessResponse({
+			status: 200,
+			data: formattedData,
+		});
 	} catch {
-		return NextResponse.json(
-			{ message: "Something went wrong while fetching spending data." },
-			{ status: 500 }
-		);
+		return createErrorResponse({
+			message: "Something went wrong while fetching spending data.",
+			status: 500,
+		});
 	}
 }
 
@@ -123,6 +130,6 @@ const formatLabel = (type: string, value: number) => {
 		case "today":
 			return `${value}:00 - ${value + 1}:00`;
 		default:
-			return value;
+			return value.toString();
 	}
 };
