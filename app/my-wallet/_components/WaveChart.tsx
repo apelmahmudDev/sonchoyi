@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { useGetUserByEmailQuery } from "@/lib/api/services/userApi";
+import { useGetSpendsQuery } from "@/lib/api/services/transactionApi";
 
 // Dynamically import the chart to avoid SSR issues
 const Chart = dynamic(() => import("react-apexcharts"), {
@@ -12,12 +15,6 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 
 // Type definitions
 type TimePeriodKey = "today" | "week" | "month" | "year";
-
-interface SpendingData {
-	label: string;
-	totalSpent: number;
-	count: number;
-}
 
 // Default placeholder values
 const defaultTimePeriods: Record<
@@ -65,35 +62,33 @@ const getChartOptions = (
 });
 
 const WaveChart: React.FC = () => {
+	const { data: session } = useSession();
 	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("week");
 	const [chartData, setChartData] = useState(defaultTimePeriods);
-	const [isLoading, setIsLoading] = useState(false);
 
-	// Fetch spending data based on selected time period
+	const { data: { data: user } = {}, isLoading } = useGetUserByEmailQuery(
+		session?.user?.email ?? "",
+		{
+			skip: !session?.user?.email,
+		}
+	);
+
+	const { data: { data: spends = [] } = {}, isSuccess } = useGetSpendsQuery(
+		{ type: timePeriod, userId: user?.id as string },
+		{ skip: !user?.id }
+	);
+
 	useEffect(() => {
-		const fetchSpendingData = async () => {
-			setIsLoading(true);
-			try {
-				const response = await fetch(`/api/spending?type=${timePeriod}`);
-				if (!response.ok) throw new Error("Failed to fetch data");
+		if (isSuccess && spends?.length) {
+			const labels = spends.map((item) => item.label);
+			const values = spends.map((item) => item.totalSpent);
 
-				const data: SpendingData[] = await response.json();
-				const labels = data.map((item) => item.label);
-				const values = data.map((item) => item.totalSpent);
-
-				setChartData((prev) => ({
-					...prev,
-					[timePeriod]: { labels, data: values },
-				}));
-			} catch (error) {
-				console.error("Error fetching spending data:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchSpendingData();
-	}, [timePeriod]);
+			setChartData((prev) => ({
+				...prev,
+				[timePeriod]: { labels, data: values },
+			}));
+		}
+	}, [spends, timePeriod, isSuccess]);
 
 	return (
 		<div>
