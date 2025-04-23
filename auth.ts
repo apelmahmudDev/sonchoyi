@@ -49,4 +49,36 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 			},
 		}),
 	],
+	pages: {
+		signIn: "/login",
+		error: "/login",
+	},
+	callbacks: {
+		async signIn({ user, account, profile }) {
+			await connectToDatabase();
+
+			if (account?.provider === "google") {
+				try {
+					const existingUser = await userModel.findOne({ email: user.email });
+
+					if (!existingUser) {
+						// Use Google profile ID as the password
+						const rawPassword = profile?.sub || user.id;
+						const hashedPassword = await bcrypt.hash(rawPassword!, 10);
+
+						await userModel.create({
+							email: user.email,
+							name: user.name,
+							image: user.image,
+							password: hashedPassword,
+						});
+					}
+				} catch {
+					return false;
+				}
+			}
+
+			return true;
+		},
+	},
 });
