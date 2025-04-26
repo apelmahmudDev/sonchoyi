@@ -34,3 +34,4 @@ export { default as HamburgerMenuIcon } from "./HamburgerMenuIcon";
 export { default as LoaderIcon } from "./LoaderIcon";
 export { default as InfoIcon } from "./InfoIcon";
 export { default as ErrorIcon } from "./ErrorIcon";
+export { default as ChartMan } from "./ChartMan";

@@ -29,7 +29,7 @@ export default function FeaturesSection() {
 			className="relative py-24 bg-gradient-to-br from-[#f4f7ff] to-[#e7ecff] dark:from-[#0f172a] dark:to-[#1e293b] overflow-hidden"
 		>
 			{/* Optional noise/texture overlay */}
-			<div className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-20 feature-bg bg-cover bg-no-repeat bg-top z-0 bg-fixed" />
+			<div className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-20 bg-feature bg-cover bg-no-repeat bg-top z-0 bg-fixed" />
 
 			<div className="relative z-10 max-w-7xl mx-auto px-6">
 				<div className="text-center mb-16 space-y-4">

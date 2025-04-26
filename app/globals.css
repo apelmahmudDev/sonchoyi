@@ -200,31 +200,22 @@
 	}
 }
 
-.bg {
+.bg-welcome {
 	background-image: linear-gradient(
 			to right,
 			rgba(30, 34, 37, 0.88) 0%,
-			#141a21 75%
+			#0b0f19 75%
 		),
-		url(https://assets.minimals.cc/public/assets/background/background-5.webp);
-
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
-	height: 320px;
+		url("../assets/images/background/wave.png");
 }
-.ballance-bg {
+
+.bg-balance {
 	background-image: linear-gradient(
 			to bottom,
 			rgba(30, 34, 37, 0.88) 0%,
-			#141a21 75%
+			#0b0f19 75%
 		),
-		url(https://assets.minimals.cc/public/assets/background/background-5.webp);
-
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
-	height: 320px;
+		url("../assets/images/background/particle-abstract-bg.png");
 }
 
 .dropdown-list-area {
@@ -320,6 +311,6 @@ input:-webkit-autofill::first-line {
 		url(https://pub-c5e31b5cdafb419fb247a8ac2e78df7a.r2.dev/public/assets/background/background-3-blur.webp);
 }
 
-.feature-bg {
-	background-image: url("../assets/images/background/feature-bg.jpg");
+.bg-feature {
+	background-image: url("../assets/images/background/feature-bg.webp");
 }
