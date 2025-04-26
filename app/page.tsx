@@ -1,152 +1,91 @@
-import { doSignOut } from "./actions";
-import Image from "next/image";
-import Link from "next/link";
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import Navigation from "@/components/Navigation";
-import BankImg from "@/assets/images/background/bank.png";
-import HeroImg from "@/assets/images/background/bg.webp";
-import MyAccountImg from "@/assets/images/account-presentation.png";
-import { LogoutIcon, SuccessIcon } from "@/components/icon";
+import { ArrowRight } from "lucide-react";
+import Navbar from "@/components/landing/Navbar";
+import FeaturesSection from "@/components/landing/FeaturesSection";
+import ScreenshotPreviewSection from "@/components/landing/ScreenshotPreviewSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import StatsChartSection from "@/components/landing/StatsChartSection";
+import TestimonialsSection from "@/components/landing/TestimonialsSection";
+import PricingSection from "@/components/landing/PricingSection";
+import ComparisonSection from "@/components/landing/ComparisonSection";
+import CTASection from "@/components/landing/CTASection";
+import FAQSection from "@/components/landing/FAQSection";
+import Footer from "@/components/landing/Footer";
 
-export default async function Home() {
-
+export default function HeroSection() {
 	return (
 		<>
-			<header>
-				<Navigation />
-			</header>
-			<main>
-				<section className="relative h-screen bg-[#76e7f8]">
-					<Image
-						alt="Banner"
-						src={HeroImg}
-						placeholder="blur"
-						quality={100}
-						fill
-						sizes="100vw"
-						style={{
-							objectFit: "initial",
-						}}
-					/>
-					<div className="absolute w-full h-full">
-						<div className="h-full max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-10 justify-between items-center">
-							<div className="max-w-xl">
-								<form action={doSignOut}>
-									<button
-										type="submit"
-										className="rounded-2xl flex items-center gap-2.5 cursor-pointer"
-									>
-										<div className="flex items-center justify-center h-[52px] w-[52px] bg-[#EEE5FF] rounded-2xl">
-											<LogoutIcon />
-										</div>
-										<p className="text-base font-medium text-[#292B2D]">
-											Logout
-										</p>
-									</button>
-								</form>
-								<p className="mt-[130px] md:mt-0 text-base mb-3 text-black">
-									Smart Money Management
-								</p>
-								<h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-left uppercase text-black">
-									<span className="text-[#00A86B]">Empower Yourself</span>{" "}
-									<br /> Gain Total Control Over Your Money
-								</h1>
-								<ul className="mt-5 flex flex-col gap-2">
-									<li className="text-left text-black text-sm sm:text-base flex items-start gap-2">
-										<SuccessIcon className="w-4 h-4 mt-[3.5px]" />
-										<span>
-											Become your own money manager and make every cent count
-										</span>
-									</li>
-									<li className="text-left text-black text-sm sm:text-base flex items-start gap-2">
-										<SuccessIcon className="w-4 h-4 mt-[3.5px]" />
-										<span>
-											Track your transaction easily, with categories and
-											financial report
-										</span>
-									</li>
-									<li className="text-left text-black text-sm sm:text-base flex items-start gap-2">
-										<SuccessIcon className="w-4 h-4 mt-[3.5px]" />
-										<span>
-											Setup your budget for each category so you in control
-										</span>
-									</li>
-								</ul>
-								<Link href="/login">
-									<Button className="mt-10">Get started</Button>
-								</Link>
-							</div>
-							<div>
-								<Image src={BankImg} width={500} height={500} alt="Bank" />
-							</div>
-						</div>
-					</div>
-				</section>
-				{/* key benefits */}
-				<section className="bg-white mt-[200px] sm:mt-[300px] md:mt-0 py-20">
-					<div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-20">
-						<div className="relative lg:max-w-lg w-full bg-accent h-auto rounded-lg px-10 py-3 order-last lg:order-first">
-							<div className="shadow-md rounded-lg overflow-hidden border border-gray-200">
-								<Image src={MyAccountImg} alt="Bank" />
-							</div>
-						</div>
-						<div>
-							<h2 className="text-left text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#00A86B]">
-								Discover key benefits to manage and grow your finances.
-							</h2>
-							<p className="text-left text-base text-gray-600 py-5">
-								Maximize savings, track expenses, and stay in control.
-							</p>
-							<div className="mt-3 flex flex-col gap-8">
-								{/* Effortless Expense Tracking */}
-								<section>
-									<div className="flex items-center gap-3">
-										<SuccessIcon className="w-5 h-5" aria-hidden="true" />
-										<h3 className="text-left text-black text-lg font-semibold">
-											Effortless Expense Tracking
-										</h3>
-									</div>
-									<p className="mt-2 ml-8 text-left text-gray-600">
-										Keep track of your daily expenses in one place. Get
-										real-time updates and insights to stay organized, avoid
-										overspending, and make informed financial decisions.
-									</p>
-								</section>
+			<Navbar />
+			<section className="min-h-screen flex items-center justify-center bg-background px-6 py-16 transition-colors duration-300">
+				<div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-12">
+					{/* Left Content */}
+					<motion.div
+						initial={{ opacity: 0, y: 40 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.6 }}
+						className="text-center md:text-left"
+					>
+						<h1 className="text-5xl font-extrabold text-foreground mb-4 leading-tight">
+							Manage Your <span className="text-primary">Money Smartly</span>{" "}
+							<br />
+							with <span className="text-accent">Sonchoyi</span>
+						</h1>
+						<p className="text-muted-foreground text-lg max-w-xl mb-6">
+							Track every penny, create budgets like a boss, and analyze your
+							spending with smooth, interactive charts.
+						</p>
+						<Button size="lg" className="gap-2">
+							Get Started
+							<ArrowRight className="w-5 h-5" />
+						</Button>
+					</motion.div>
 
-								{/* Smart Budget Planning */}
-								<section>
-									<div className="flex items-center gap-3">
-										<SuccessIcon className="w-5 h-5" aria-hidden="true" />
-										<h3 className="text-left text-black text-lg font-semibold">
-											Smart Budget Planning
-										</h3>
-									</div>
-									<p className="mt-2 ml-8 text-left text-gray-600">
-										Set personalized budgets for your goals. Track spending
-										habits, get alerts when nearing limits, and adjust to stay
-										on track.
-									</p>
-								</section>
+					{/* Right Dashboard Preview */}
 
-								{/* Seamless Financial Insights */}
-								<section>
-									<div className="flex items-center gap-3">
-										<SuccessIcon className="w-5 h-5" aria-hidden="true" />
-										<h3 className="text-left text-black text-lg font-semibold">
-											Seamless Financial Insights
-										</h3>
-									</div>
-									<p className="mt-2 ml-8 text-left text-gray-600">
-										Visualize spending patterns with interactive charts and
-										reports. Identify areas to cut costs, analyze trends, and
-										gain control over your financial future.
-									</p>
-								</section>
-							</div>
+					<motion.div
+						initial={{ opacity: 0, scale: 0.95 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.8, delay: 0.2 }}
+						className="relative w-full max-w-md"
+					>
+						{/* Glowing animated blob */}
+						<div className="absolute -top-10 -left-10 w-72 h-72 bg-accent blur-3xl rounded-full opacity-30 animate-pulse z-0" />
+
+						{/* Card preview */}
+						<div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border bg-card text-card-foreground">
+							<img
+								src="https://img.freepik.com/premium-vector/flat-character-vector-budget-report_9206-2583.jpg"
+								alt="Sonchoyi Dashboard"
+								className="w-full h-auto"
+							/>
 						</div>
-					</div>
-				</section>
-			</main>
+
+						{/* Floating card */}
+						<motion.div
+							initial={{ y: 40, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ delay: 0.5, duration: 0.6 }}
+							className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl backdrop-blur-md bg-card/70 shadow-xl border text-sm font-medium text-foreground z-20"
+						>
+							📈 Your savings grew by 18% this month!
+						</motion.div>
+					</motion.div>
+				</div>
+			</section>
+			<FeaturesSection />
+			<ScreenshotPreviewSection />
+			<HowItWorksSection />
+			<StatsChartSection />
+			<TestimonialsSection />
+			<PricingSection />
+			<ComparisonSection />
+			<CTASection />
+			<FAQSection />
+			<Footer />
 		</>
 	);
 }
