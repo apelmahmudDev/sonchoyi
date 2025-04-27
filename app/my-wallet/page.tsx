@@ -34,7 +34,7 @@ export default async function MyWallet() {
 	const transactions = await getTransactionsByUserId(user?.id as string);
 
 	return (
-		<div>
+		<section className="flex flex-col gap-6">
 			<div className="grid grid-cols-[1fr_469px] gap-6">
 				<Card className="h-[310px] bg-welcome bg-cover bg-no-repeat bg-bottom p-3 dark:border border-[#1C252E]">
 					<CardContent className="h-full">
@@ -136,7 +136,7 @@ export default async function MyWallet() {
 					</CardContent>
 				</Card>
 			</div> */}
-			<div className="my-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 				<Card className="bg-green-50/60 dark:bg-green-500/10 border border-green-200 dark:border-green-400/30">
 					<CardContent>
 						<div>
@@ -144,7 +144,7 @@ export default async function MyWallet() {
 								Total Income
 							</h2>
 							<p className="text-4xl font-bold text-green-900 dark:text-green-100">
-								৳ 25,600
+								৳ {mainAccount?.totalIncome}
 							</p>
 						</div>
 						<div className="flex items-end justify-between mt-5">
@@ -165,7 +165,7 @@ export default async function MyWallet() {
 								Total Expense
 							</h2>
 							<p className="text-4xl font-bold text-red-900 dark:text-red-100">
-								৳ 25,600
+								৳ {mainAccount?.totalExpense}
 							</p>
 						</div>
 						<div className="flex items-end justify-between mt-5">
@@ -199,7 +199,7 @@ export default async function MyWallet() {
 					</CardContent>
 				</Card>
 			</div>
-			<div className="mt-[23px] grid grid-cols-2 gap-6">
+			<div className="grid grid-cols-2 gap-6">
 				{/* Spend Frequency */}
 				<Card>
 					<CardHeader>
@@ -243,6 +243,6 @@ export default async function MyWallet() {
 					</CardContent>
 				</Card>
 			</div>
-		</div>
+		</section>
 	);
 }
