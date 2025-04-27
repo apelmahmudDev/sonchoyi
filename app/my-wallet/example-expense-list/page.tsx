@@ -15,12 +15,11 @@ export const metadata: Metadata = {
 // Simulate a database read for tasks.
 async function getTasks() {
 	const data = await fs.readFile(
-		// path.join(process.cwd(), "app/app/my-wallet/examples/data/tasks/tasks.json")
 		path.join(
 			process.cwd(),
 			"app",
 			"my-wallet",
-			"example",
+			"example-expense-list",
 			"data",
 			"tasks.json"
 		)

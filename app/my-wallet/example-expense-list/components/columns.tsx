@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { typeIconMap } from "../data/type-icon-map";
+import { DefaultIcon } from "@/components/icon";
 
 export const columns: ColumnDef<Task>[] = [
 	{
@@ -34,11 +36,56 @@ export const columns: ColumnDef<Task>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: "id",
+		accessorKey: "type",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Task" />
+			<DataTableColumnHeader column={column} title="Type" />
 		),
-		cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+		// cell: ({ row }) => <div className="w-[80px]">{row.getValue("type")}</div>,
+		// cell: ({ row }) => (
+		// 	<div className="w-[170px] flex items-center gap-2">
+		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#FCEED4] rounded-sm">
+		// 			<ShoppingBagIcon />
+		// 		</div>
+		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#BDDCFF] rounded-sm">
+		// 			<TransportationIcon />
+		// 		</div>
+		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#CFFAEA] rounded-sm">
+		// 			<SalaryIcon />
+		// 		</div>
+		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#FDD5D7] rounded-sm">
+		// 			<FoodIcon />
+		// 		</div>
+		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#EEE5FF] rounded-sm">
+		// 			<SubscriptionIcon />
+		// 		</div>
+		// 		<span className="font-semibold text-gray-800 dark:text-white text-sm">
+		// 			{row.getValue("type")}
+		// 		</span>
+		// 	</div>
+		// ),
+		cell: ({ row }) => {
+			const type: string = row.getValue("type");
+			const iconData = typeIconMap[type as keyof typeof typeIconMap];
+
+			// fallback values if type not found
+			const Icon = iconData?.icon || DefaultIcon;
+			const bg = iconData?.bg || "var(--default-bg)";
+
+			return (
+				<div className="w-[170px] flex items-center gap-3">
+					<div
+						className="shrink-0 flex items-center justify-center h-10 w-10 rounded-md"
+						style={{ backgroundColor: bg }}
+					>
+						{<Icon />}
+					</div>
+
+					<span className="font-semibold text-gray-800 dark:text-white text-sm">
+						{type}
+					</span>
+				</div>
+			);
+		},
 		enableSorting: false,
 		enableHiding: false,
 	},

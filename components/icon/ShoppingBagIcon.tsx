@@ -1,14 +1,15 @@
 import * as React from "react";
-
 interface SvgProps {
 	className?: string;
 }
 
-const ShoppingBagIcon: React.FC<SvgProps> = (props) => (
+const SubscriptionIcon: React.FC<SvgProps> = (props) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		width={40}
-		height={40}
+		width={30}
+		height={30}
+		viewBox="0 0 40 40"
+		preserveAspectRatio="xMidYMid meet"
 		fill="none"
 		{...props}
 	>
@@ -19,4 +20,4 @@ const ShoppingBagIcon: React.FC<SvgProps> = (props) => (
 	</svg>
 );
 
-export default ShoppingBagIcon;
+export default SubscriptionIcon;

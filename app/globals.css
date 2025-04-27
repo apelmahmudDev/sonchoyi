@@ -137,6 +137,16 @@
 	--sidebar-ring: #7f5af0;
 
 	--radius: 0.75rem;
+
+	--shopping-bg: #fceed4;
+	--transportation-bg: #bddcff;
+	--salary-bg: #cffaea;
+	--food-bg: #fdd5d7;
+	--subscription-bg: #eee5ff;
+	--rent-bg: #c3ddfd;
+	--utilities-bg: #d1e9ff;
+	--entertainment-bg: #fff7e6;
+	--default-bg: #e5e7eb;
 }
 
 .dark {
@@ -183,6 +193,16 @@
 	--sidebar-accent-foreground: #0f172a;
 	--sidebar-border: rgba(255, 255, 255, 0.08);
 	--sidebar-ring: #7f5af0;
+
+	--shopping-bg: #3b2f1e;
+	--transportation-bg: #1e2d3b;
+	--salary-bg: #1e3b2e;
+	--food-bg: #3b1e1e;
+	--subscription-bg: #2c1e3b;
+	--rent-bg: #1e40af;
+	--utilities-bg: #1e40af;
+	--entertainment-bg: #b45309;
+	--default-bg: #374151;
 }
 
 @layer base {
