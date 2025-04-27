@@ -12,6 +12,7 @@ import {
 
 import { ObjectId } from "mongodb";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
+import ChartExample from "./_components/ChartExample";
 
 export interface Transaction {
 	id: string;
@@ -198,6 +199,9 @@ export default async function MyWallet() {
 						</div>
 					</CardContent>
 				</Card>
+			</div>
+			<div>
+				<ChartExample />
 			</div>
 			<div className="grid grid-cols-2 gap-6">
 				{/* Spend Frequency */}
