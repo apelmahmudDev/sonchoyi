@@ -63,7 +63,7 @@ function FeatureCard({ icon, title, desc, delay }: any) {
 			initial={{ opacity: 0, y: 40 }}
 			animate={isInView ? { opacity: 1, y: 0 } : {}}
 			transition={{ duration: 0.6, ease: "easeOut", delay }}
-			className="group p-6 rounded-2xl border bg-card text-card-foreground shadow-sm transition hover:shadow-lg hover:border-primary/40 relative overflow-hidden"
+			className="group p-6 rounded-2xl border bg-[#f3f8f9] dark:bg-[#111827] text-card-foreground shadow-sm transition hover:shadow-lg hover:border-primary/40 relative overflow-hidden"
 		>
 			{/* Subtle glowing background blob */}
 			<div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/20 blur-2xl rounded-full opacity-0 group-hover:opacity-60 transition duration-300 z-0" />

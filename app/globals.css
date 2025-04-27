@@ -95,7 +95,8 @@
 	--background: oklch(0.985 0.008 220); /* very soft icy blue */
 	--foreground: oklch(0.2 0.01 260); /* dark navy text */
 
-	--card: oklch(0.975 0.005 220);
+	/* --card: oklch(0.975 0.005 220); */
+	--card: #ffffff;
 	--card-foreground: var(--foreground);
 
 	--popover: #ffffff;
@@ -105,7 +106,7 @@
 	--primary-foreground: #ffffff;
 
 	--secondary: #d1d5db; /* soft gray */
-	--secondary-foreground: #111827;
+	--secondary-foreground: #111823;
 
 	--muted: #e0e7ff; /* soft periwinkle */
 	--muted-foreground: #475569;
@@ -142,10 +143,11 @@
 	--background: #0b0f19; /* rich midnight */
 	--foreground: #f1f5f9; /* cool light gray */
 
-	--card: #111827;
+	/* --card: #111827; card, popover secondary-foreground*/
+	--card: #111823;
 	--card-foreground: #f8fafc;
 
-	--popover: #111827;
+	--popover: #111823;
 	--popover-foreground: #f8fafc;
 
 	--primary: #7f5af0;
