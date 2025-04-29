@@ -21,7 +21,7 @@ async function getTasks() {
 			process.cwd(),
 			"app",
 			"my-wallet",
-			"example-expense-list",
+			"example",
 			"data",
 			"tasks.json"
 		)

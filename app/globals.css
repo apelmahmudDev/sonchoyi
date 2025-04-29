@@ -138,6 +138,7 @@
 
 	--radius: 0.75rem;
 
+	/* icon-bg income/expense */
 	--shopping-bg: #fceed4;
 	--transportation-bg: #bddcff;
 	--salary-bg: #cffaea;
@@ -147,6 +148,18 @@
 	--utilities-bg: #d1e9ff;
 	--entertainment-bg: #fff7e6;
 	--default-bg: #e5e7eb;
+	--healthcare-bg: oklch(95% 0.05 150);
+	--travel-bg: oklch(95% 0.07 280);
+	--other-bg: oklch(95% 0.03 30);
+	--bonus-bg: oklch(95% 0.07 100);
+	--interest-bg: oklch(95% 0.08 220);
+	--business-bg: oklch(95% 0.06 60);
+	--investments-bg: oklch(95% 0.09 190);
+	--freelance-bg: oklch(95% 0.08 40);
+	--savings-bg: oklch(95% 0.04 120);
+	--pension-bg: oklch(95% 0.04 90);
+	--tutoring-bg: oklch(95% 0.06 260);
+	--selling-bg: oklch(95% 0.06 20);
 }
 
 .dark {
@@ -194,6 +207,7 @@
 	--sidebar-border: rgba(255, 255, 255, 0.08);
 	--sidebar-ring: #7f5af0;
 
+	/* icon-bg income/expense */
 	--shopping-bg: #3b2f1e;
 	--transportation-bg: #1e2d3b;
 	--salary-bg: #1e3b2e;
@@ -203,6 +217,18 @@
 	--utilities-bg: #1e40af;
 	--entertainment-bg: #b45309;
 	--default-bg: #374151;
+	--healthcare-bg: oklch(25% 0.05 150);
+	--travel-bg: oklch(25% 0.07 280);
+	--other-bg: oklch(25% 0.03 30);
+	--bonus-bg: oklch(25% 0.07 100);
+	--interest-bg: oklch(25% 0.08 220);
+	--business-bg: oklch(25% 0.06 60);
+	--investments-bg: oklch(25% 0.09 190);
+	--freelance-bg: oklch(25% 0.08 40);
+	--savings-bg: oklch(25% 0.04 120);
+	--pension-bg: oklch(25% 0.04 90);
+	--tutoring-bg: oklch(25% 0.06 260);
+	--selling-bg: oklch(25% 0.06 20);
 }
 
 @layer base {

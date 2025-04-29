@@ -8,6 +8,15 @@ import {
 	RentIcon,
 	UtilitiesIcon,
 	EntertainmentIcon,
+	HealthCareIcon,
+	TravelIcon,
+	OtherIcon,
+	DateSaverIcon,
+	FinanceIcon,
+	RealEstateAgentIcon,
+	UniverseIcon,
+	TutorIcon,
+	SellIcon,
 } from "@/components/icon";
 
 export const typeIconMap = {
@@ -45,6 +54,54 @@ export const typeIconMap = {
 	},
 	Entertainment: {
 		icon: EntertainmentIcon,
-		bg: "var(--entertainment-bg)",
+		bg: "var(--interest-bg)",
+	},
+	Healthcare: {
+		icon: HealthCareIcon,
+		bg: "var(--healthcare-bg)",
+	},
+	Travel: {
+		icon: TravelIcon,
+		bg: "var(--travel-bg)",
+	},
+	Bonus: {
+		icon: DateSaverIcon,
+		bg: "var(--bonus-bg)",
+	},
+	Interest: {
+		icon: DateSaverIcon,
+		bg: "var(--interest-bg)",
+	},
+	Business: {
+		icon: FinanceIcon,
+		bg: "var(--business-bg)",
+	},
+	Investments: {
+		icon: RealEstateAgentIcon,
+		bg: "var(--investments-bg)",
+	},
+	Freelance: {
+		icon: UniverseIcon,
+		bg: "var(--freelance-bg)",
+	},
+	Savings: {
+		icon: SalaryIcon,
+		bg: "var(--savings-bg)",
+	},
+	Pension: {
+		icon: SalaryIcon,
+		bg: "var(--pension-bg)",
+	},
+	Tutoring: {
+		icon: TutorIcon,
+		bg: "var(--tutoring-bg)",
+	},
+	Selling: {
+		icon: SellIcon,
+		bg: "var(--selling-bg)",
+	},
+	Other: {
+		icon: OtherIcon,
+		bg: "var(--other-bg)",
 	},
 } as const;
