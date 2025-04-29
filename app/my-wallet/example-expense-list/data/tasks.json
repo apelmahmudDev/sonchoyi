@@ -1,149 +1,128 @@
 [
 	{
 		"type": "Shopping",
-		"title": "You can't compress the program without quantifying the open-source SSD pixel!",
-		"status": "in progress",
-		"label": "documentation",
-		"priority": "medium"
+		"description": "Bought new clothes",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$120"
 	},
 	{
 		"type": "Subscription",
-		"title": "Try to calculate the EXE feed, maybe it will index the multi-byte pixel!",
-		"status": "backlog",
-		"label": "documentation",
-		"priority": "medium"
+		"description": "Netflix monthly payment",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$15"
 	},
 	{
 		"type": "Food",
-		"title": "We need to bypass the neural TCP card!",
-		"status": "todo",
-		"label": "bug",
-		"priority": "high"
+		"description": "Dinner at a restaurant",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$30"
 	},
 	{
 		"type": "Salary",
-		"title": "The SAS interface is down, bypass the open-source pixel so we can back up the PNG bandwtypeth!",
-		"status": "backlog",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Monthly salary received",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$1500"
 	},
 	{
 		"type": "Transportation",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Ride-sharing trip fare",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$8"
 	},
 	{
 		"type": "Education",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Bought an online course",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$60"
 	},
 	{
 		"type": "Rent",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Paid apartment rent",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$700"
 	},
 	{
 		"type": "Utilities",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Electricity bill payment",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$45"
 	},
 	{
 		"type": "Entertainment",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Movie night tickets",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$20"
 	},
 	{
 		"type": "Healthcare",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Doctor appointment",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$100"
 	},
 	{
 		"type": "Travel",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Weekend trip expenses",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$200"
 	},
 	{
 		"type": "Other",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Miscellaneous expense",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$50"
 	},
 	{
 		"type": "Bonus",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Year-end bonus received",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$300"
 	},
 	{
 		"type": "Interest",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Bank savings interest",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$25"
 	},
 	{
 		"type": "Business",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Monthly business profit",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$900"
 	},
 	{
 		"type": "Investments",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Dividend from stocks",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$45"
 	},
 	{
 		"type": "Freelance",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Client payment for project",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$250"
 	},
 	{
 		"type": "Savings",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Transferred to savings account",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$100"
 	},
 	{
 		"type": "Pension",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Monthly pension received",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$600"
 	},
 	{
 		"type": "Tutoring",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Earned from tutoring session",
+		"createdAt": "29 Apr 2025 9:27 pm",
+		"amount": "$80"
 	},
 	{
 		"type": "Selling",
-		"title": "I'll parse the wireless SSL protocol, that should driver the API panel!",
-		"status": "canceled",
-		"label": "feature",
-		"priority": "medium"
+		"description": "Sold old laptop",
+		"createdAt": "28 Apr 2025 9:27 pm",
+		"amount": "$350"
 	}
 ]

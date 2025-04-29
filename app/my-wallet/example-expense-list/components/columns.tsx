@@ -1,9 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { labels, priorities, statuses } from "../data/data";
 import { Task } from "../data/schema";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
@@ -40,29 +38,6 @@ export const columns: ColumnDef<Task>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Type" />
 		),
-		// cell: ({ row }) => <div className="w-[80px]">{row.getValue("type")}</div>,
-		// cell: ({ row }) => (
-		// 	<div className="w-[170px] flex items-center gap-2">
-		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#FCEED4] rounded-sm">
-		// 			<ShoppingBagIcon />
-		// 		</div>
-		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#BDDCFF] rounded-sm">
-		// 			<TransportationIcon />
-		// 		</div>
-		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#CFFAEA] rounded-sm">
-		// 			<SalaryIcon />
-		// 		</div>
-		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#FDD5D7] rounded-sm">
-		// 			<FoodIcon />
-		// 		</div>
-		// 		<div className="shrink-0 flex items-center justify-center h-[40px] w-[40px] bg-[#EEE5FF] rounded-sm">
-		// 			<SubscriptionIcon />
-		// 		</div>
-		// 		<span className="font-semibold text-gray-800 dark:text-white text-sm">
-		// 			{row.getValue("type")}
-		// 		</span>
-		// 	</div>
-		// ),
 		cell: ({ row }) => {
 			const type: string = row.getValue("type");
 			const iconData = typeIconMap[type as keyof typeof typeIconMap];
@@ -90,43 +65,29 @@ export const columns: ColumnDef<Task>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: "title",
+		accessorKey: "description",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Title" />
+			<DataTableColumnHeader column={column} title="Description" />
 		),
 		cell: ({ row }) => {
-			const label = labels.find((label) => label.value === row.original.label);
-
 			return (
 				<div className="flex space-x-2">
-					{label && <Badge variant="outline">{label.label}</Badge>}
 					<span className="max-w-[500px] truncate font-medium">
-						{row.getValue("title")}
+						{row.getValue("description")}
 					</span>
 				</div>
 			);
 		},
 	},
 	{
-		accessorKey: "status",
+		accessorKey: "createdAt",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Status" />
+			<DataTableColumnHeader column={column} title="Created at" />
 		),
 		cell: ({ row }) => {
-			const status = statuses.find(
-				(status) => status.value === row.getValue("status")
-			);
-
-			if (!status) {
-				return null;
-			}
-
 			return (
 				<div className="flex w-[100px] items-center">
-					{status.icon && (
-						<status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-					)}
-					<span>{status.label}</span>
+					<span>{row.getValue("createdAt")}</span>
 				</div>
 			);
 		},
@@ -135,25 +96,16 @@ export const columns: ColumnDef<Task>[] = [
 		},
 	},
 	{
-		accessorKey: "priority",
+		accessorKey: "amount",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Priority" />
+			<DataTableColumnHeader column={column} title="Amount" />
 		),
 		cell: ({ row }) => {
-			const priority = priorities.find(
-				(priority) => priority.value === row.getValue("priority")
-			);
-
-			if (!priority) {
-				return null;
-			}
-
 			return (
 				<div className="flex items-center">
-					{priority.icon && (
-						<priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-					)}
-					<span>{priority.label}</span>
+					<span>
+						<span>{row.getValue("amount")}</span>
+					</span>
 				</div>
 			);
 		},
