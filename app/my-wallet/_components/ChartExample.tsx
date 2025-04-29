@@ -117,6 +117,7 @@ const getChartOptions = (
 	grid: {
 		show: true,
 		borderColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "#F4F4F4",
+		strokeDashArray: 3,
 	},
 	fill: {
 		type: "gradient",
