@@ -13,6 +13,7 @@ import {
 import { ObjectId } from "mongodb";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import ChartExample from "./_components/ChartExample";
+import RecentTransactionsTable from "./_components/RecentTransactionsTable";
 
 export interface Transaction {
 	id: string;
@@ -200,7 +201,9 @@ export default async function MyWallet() {
 					</CardContent>
 				</Card>
 			</div>
-			<div>
+			{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
+			<div className="grid grid-cols-[569px_1fr] gap-6">
+				<RecentTransactionsTable transactions={transactions} />
 				<ChartExample />
 			</div>
 			<div className="grid grid-cols-2 gap-6">
