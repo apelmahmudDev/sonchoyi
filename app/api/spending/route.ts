@@ -10,7 +10,7 @@ export async function GET(request: Request) {
 		await connectToDatabase();
 
 		const { searchParams } = new URL(request.url);
-		const filterType = searchParams.get("type"); // 'month', 'week', 'year', 'today'
+		const frequency = searchParams.get("frequency"); // 'month', 'week', 'year', 'today'
 		const userId = searchParams.get("userId");
 
 		if (!userId) {
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 		let startDate;
 		let groupingField;
 
-		switch (filterType) {
+		switch (frequency) {
 			case "month":
 				startDate = startOfYear(new Date());
 				groupingField = { $month: "$date" };
@@ -77,7 +77,7 @@ export async function GET(request: Request) {
 
 		// Mapping the aggregation result to human-readable labels
 		const formattedData = spending.map((item) => ({
-			label: formatLabel(filterType, item._id),
+			label: formatLabel(frequency, item._id),
 			totalSpent: item.totalSpent,
 			count: item.count,
 		}));
@@ -110,15 +110,7 @@ const formatLabel = (type: string, value: number) => {
 		"Nov",
 		"Dec",
 	];
-	const weekDays = [
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-	];
+	const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 	switch (type) {
 		case "month":
