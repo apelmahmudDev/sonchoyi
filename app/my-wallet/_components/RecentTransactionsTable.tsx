@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
 	Table,
 	TableBody,
@@ -7,14 +8,18 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { DefaultIcon } from "@/components/icon";
-import { format, isToday, isYesterday, formatDistanceToNow } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { ArrowRightIcon } from "lucide-react";
 import { typeIconMap } from "@/constants/type-icon-map";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowRightIcon } from "lucide-react";
+import { format, isToday, isYesterday, formatDistanceToNow } from "date-fns";
+import { Transaction } from "../page";
 
-export default function RecentTransactionsTable({ transactions }: any) {
+export default function RecentTransactionsTable({
+	transactions,
+}: {
+	transactions: Transaction[];
+}) {
 	return (
 		<Card className="pt-6 pb-4">
 			<CardContent className="px-0">
@@ -38,7 +43,7 @@ export default function RecentTransactionsTable({ transactions }: any) {
 							{transactions?.length &&
 								transactions.slice(0, 4).map((transaction) => {
 									const category = transaction?.category;
-									const iconData = typeIconMap[category] || {};
+									const iconData = typeIconMap[category as keyof typeof typeIconMap] || {};
 									const Icon = iconData.icon || DefaultIcon;
 									const bgColor = iconData.bg || "var(--default-bg)";
 
@@ -89,8 +94,8 @@ export default function RecentTransactionsTable({ transactions }: any) {
 													}`}
 												>
 													{transaction?.type === "expense"
-														? `- $${transaction?.amount}`
-														: `+ $${transaction?.amount}`}
+														? `- ৳${transaction?.amount}`
+														: `+ ৳${transaction?.amount}`}
 												</p>
 											</TableCell>
 										</TableRow>
