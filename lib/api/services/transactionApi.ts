@@ -11,9 +11,9 @@ export const userApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getSpends: builder.query<
 			ApiResponse<SpendingData[]>,
-			{ type: string; userId: string }
+			{ userId: string, frequency: string, year?: number }
 		>({
-			query: ({ type, userId }) => `/spending?type=${type}&userId=${userId}`,
+			query: ({ userId, frequency, year = ""}) => `/spending?userId=${userId}&frequency=${frequency}&year=${year}`
 		}),
 	}),
 	overrideExisting: false,
