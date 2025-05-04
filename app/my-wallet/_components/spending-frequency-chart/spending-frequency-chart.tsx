@@ -27,7 +27,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 const SpendingFrequencyChart: React.FC = () => {
 	const { resolvedTheme } = useTheme();
 	const { data: session } = useSession();
-	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("monthly");
+	const [timePeriod, setTimePeriod] = useState<TimePeriodKey>("weekly");
 	const [chartData, setChartData] = useState(defaultTimePeriods);
 
 	const { data: { data: user } = {} } = useGetUserByEmailQuery(
@@ -59,16 +59,16 @@ const SpendingFrequencyChart: React.FC = () => {
 					<h3 className="text-lg font-semibold">Spending Frequency</h3>
 					<Select
 						onValueChange={(e) => setTimePeriod(e as TimePeriodKey)}
-						defaultValue="monthly"
+						defaultValue="weekly"
 					>
 						<SelectTrigger className="w-[120px] h-10">
 							<SelectValue placeholder="Period" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
+								<SelectItem value="daily">Daily</SelectItem>
 								<SelectItem value="weekly">Weekly</SelectItem>
 								<SelectItem value="monthly">Monthly</SelectItem>
-								<SelectItem value="yearly">Yearly</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
