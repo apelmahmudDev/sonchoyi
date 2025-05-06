@@ -14,6 +14,7 @@ import { typeIconMap } from "@/constants/type-icon-map";
 import { Card, CardContent } from "@/components/ui/card";
 import { format, isToday, isYesterday, formatDistanceToNow } from "date-fns";
 import { Transaction } from "../page";
+import FormattedAmount from "@/components/ui/formatted-amount";
 
 export default function RecentTransactionsTable({
 	transactions,
@@ -93,9 +94,11 @@ export default function RecentTransactionsTable({
 															: "text-green-400"
 													}`}
 												>
+													
 													{transaction?.type === "expense"
-														? `- ৳${transaction?.amount}`
-														: `+ ৳${transaction?.amount}`}
+														? <FormattedAmount prefix="- " amount={transaction?.amount}/>
+														: <FormattedAmount prefix="+ " amount={transaction?.amount}/>
+													}
 												</p>
 											</TableCell>
 										</TableRow>

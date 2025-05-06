@@ -144,7 +144,7 @@ export default async function MyWallet() {
 			</div>
 
 			{/* transactions and spending chart */}
-			<div className="grid grid-cols-[569px_1fr] gap-6">
+			<div className="grid grid-cols-[589px_1fr] gap-6">
 				<RecentTransactionsTable transactions={transactions} />
 				<SpendingFrequencyChart />
 			</div>

@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/formatCurrency";
 import { ApexOptions } from "apexcharts";
 
 export const getChartOptions = (
@@ -47,6 +48,7 @@ export const getChartOptions = (
     tooltip: {
         theme: isDarkMode ? "dark" : "light",
         x: { format: "dd/MM/yy HH:mm" },
+        y: { formatter: (val: number) => formatCurrency(val)},
     },
     xaxis: {
         categories: xaxisLabels,
