@@ -5,7 +5,7 @@ import { Task } from "../data/schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { typeIconMap } from "../data/type-icon-map";
+import { typeIconMap } from "../../../../constants/type-icon-map";
 import { DefaultIcon } from "@/components/icon";
 
 export const columns: ColumnDef<Task>[] = [
