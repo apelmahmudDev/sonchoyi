@@ -45,7 +45,7 @@ export default async function MyWallet() {
 								<h1 className="text-2xl font-bold mb-1 text-white">
 									Welcome back 👋
 								</h1>
-								<p className="text-2xl font-bold text-white">Apel Mahmud</p>
+								<p className="text-2xl font-bold text-white">{user?.name}</p>
 								<p className="mt-3 text-white opacity-65 max-w-sm text-sm font-medium">
 									Manage your finances smartly and stay in control of your
 									future. Let’s make today productive!
@@ -128,7 +128,7 @@ export default async function MyWallet() {
 							<h2 className="font-semibold text-xs uppercase tracking-wide text-muted-foreground mb-3">
 								Active accounts
 							</h2>
-							<p className="text-4xl font-bold text-foreground">3</p>
+							<p className="text-4xl font-bold text-foreground">{mainAccount?.linkedAccounts?.length}</p>
 						</div>
 						<div className="flex items-end justify-between mt-5">
 							<div className="flex items-center text-green-500 text-sm font-semibold">
