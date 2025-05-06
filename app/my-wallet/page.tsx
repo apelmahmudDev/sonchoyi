@@ -12,6 +12,7 @@ import { ObjectId } from "mongodb";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import RecentTransactionsTable from "./_components/RecentTransactionsTable";
 import { SpendingFrequencyChart } from "./_components/spending-frequency-chart";
+import FormattedAmount from "@/components/ui/formatted-amount";
 
 export interface Transaction {
 	id: string;
@@ -60,7 +61,7 @@ export default async function MyWallet() {
 					<CardContent className="relative h-full flex flex-col items-center justify-center px-6 py-8">
 						<div className="flex flex-col items-center gap-4">
 							<h1 className="text-5xl font-extrabold text-white tracking-tight">
-								৳ {mainAccount?.totalBalance ?? "0.00"}
+								<FormattedAmount amount={mainAccount?.totalBalance}/>
 							</h1>
 
 							<p className="text-center text-muted-foreground text-sm max-w-[280px] leading-relaxed">
@@ -86,7 +87,7 @@ export default async function MyWallet() {
 								Total Income
 							</h2>
 							<p className="text-4xl font-bold text-green-900 dark:text-green-100">
-								৳ {mainAccount?.totalIncome}
+								<FormattedAmount amount={mainAccount?.totalIncome}/>
 							</p>
 						</div>
 						<div className="flex items-end justify-between mt-5">
@@ -107,7 +108,7 @@ export default async function MyWallet() {
 								Total Expense
 							</h2>
 							<p className="text-4xl font-bold text-red-900 dark:text-red-100">
-								৳ {mainAccount?.totalExpense}
+								<FormattedAmount amount={mainAccount?.totalExpense}/>
 							</p>
 						</div>
 						<div className="flex items-end justify-between mt-5">
