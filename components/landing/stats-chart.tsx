@@ -43,7 +43,7 @@ const chartOptions: ApexOptions = {
 	},
 };
 
-const StatsChartSection = () => {
+export default function StatsChart() {
 	const seriesData = [300, 450, 350, 600, 500, 700, 800];
 	const series = [{ name: "Spend", data: seriesData }];
 
@@ -143,6 +143,4 @@ const StatsChartSection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default StatsChartSection;
+}

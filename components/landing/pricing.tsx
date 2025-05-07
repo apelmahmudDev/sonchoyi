@@ -57,7 +57,7 @@ const pricingPlans = {
 	],
 };
 
-const PricingSection = () => {
+export default function Pricing() {
 	const [isYearly, setIsYearly] = useState(false);
 	const plans = isYearly ? pricingPlans.yearly : pricingPlans.monthly;
 
@@ -133,6 +133,4 @@ const PricingSection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default PricingSection;
+}

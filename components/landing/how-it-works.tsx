@@ -1,7 +1,8 @@
-import React from "react";
+"use client";
+
 import { motion } from "framer-motion";
 
-const HowItWorksSection = () => {
+export default function HowItWorks() {
 	return (
 		<section
 			id="how-it-works"
@@ -60,6 +61,4 @@ const HowItWorksSection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default HowItWorksSection;
+}

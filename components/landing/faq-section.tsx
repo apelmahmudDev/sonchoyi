@@ -8,7 +8,7 @@ import {
 } from "@radix-ui/react-accordion"; // Adjust this based on your actual ShadCN import if needed
 import { motion } from "framer-motion";
 
-const FAQSection = () => {
+export default function FAQSection() {
 	return (
 		<section className="py-20 bg-gradient-to-br from-[#f9fafb] to-[#e0e7ff] dark:from-[#0f172a] dark:to-[#1e293b]">
 			<div className="max-w-7xl mx-auto px-6">
@@ -99,6 +99,4 @@ const FAQSection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default FAQSection;
+}

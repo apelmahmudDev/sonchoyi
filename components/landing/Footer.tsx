@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const Footer = () => {
+export default function Footer() {
 	return (
 		<footer className="bg-gradient-to-br from-[#7F3DFF] to-[#6B21A8] dark:from-[#0f172a] dark:to-[#1e293b] py-10 transition-all ease-in-out duration-300">
 			<div className="max-w-7xl mx-auto px-6">
@@ -130,6 +130,4 @@ const Footer = () => {
 			</motion.div>
 		</footer>
 	);
-};
-
-export default Footer;
+}

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
-const CTASection = () => {
+export default function CTA() {
 	return (
 		<section className="py-20 bg-gradient-to-br from-[#7F3DFF] to-[#3B82F6] dark:from-[#1e293b] dark:to-[#0f172a] text-center text-white">
 			<div className="max-w-6xl mx-auto px-6">
@@ -37,6 +37,4 @@ const CTASection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default CTASection;
+}

@@ -30,7 +30,7 @@ const testimonials = [
 	},
 ];
 
-const TestimonialsSection = () => {
+export default function Testimonials() {
 	return (
 		<section className="py-20 bg-gradient-to-r from-indigo-100 via-purple-50 to-pink-100 dark:from-slate-800 dark:via-slate-900 dark:to-indigo-900 transition-colors duration-300">
 			<div className="max-w-6xl mx-auto px-6">
@@ -92,6 +92,4 @@ const TestimonialsSection = () => {
 			</div>
 		</section>
 	);
-};
-
-export default TestimonialsSection;
+}

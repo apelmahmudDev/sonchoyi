@@ -1,28 +1,29 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import DashboardOverviewImg from "@/assets/images/dashboard-preview-3d.png";
 
 const screenshots = [
 	{
-		img: "https://cdni.iconscout.com/illustration/premium/thumb/budget-illustration-download-in-svg-png-gif-file-formats--accounting-bank-statement-ecommerce-and-finance-pack-business-illustrations-2923545.png?f=webp",
+		img: DashboardOverviewImg,
 		title: "Dashboard Overview",
 		desc: "See your financial overview, trends, and data at a glance.",
 	},
 	{
-		img: "https://cdni.iconscout.com/illustration/premium/thumb/budget-illustration-download-in-svg-png-gif-file-formats--financial-estimate-business-planning-investment-company-pack-illustrations-5988761.png",
+		img: DashboardOverviewImg,
 		title: "Expense Tracker",
 		desc: "Track every penny with detailed charts and insights on spending.",
 	},
 	{
-		img: "https://www.pngitem.com/pimgs/m/650-6503634_budgets-hd-png-download.png",
+		img: DashboardOverviewImg,
 		title: "Budgeting Tools",
 		desc: "Plan and allocate budgets efficiently with smart recommendations.",
 	},
 ];
 
-export default function ScreenshotPreviewSection() {
+export default function ScreenshotPreview() {
 	return (
 		<section className="relative py-20 bg-white dark:bg-slate-900 overflow-hidden">
 			<div className="max-w-7xl mx-auto px-6">
@@ -55,7 +56,7 @@ function ScreenshotCard({
 	desc,
 	delay,
 }: {
-	img: string;
+	img: StaticImageData;
 	title: string;
 	desc: string;
 	delay: number;
@@ -69,7 +70,7 @@ function ScreenshotCard({
 			className="p-6 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md shadow-sm hover:shadow-md transition"
 		>
 			<div className="mb-4">
-				<img
+				<Image
 					src={img}
 					alt={title}
 					width={500}
