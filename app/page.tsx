@@ -8,10 +8,12 @@ import Pricing from "@/components/landing/pricing";
 import Comparison from "@/components/landing/comparison";
 import CTA from "@/components/landing/cta";
 import FAQSection from "@/components/landing/faq-section";
+import Navbar from "@/components/landing/navbar";
 
 export default function HomePage() {
 	return (
 		<>
+			<Navbar/>
 			<Hero />
 			<Features />
 			<ScreenshotPreview />
