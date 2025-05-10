@@ -1,5 +1,4 @@
 import Hero from "@/components/landing/hero";
-import Navbar from "@/components/landing/navbar";
 import Features from "@/components/landing/features";
 import ScreenshotPreview from "@/components/landing/screenshot-preview";
 import HowItWorksSection from "@/components/landing/how-it-works";
@@ -14,7 +13,6 @@ import Footer from "@/components/landing/footer";
 export default function HomePage() {
 	return (
 		<>
-			<Navbar />
 			<Hero />
 			<Features />
 			<ScreenshotPreview />
@@ -25,7 +23,6 @@ export default function HomePage() {
 			<Comparison />
 			<CTA />
 			<FAQSection />
-			<Footer />
 		</>
 	);
 }
