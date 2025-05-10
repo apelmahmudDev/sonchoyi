@@ -8,7 +8,6 @@ import Pricing from "@/components/landing/pricing";
 import Comparison from "@/components/landing/comparison";
 import CTA from "@/components/landing/cta";
 import FAQSection from "@/components/landing/faq-section";
-import Footer from "@/components/landing/footer";
 
 export default function HomePage() {
 	return (
