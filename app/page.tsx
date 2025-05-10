@@ -3,7 +3,7 @@ import Navbar from "@/components/landing/navbar";
 import Features from "@/components/landing/features";
 import ScreenshotPreview from "@/components/landing/screenshot-preview";
 import HowItWorksSection from "@/components/landing/how-it-works";
-import StatsChart from "@/components/landing/stats-chart";
+// import StatsChart from "@/components/landing/stats-chart";
 import Testimonials from "@/components/landing/testimonials";
 import Pricing from "@/components/landing/pricing";
 import Comparison from "@/components/landing/comparison";
@@ -19,7 +19,7 @@ export default function HomePage() {
 			<Features />
 			<ScreenshotPreview />
 			<HowItWorksSection />
-			<StatsChart />
+			{/* <StatsChart /> error here*/}
 			<Testimonials />
 			<Pricing />
 			<Comparison />
