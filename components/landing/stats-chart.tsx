@@ -1,9 +1,13 @@
 "use client";
 
-import Chart from "react-apexcharts";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Activity, TrendingUp, Users } from "lucide-react";
 import type { ApexOptions } from "apexcharts";
+// Dynamically import the chart to avoid SSR issues
+const Chart = dynamic(() => import("react-apexcharts"), {
+	ssr: false,
+});
 
 const chartOptions: ApexOptions = {
 	chart: {
